@@ -48,8 +48,7 @@ public class InputManager : MonoBehaviour
 
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("UI"))
         {
-            hit.collider.SendMessageUpwards("OnToggleMusic", hit.collider.gameObject);
+            hit.collider.SendMessageUpwards("OnClickedTrigger", hit.collider.gameObject);
         }
     }
-
 }

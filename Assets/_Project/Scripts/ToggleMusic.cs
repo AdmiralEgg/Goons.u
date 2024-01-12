@@ -32,7 +32,7 @@ public class ToggleMusic : MonoBehaviour
         _currentState = ToggleState.WaitingForStart;
     }
 
-    private void OnToggleMusic()
+    private void OnClickedTrigger()
     {
         if ((_currentState == ToggleState.RotateToStart) || (_currentState == ToggleState.RotateToStop)) return;
         

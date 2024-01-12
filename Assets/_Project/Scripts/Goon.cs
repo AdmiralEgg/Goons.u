@@ -16,8 +16,8 @@ public class Goon : MonoBehaviour
 
     private AudioSource _faceAudioSource;
 
-    [SerializeField]
-    private GoonType _goonType;
+    [SerializeField, Required]
+    private GoonData _goonData;
 
     [SerializeField]
     private WordData[] _wordData;
@@ -26,9 +26,12 @@ public class Goon : MonoBehaviour
     [SerializeField, ReadOnly]
     private List<WordData> _wordQueue;
 
+    private ScrapGenerator _scrapGenerator;
+
     private void OnEnable()
     {
         _faceAudioSource = GetComponentInChildren<AudioSource>();
+        _scrapGenerator = GetComponentInChildren<ScrapGenerator>();
 
         // Load two words into the queue
         LoadRandomWords(2);
@@ -37,7 +40,7 @@ public class Goon : MonoBehaviour
     // Triggered by InputManager
     private void OnGoonSelected(GameObject gameObject)
     {
-        Debug.Log($"Something poked me on the {gameObject.name}! I'm the {_goonType}");
+        Debug.Log($"Something poked me on the {gameObject.name}! I'm the {_goonData.GoonType}");
 
         PlayWord();
     }
@@ -61,13 +64,20 @@ public class Goon : MonoBehaviour
             return;
         }
 
-        string word = _wordQueue.First<WordData>().Word;
-        AudioClip wordAudio = _wordQueue.First<WordData>().WordAudio;
+        WordData wordData = _wordQueue.First<WordData>();
+
+        string word = wordData.Word;
+        AudioClip wordAudio = wordData.WordAudio;
         _wordQueue.RemoveAt(0);
         
         if (wordAudio != null ) 
         {
             _faceAudioSource.PlayOneShot(wordAudio);
+
+            if (_scrapGenerator.gameObject.activeInHierarchy)
+            {
+                _scrapGenerator.PrintScrap(wordData);
+            }
         }
         else
         {
@@ -84,6 +94,12 @@ public class Goon : MonoBehaviour
 
     public void Dance()
     {
+        // dance left and right, or up and down
+    }
+
+    public GoonData GetGoonData()
+    {
+        return _goonData;
         // dance left and right, or up and down
     }
 }
