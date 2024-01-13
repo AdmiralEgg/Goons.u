@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Linq;
+using UnityEngine.UIElements;
 
 public class Goon : MonoBehaviour
 {
@@ -28,10 +29,18 @@ public class Goon : MonoBehaviour
 
     private ScrapGenerator _scrapGenerator;
 
+    [SerializeField]
+    private AudioClip _niceCatchAudio, _stickTouchAudio, _speakerTouchAudio, _crowdTouchAudio;
+
     private void OnEnable()
     {
         _faceAudioSource = GetComponentInChildren<AudioSource>();
         _scrapGenerator = GetComponentInChildren<ScrapGenerator>();
+
+        Scrap.ScrapCaught += (scrap) =>
+        {
+            PlayComment(scrap, _niceCatchAudio);
+        };
 
         // Load two words into the queue
         LoadRandomWords(2);
@@ -41,6 +50,12 @@ public class Goon : MonoBehaviour
     private void OnGoonSelected(GameObject gameObject)
     {
         Debug.Log($"Something poked me on the {gameObject.name}! I'm the {_goonData.GoonType}");
+
+        if (gameObject.name == "GoonStick")
+        {
+            PlayComment(null, _stickTouchAudio);
+            return;
+        }
 
         PlayWord();
     }
@@ -101,5 +116,10 @@ public class Goon : MonoBehaviour
     {
         return _goonData;
         // dance left and right, or up and down
+    }
+
+    private void PlayComment(Scrap caughtScrap, AudioClip clip)
+    {
+        _faceAudioSource.PlayOneShot(clip);
     }
 }

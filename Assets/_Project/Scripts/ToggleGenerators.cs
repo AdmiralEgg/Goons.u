@@ -79,9 +79,10 @@ public class ToggleGenerators : MonoBehaviour
             generator.GetComponent<ScrapGenerator>().StartGenerator();
         }
 
-        foreach (GameObject go in _trapDoors)
+        foreach (GameObject trapdoor in _trapDoors)
         {
             // Open the trapdoors
+            trapdoor.GetComponent<ActivateTrapDoor>().OpenTrapDoor();
         }
 
         _currentState = ToggleState.On;
@@ -101,9 +102,10 @@ public class ToggleGenerators : MonoBehaviour
             generator.GetComponent<ScrapGenerator>().ShutdownGenerator();
         }
 
-        foreach (GameObject go in _trapDoors)
+        foreach (GameObject trapdoor in _trapDoors)
         {
             // Close the trapdoors
+            trapdoor.GetComponent<ActivateTrapDoor>().CloseTrapDoor();
         }
 
         _currentState = ToggleState.Off;
