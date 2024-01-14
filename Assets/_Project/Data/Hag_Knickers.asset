@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Knickers
-  Syllables: 2
+  wordSize: 1
   WordAudio: {fileID: 8300000, guid: 77d5f868ba14a384d9088ecedb0a2aa8, type: 3}
   FaceClip: {fileID: 0}
   StickClip: {fileID: 0}

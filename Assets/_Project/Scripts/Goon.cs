@@ -15,27 +15,35 @@ public class Goon : MonoBehaviour
         Yorky
     }
 
-    private AudioSource _faceAudioSource;
+    public enum GoonState
+    {
+        Idle,
+        Speaking
+    }
 
     [SerializeField, Required]
     private GoonData _goonData;
 
     [SerializeField]
+    private AudioClip _niceCatchAudio, _stickTouchAudio, _speakerTouchAudio, _crowdTouchAudio;
+
+    [SerializeField]
     private WordData[] _wordData;
 
-    // TODO: Use a Queue type instead?
     [SerializeField, ReadOnly]
     private List<WordData> _wordQueue;
 
-    private ScrapGenerator _scrapGenerator;
+    [SerializeField, ReadOnly]
+    private GoonState _currentState;
 
-    [SerializeField]
-    private AudioClip _niceCatchAudio, _stickTouchAudio, _speakerTouchAudio, _crowdTouchAudio;
+    private ScrapGenerator _scrapGenerator;
+    private AudioSource _faceAudioSource;
 
     private void OnEnable()
     {
         _faceAudioSource = GetComponentInChildren<AudioSource>();
         _scrapGenerator = GetComponentInChildren<ScrapGenerator>();
+        _currentState = GoonState.Idle;
 
         Scrap.ScrapCaught += (scrap) =>
         {
@@ -49,11 +57,13 @@ public class Goon : MonoBehaviour
     // Triggered by InputManager
     private void OnGoonSelected(GameObject gameObject)
     {
+        if (_currentState == GoonState.Speaking) return;
+
         Debug.Log($"Something poked me on the {gameObject.name}! I'm the {_goonData.GoonType}");
 
         if (gameObject.name == "GoonStick")
         {
-            PlayComment(null, _stickTouchAudio);
+            StartCoroutine(Speak(_stickTouchAudio));
             return;
         }
 
@@ -73,6 +83,8 @@ public class Goon : MonoBehaviour
 
     private void PlayWord()
     {
+        if (_currentState == GoonState.Speaking) return;
+        
         if (_wordQueue.Count == 0)
         {
             Debug.LogError("No words found in the queue, cannot play.");
@@ -87,7 +99,7 @@ public class Goon : MonoBehaviour
         
         if (wordAudio != null ) 
         {
-            _faceAudioSource.PlayOneShot(wordAudio);
+            StartCoroutine(Speak(wordAudio));
 
             if (_scrapGenerator.gameObject.activeInHierarchy)
             {
@@ -96,15 +108,10 @@ public class Goon : MonoBehaviour
         }
         else
         {
-            _faceAudioSource.Play();
+            Debug.LogError($"Word audio for {word} is not defined.");
         }
 
         LoadRandomWords();
-    }
-
-    private List<WordData> GetWordQueue()
-    {
-        return _wordQueue;
     }
 
     public void Dance()
@@ -115,11 +122,23 @@ public class Goon : MonoBehaviour
     public GoonData GetGoonData()
     {
         return _goonData;
-        // dance left and right, or up and down
     }
 
     private void PlayComment(Scrap caughtScrap, AudioClip clip)
     {
+        if (_currentState == GoonState.Speaking) return;
+
+        StartCoroutine(Speak(clip));
+    }
+
+    private IEnumerator Speak(AudioClip clip)
+    {
+        _currentState = GoonState.Speaking;
+        
         _faceAudioSource.PlayOneShot(clip);
+
+        yield return new WaitForSeconds(clip.length);
+
+        _currentState = GoonState.Idle;
     }
 }
