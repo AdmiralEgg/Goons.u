@@ -105,7 +105,7 @@ public class ScrapGenerator : MonoBehaviour
         GameObject scrap = Instantiate(_scrapPrefab, this.transform, false);
 
         // apply font and colour to scrap
-        scrap.GetComponent<Scrap>().SetWord(word.Word);
+        scrap.GetComponent<Scrap>().SetWordData(word);
         if (_goonData.WordFont != null) scrap.GetComponent<Scrap>().SetFont(_goonData.WordFont);
         if (_goonData.WordColour != null) scrap.GetComponent<Scrap>().SetFontColor(_goonData.WordColour);
     }

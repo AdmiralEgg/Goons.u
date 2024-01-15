@@ -9,6 +9,9 @@ public class ScrapInventory : MonoBehaviour
     [Tooltip("Maximum slots that can be used to hold words")]
     public int _maxSlots = 5;
 
+    [SerializeField, ReadOnly, Tooltip("Number of scraps currently being held")]
+    private int _scrapsHeldCount;
+
     [SerializeField, ReadOnly, Tooltip("Scraps currently being held")]
     private List<Scrap> _scrapsHeld;
 
@@ -24,6 +27,22 @@ public class ScrapInventory : MonoBehaviour
         _scrapSlots = new List<ScrapSlot>(GetComponentsInChildren<ScrapSlot>());
 
         Scrap.ScrapCaught += AddScrapToInventory;
+    }
+
+    private void Update()
+    {
+        // Check for a difference in number of scraps
+        if (GetComponentsInChildren<Scrap>().Length != _scrapsHeld.Count)
+        {
+            _scrapsHeld.Clear();
+
+            foreach (Scrap scrap in GetComponentsInChildren<Scrap>())
+            {
+                _scrapsHeld.Add(scrap);
+            }
+
+            _scrapsHeldCount = _scrapsHeld.Count;
+        }
     }
 
     public void AddScrapToInventory(Scrap scrap)
@@ -70,6 +89,6 @@ public class ScrapInventory : MonoBehaviour
 
     private int CountScrapHeld()
     {
-        return GetComponentsInChildren<Scrap>().Length;
+        return _scrapsHeld.Count;
     }
 }

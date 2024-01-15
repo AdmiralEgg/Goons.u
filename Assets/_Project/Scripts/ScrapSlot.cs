@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -26,13 +27,39 @@ public class ScrapSlot : MonoBehaviour
     [SerializeField, ReadOnly]
     private Scrap _slotScrap;
 
+    public static Action<Scrap> ScrapAttachedToGoon;
+    public static Action<Scrap> ScrapAttachedToInventory;
+
     void Awake()
     {
         _currentSlotState = ScrapSlotState.Open;
     }
 
+    private void Update()
+    {
+        Scrap scrap = GetComponentInChildren<Scrap>();
+        
+        // Check for any scrap in this slot
+        if (scrap != null)
+        {
+            _currentSlotState = ScrapSlotState.Filled;
+            _slotScrap = scrap;
+        }
+        else
+        {
+            _currentSlotState = ScrapSlotState.Open;
+            _slotScrap = null;
+        }
+    }
+
     public void AddScrapToSlot(Scrap scrap)
     {
+        if (_currentSlotState == ScrapSlotState.Filled) 
+        {
+            Debug.Log("Slot already filled, swap scraps!");
+            return;
+        }
+        
         // Move to the slot
         scrap.transform.SetParent(this.transform);
         scrap.transform.position = this.transform.position;
@@ -40,18 +67,16 @@ public class ScrapSlot : MonoBehaviour
         // Set the scrap state
         if (_slotType == ScrapSlotType.Inventory)
         {
-            scrap.SetScrapState(Scrap.ScrapState.Inventory);
+            scrap.SetScrapAttachedState(Scrap.ScrapAttachedState.Inventory);
+            ScrapAttachedToInventory?.Invoke(scrap);
         }
-        
-        _slotScrap = scrap;
-        _currentSlotState = ScrapSlotState.Filled;
-    }
 
-    public void RemoveScrapFromSlot()
-    {
-        _slotScrap.SetScrapState(Scrap.ScrapState.Free);
-        
-        _currentSlotState = ScrapSlotState.Open;
+        // Set the scrap state
+        if (_slotType == ScrapSlotType.Goon)
+        {
+            scrap.SetScrapAttachedState(Scrap.ScrapAttachedState.Goon);
+            ScrapAttachedToGoon?.Invoke(scrap);
+        }
     }
 
     private void OnDrawGizmos()
@@ -63,5 +88,10 @@ public class ScrapSlot : MonoBehaviour
     public ScrapSlotState GetCurrentSlotState()
     {
         return _currentSlotState;
+    }
+
+    public Scrap GetSlotScrap()
+    {
+        return _slotScrap;
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Linq;
 using UnityEngine.UIElements;
+using Sirenix.OdinInspector.Editor.Drawers;
+using UnityEngine.InputSystem.Interactions;
 
 public class Goon : MonoBehaviour
 {
@@ -34,7 +36,13 @@ public class Goon : MonoBehaviour
     private List<WordData> _wordQueue;
 
     [SerializeField, ReadOnly]
+    private ScrapSlot[] _allScrapSlots;
+
+    [SerializeField, ReadOnly]
     private GoonState _currentState;
+
+    [SerializeField, ReadOnly]
+    private bool _hasFixedWords;
 
     private ScrapGenerator _scrapGenerator;
     private AudioSource _faceAudioSource;
@@ -43,6 +51,7 @@ public class Goon : MonoBehaviour
     {
         _faceAudioSource = GetComponentInChildren<AudioSource>();
         _scrapGenerator = GetComponentInChildren<ScrapGenerator>();
+        _allScrapSlots = GetComponentsInChildren<ScrapSlot>();
 
         _niceCatchAudio = _goonData.NiceCatchAudio;
         _stickTouchAudio = _goonData.StickTouchAudio;
@@ -50,11 +59,36 @@ public class Goon : MonoBehaviour
         _crowdTouchAudio = _goonData.CrowdTouchAudio;
 
         _wordData = _goonData.WordData;
+        _hasFixedWords = false;
 
         _currentState = GoonState.Idle;
 
+        foreach (BulbController bulb in GetComponentsInChildren<BulbController>()) 
+        {
+            bulb.SetBulbEmissionColor(_goonData.WordColour);
+        }
+
         // Load two words into the queue
         LoadRandomWords(2);
+    }
+
+    private void Update()
+    {
+        CheckFixedWords();
+    }
+
+    private void CheckFixedWords()
+    {
+        _hasFixedWords = false;
+
+        foreach (ScrapSlot slot in _allScrapSlots)
+        {
+            if (slot.GetCurrentSlotState() == ScrapSlot.ScrapSlotState.Filled)
+            {
+                _hasFixedWords = true;
+                return;
+            }
+        }
     }
 
     // Triggered by InputManager
@@ -62,15 +96,20 @@ public class Goon : MonoBehaviour
     {
         if (_currentState == GoonState.Speaking) return;
 
-        Debug.Log($"Something poked me on the {gameObject.name}! I'm the {_goonData.GoonType}");
-
         if (gameObject.name == "GoonStick")
         {
             PlayComment(_stickTouchAudio);
             return;
         }
 
-        PlayWord();
+        if (_hasFixedWords == true)
+        {
+            PlayNextFixedWord();
+        }
+        else
+        {
+            PlayRandomWord();
+        }
     }
 
     private void LoadRandomWords(int wordsToLoad = 1)
@@ -84,7 +123,24 @@ public class Goon : MonoBehaviour
         }
     }
 
-    private void PlayWord()
+    private void PlayNextFixedWord()
+    {
+        // TODO: This just plays the first fixed word, make it iterate through them.
+        foreach (ScrapSlot slot in _allScrapSlots)
+        {
+            if (slot.GetCurrentSlotState() == ScrapSlot.ScrapSlotState.Filled)
+            {
+                WordData wordData = slot.GetSlotScrap().GetWordData();
+
+                // Play this word
+                StartCoroutine(Speak(wordData.WordAudio));
+                _scrapGenerator.PrintScrap(wordData);
+                return;
+            }
+        }
+    }
+
+    private void PlayRandomWord()
     {
         if (_currentState == GoonState.Speaking) return;
         

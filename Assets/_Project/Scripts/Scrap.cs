@@ -12,25 +12,35 @@ public class Scrap : MonoBehaviour
 {
     public enum ScrapState
     {
-        Falling,
         Free,
-        Inventory,
         Selected
+    }
+
+    public enum ScrapAttachedState
+    {
+        None,
+        Inventory,
+        Goon
     }
 
     [SerializeField, ReadOnly, Tooltip("State of the scrap, governs rigidbody properties and deletion over time")]
     private ScrapState _currentScrapState;
 
+    [SerializeField, ReadOnly, Tooltip("Whether the scrap is attached to the inventory, or a goon")]
+    private ScrapAttachedState _currentScrapAttachedState;
+
+    [SerializeField, ReadOnly]
+    private WordData _wordData;
+
     private TextMeshProUGUI _text;
 
     public static Action<Scrap> ScrapCaught, ScrapSelected;
 
-    //public static Action<Scrap> ;
-
     void Awake()
     {
         // Set the state
-        SetScrapState(ScrapState.Falling);
+        SetScrapState(ScrapState.Free);
+        SetScrapAttachedState(ScrapAttachedState.None);
 
         // Look at camera, set random rotation
         this.transform.Rotate(-90, 0, 0);
@@ -58,26 +68,46 @@ public class Scrap : MonoBehaviour
         _text.color = fontColor;
     }
 
-    public void SetWord(string word)
+    public void SetWordData(WordData wordData)
     {
-        _text.text = word;
+        _wordData = wordData;
+        _text.text = wordData.Word;
+    }
+
+    public WordData GetWordData()
+    {
+        return _wordData;
     }
 
     private void OnClickedTrigger()
     {
-        if (_currentScrapState == ScrapState.Falling) 
-        {
-            // Move the scrap to the inventory
-            ScrapCaught.Invoke(this);
-            return;
-        }
+        // If clicking something already selected, ignore it.
+        if (_currentScrapState == ScrapState.Selected) return;
 
-        if (_currentScrapState == ScrapState.Inventory)
+        if (_currentScrapState == ScrapState.Free) 
         {
-            // Click to click. Highlight object somehow. Make it wiggle? Wiggle plus emission.
-            SetScrapState(ScrapState.Selected);
+            if (_currentScrapAttachedState == ScrapAttachedState.None)
+            {
+                // Try moving the scrap to the inventory
+                ScrapCaught?.Invoke(this);
+                return;
+            }
 
-            ScrapSelected?.Invoke(this);
+            if (_currentScrapAttachedState == ScrapAttachedState.Inventory)
+            {
+                // Try moving the scrap to the inventory
+                SetScrapState(ScrapState.Selected);
+                ScrapSelected?.Invoke(this);
+                return;
+            }
+
+            if (_currentScrapAttachedState == ScrapAttachedState.Goon)
+            {
+                SetScrapState(ScrapState.Selected);
+                ScrapSelected?.Invoke(this);
+                return;
+            }
+                
             return;
         }
     }
@@ -89,24 +119,34 @@ public class Scrap : MonoBehaviour
         switch (scrapState)
         {
             case ScrapState.Free:
-                GetComponent<Rigidbody>().isKinematic = false;
                 GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
                 break;
-            case ScrapState.Inventory:
+            case ScrapState.Selected:
+                GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
+                break;
+        }
+    }
+
+    public void SetScrapAttachedState(ScrapAttachedState scrapAttachedState)
+    {
+        _currentScrapAttachedState = scrapAttachedState;
+
+        switch (scrapAttachedState)
+        {
+            case ScrapAttachedState.None:
+                GetComponent<Rigidbody>().isKinematic = false;
+                break;
+            case ScrapAttachedState.Inventory:
                 GetComponent<Rigidbody>().isKinematic = true;
-                GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
                 // Reset rotation
                 this.transform.rotation = Quaternion.identity;
                 this.transform.Rotate(-90, 0, 0);
                 break;
-            case ScrapState.Falling:
-                GetComponent<Rigidbody>().isKinematic = false;
-                GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
-                break;
-            case ScrapState.Selected:
+            case ScrapAttachedState.Goon:
                 GetComponent<Rigidbody>().isKinematic = true;
-                GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
-                //GetComponent<MMWiggle>().RotationActive = true;
+                // Reset rotation
+                this.transform.rotation = Quaternion.identity;
+                this.transform.Rotate(-90, 0, 0);
                 break;
         }
     }
