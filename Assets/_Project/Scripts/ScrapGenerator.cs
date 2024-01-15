@@ -34,8 +34,6 @@ public class ScrapGenerator : MonoBehaviour
     private AudioSource _audioSource;
     private GoonData _goonData;
 
-
-    
     void Awake()
     {
         _goonData = this.GetComponentInParent<Goon>().GetGoonData();

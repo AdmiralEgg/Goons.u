@@ -24,10 +24,10 @@ public class Goon : MonoBehaviour
     [SerializeField, Required]
     private GoonData _goonData;
 
-    [SerializeField]
+    [SerializeField, ReadOnly]
     private AudioClip _niceCatchAudio, _stickTouchAudio, _speakerTouchAudio, _crowdTouchAudio;
 
-    [SerializeField]
+    [SerializeField, ReadOnly]
     private WordData[] _wordData;
 
     [SerializeField, ReadOnly]
@@ -43,12 +43,15 @@ public class Goon : MonoBehaviour
     {
         _faceAudioSource = GetComponentInChildren<AudioSource>();
         _scrapGenerator = GetComponentInChildren<ScrapGenerator>();
-        _currentState = GoonState.Idle;
 
-        Scrap.ScrapCaught += (scrap) =>
-        {
-            PlayComment(scrap, _niceCatchAudio);
-        };
+        _niceCatchAudio = _goonData.NiceCatchAudio;
+        _stickTouchAudio = _goonData.StickTouchAudio;
+        _speakerTouchAudio = _goonData.SpeakerTouchAudio;
+        _crowdTouchAudio = _goonData.CrowdTouchAudio;
+
+        _wordData = _goonData.WordData;
+
+        _currentState = GoonState.Idle;
 
         // Load two words into the queue
         LoadRandomWords(2);
@@ -63,7 +66,7 @@ public class Goon : MonoBehaviour
 
         if (gameObject.name == "GoonStick")
         {
-            StartCoroutine(Speak(_stickTouchAudio));
+            PlayComment(_stickTouchAudio);
             return;
         }
 
@@ -124,7 +127,19 @@ public class Goon : MonoBehaviour
         return _goonData;
     }
 
-    private void PlayComment(Scrap caughtScrap, AudioClip clip)
+    public GoonState GetGoonState()
+    {
+        return _currentState;
+    }
+
+    private void PlayComment(AudioClip clip)
+    {
+        if (_currentState == GoonState.Speaking) return;
+
+        StartCoroutine(Speak(clip));
+    }
+
+    public void PlayGroupComment(AudioClip clip)
     {
         if (_currentState == GoonState.Speaking) return;
 

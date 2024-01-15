@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using MoreMountains.Feedbacks;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -10,8 +12,10 @@ public class Scrap : MonoBehaviour
 {
     public enum ScrapState
     {
-        Default,
-        Inventory
+        Falling,
+        Free,
+        Inventory,
+        Selected
     }
 
     [SerializeField, ReadOnly, Tooltip("State of the scrap, governs rigidbody properties and deletion over time")]
@@ -19,12 +23,14 @@ public class Scrap : MonoBehaviour
 
     private TextMeshProUGUI _text;
 
-    public static Action<Scrap> ScrapCaught;
+    public static Action<Scrap> ScrapCaught, ScrapSelected;
+
+    //public static Action<Scrap> ;
 
     void Awake()
     {
         // Set the state
-        SetScrapState(ScrapState.Default);
+        SetScrapState(ScrapState.Falling);
 
         // Look at camera, set random rotation
         this.transform.Rotate(-90, 0, 0);
@@ -47,7 +53,7 @@ public class Scrap : MonoBehaviour
         _text.font = font;
     }
 
-    public void SetFontColor(Color fontColor)
+    public void SetFontColor(UnityEngine.Color fontColor)
     {
         _text.color = fontColor;
     }
@@ -59,24 +65,54 @@ public class Scrap : MonoBehaviour
 
     private void OnClickedTrigger()
     {
-        Debug.Log("Scrap got a click!");
+        if (_currentScrapState == ScrapState.Falling) 
+        {
+            // Move the scrap to the inventory
+            ScrapCaught.Invoke(this);
+            return;
+        }
 
-        // Move the scrap to the inventory
-        ScrapCaught(this);
+        if (_currentScrapState == ScrapState.Inventory)
+        {
+            // Click to click. Highlight object somehow. Make it wiggle? Wiggle plus emission.
+            SetScrapState(ScrapState.Selected);
+
+            ScrapSelected?.Invoke(this);
+            return;
+        }
     }
 
     public void SetScrapState(ScrapState scrapState)
     {
+        _currentScrapState = scrapState;
+
         switch (scrapState)
         {
-            case ScrapState.Default:
-                _currentScrapState = ScrapState.Default;
+            case ScrapState.Free:
                 GetComponent<Rigidbody>().isKinematic = false;
+                GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
                 break;
             case ScrapState.Inventory:
-                _currentScrapState = ScrapState.Inventory;
                 GetComponent<Rigidbody>().isKinematic = true;
+                GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+                // Reset rotation
+                this.transform.rotation = Quaternion.identity;
+                this.transform.Rotate(-90, 0, 0);
+                break;
+            case ScrapState.Falling:
+                GetComponent<Rigidbody>().isKinematic = false;
+                GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+                break;
+            case ScrapState.Selected:
+                GetComponent<Rigidbody>().isKinematic = true;
+                GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
+                //GetComponent<MMWiggle>().RotationActive = true;
                 break;
         }
+    }
+
+    public ScrapState GetScrapState()
+    {
+        return _currentScrapState;
     }
 }
