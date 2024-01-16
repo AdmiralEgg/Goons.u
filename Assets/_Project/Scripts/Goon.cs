@@ -27,6 +27,9 @@ public class Goon : MonoBehaviour
     private GoonData _goonData;
 
     [SerializeField, ReadOnly]
+    private GoonState _currentState;
+
+    [SerializeField, ReadOnly]
     private AudioClip _niceCatchAudio, _stickTouchAudio, _speakerTouchAudio, _crowdTouchAudio;
 
     [SerializeField, ReadOnly]
@@ -38,12 +41,7 @@ public class Goon : MonoBehaviour
     [SerializeField, ReadOnly]
     private ScrapSlot[] _allScrapSlots;
 
-    [SerializeField, ReadOnly]
-    private GoonState _currentState;
-
-    [SerializeField, ReadOnly]
-    private bool _hasFixedWords;
-
+    private GoonScrapSlotController _goonScrapSlotController;
     private ScrapGenerator _scrapGenerator;
     private AudioSource _faceAudioSource;
 
@@ -52,6 +50,7 @@ public class Goon : MonoBehaviour
         _faceAudioSource = GetComponentInChildren<AudioSource>();
         _scrapGenerator = GetComponentInChildren<ScrapGenerator>();
         _allScrapSlots = GetComponentsInChildren<ScrapSlot>();
+        _goonScrapSlotController = GetComponentInChildren<GoonScrapSlotController>();
 
         _niceCatchAudio = _goonData.NiceCatchAudio;
         _stickTouchAudio = _goonData.StickTouchAudio;
@@ -59,36 +58,16 @@ public class Goon : MonoBehaviour
         _crowdTouchAudio = _goonData.CrowdTouchAudio;
 
         _wordData = _goonData.WordData;
-        _hasFixedWords = false;
 
         _currentState = GoonState.Idle;
 
         foreach (BulbController bulb in GetComponentsInChildren<BulbController>()) 
         {
-            bulb.SetBulbEmissionColor(_goonData.WordColour);
+            bulb.SetGoonEmissionColor(_goonData.WordColour);
         }
 
         // Load two words into the queue
         LoadRandomWords(2);
-    }
-
-    private void Update()
-    {
-        CheckFixedWords();
-    }
-
-    private void CheckFixedWords()
-    {
-        _hasFixedWords = false;
-
-        foreach (ScrapSlot slot in _allScrapSlots)
-        {
-            if (slot.GetCurrentSlotState() == ScrapSlot.ScrapSlotState.Filled)
-            {
-                _hasFixedWords = true;
-                return;
-            }
-        }
     }
 
     // Triggered by InputManager
@@ -102,7 +81,7 @@ public class Goon : MonoBehaviour
             return;
         }
 
-        if (_hasFixedWords == true)
+        if (_goonScrapSlotController.GetUsingFixedWords() == true)
         {
             PlayNextFixedWord();
         }

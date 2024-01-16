@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using System.Net.Mime;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class InputManager : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class InputManager : MonoBehaviour
 
     public static Action ScrapDeselected;
     public static Action<GameObject> ReportHit;
+    public static Action<InputState> ChangedInputState;
 
     void Awake()
     {
@@ -43,6 +45,7 @@ public class InputManager : MonoBehaviour
 
         s_playerInput = this.GetComponent<PlayerInput>();
 
+        // On click, figure out what has been hit.
         s_playerInput.actions["Select"].performed += (InputAction.CallbackContext context) =>
         {
             Vector2 clickPosition = s_playerInput.actions["Position"].ReadValue<Vector2>();
@@ -62,10 +65,17 @@ public class InputManager : MonoBehaviour
             }
         };
 
+        // If scrap has been selected, update the state.
         Scrap.ScrapSelected += (scrap) =>
         {
             _currentSelectedScrap = scrap;
             UpdateState(InputState.ScrapSelected);
+        };
+
+        InputManager.ScrapDeselected += () =>
+        {
+            _currentSelectedScrap = null;
+            UpdateState(InputState.Free);
         };
     }
 
@@ -106,9 +116,9 @@ public class InputManager : MonoBehaviour
         if (hit.collider == null)
         {
             // Go back to free mode and turn off selection lights
-            UpdateState(InputState.Free);
+            //UpdateState(InputState.Free);
             _currentSelectedScrap.SetScrapState(Scrap.ScrapState.Free);
-            _currentSelectedScrap = null;
+            //_currentSelectedScrap = null;
             ScrapDeselected?.Invoke();
             return;
         }
@@ -121,10 +131,10 @@ public class InputManager : MonoBehaviour
             Debug.Log("Clicked a slot, attach the scrap");
             hit.collider.gameObject.GetComponent<BulbController>().SendMessageUpwards("AddScrapToSlot", _currentSelectedScrap);
 
-            UpdateState(InputState.Free);
+            //UpdateState(InputState.Free);
 
             _currentSelectedScrap.SetScrapState(Scrap.ScrapState.Free);
-            _currentSelectedScrap = null;
+            //_currentSelectedScrap = null;
             ScrapDeselected?.Invoke();
         }
         else if (hit.collider.gameObject.GetComponent<Scrap>())
@@ -141,6 +151,8 @@ public class InputManager : MonoBehaviour
 
     private void UpdateState(InputState newState)
     {
+        ChangedInputState?.Invoke(newState);
+        
         // TODO: This is rubbish, fix it
         _currentInputState = newState;
         s_currentInputState = newState;

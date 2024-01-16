@@ -200,6 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulbMaterial: {fileID: 0}
+  _connectedSlot: {fileID: 2875795713067757349}
 --- !u!33 &9196931607022039426
 MeshFilter:
   m_ObjectHideFlags: 0

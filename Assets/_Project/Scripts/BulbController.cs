@@ -2,25 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 public class BulbController : MonoBehaviour
 {
+    public float _bulbFlashSpeed = 1.5f;
+
     [SerializeField, ReadOnly]
     private Material _bulbMaterial;
+
+    [SerializeField, ReadOnly]
+    private ScrapSlot _connectedSlot;
+
+    [SerializeField, ReadOnly]
+    private Color _goonEmissionColor = Color.clear;
+
+    [SerializeField]
+    private Color _snapIndicatorEmissionColor = Color.white;
+
+    private bool _refreshBulbState = false;
 
     private void Awake()
     {
         _bulbMaterial = GetComponent<MeshRenderer>().material;
+        _connectedSlot = GetComponentInParent<ScrapSlot>();
 
-        SetBulbEmissionColor(Color.blue);
+        SetEmissionColor(_snapIndicatorEmissionColor);
+        SetActive(false);
+
+        InputManager.ChangedInputState += UpdateBulbState;
     }
 
-    public void SetBulbEmissionColor(Color emissionColor)
+    private void UpdateBulbState(InputManager.InputState newState)
     {
-        _bulbMaterial.SetColor("_EmissionColor", emissionColor);
+        _refreshBulbState = true;
     }
 
-    public void SetBulbActive(bool active)
+    private IEnumerator BulbFlash(float flashSpeed)
+    {
+        SetEmissionColor(_snapIndicatorEmissionColor);
+
+        while (true) 
+        {
+            SetActive(true);
+            yield return new WaitForSeconds(flashSpeed);
+            SetActive(false);
+            yield return new WaitForSeconds(flashSpeed);
+        }
+    }
+
+    public void SetGoonEmissionColor(Color goonEmissionColor)
+    {
+        _goonEmissionColor = goonEmissionColor;
+    }
+
+    public void SetEmissionColor(Color newEmissionColor)
+    {
+        _bulbMaterial.SetColor("_EmissionColor", newEmissionColor);
+    }
+
+    public void SetActive(bool active)
     {
         if (active == true)
         {
@@ -35,6 +77,50 @@ public class BulbController : MonoBehaviour
     private void OnClickedTrigger()
     {
         Debug.Log("Clicked a bulb.");
+    }
+
+    private void LateUpdate()
+    {
+        if (_refreshBulbState)
+        {
+            _refreshBulbState = false;
+
+            ScrapSlot.ScrapSlotState slotState = _connectedSlot.GetCurrentSlotState();
+            InputManager.InputState newState = InputManager.GetCurrentInputState();
+
+            if (newState == InputManager.InputState.ScrapSelected)
+            {
+                if (slotState == ScrapSlot.ScrapSlotState.Open)
+                {
+                    // if slot open, bulbs flash white
+                    StartCoroutine(BulbFlash(_bulbFlashSpeed));
+                    return;
+                }
+                return;
+            }
+
+            if (newState == InputManager.InputState.Free)
+            {
+                // Stop the flashing
+                StopAllCoroutines();
+
+                if (slotState == ScrapSlot.ScrapSlotState.Open)
+                {
+                    // if slot filled and not next, bulbs turn off
+                    SetActive(false);
+                    return;
+                }
+
+                if (slotState == ScrapSlot.ScrapSlotState.Filled)
+                {
+                    // if slot filled and next, bulbs turns green
+                    SetEmissionColor(_goonEmissionColor);
+                    SetActive(true);
+                    return;
+                }
+            }
+
+        }
     }
 }
 

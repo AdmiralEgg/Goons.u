@@ -10,18 +10,8 @@ using UnityEngine.UIElements;
 
 public class Scrap : MonoBehaviour
 {
-    public enum ScrapState
-    {
-        Free,
-        Selected
-    }
-
-    public enum ScrapAttachedState
-    {
-        None,
-        Inventory,
-        Goon
-    }
+    public enum ScrapState { Free, Selected }
+    public enum ScrapAttachedState { None, Inventory, Goon }
 
     [SerializeField, ReadOnly, Tooltip("State of the scrap, governs rigidbody properties and deletion over time")]
     private ScrapState _currentScrapState;

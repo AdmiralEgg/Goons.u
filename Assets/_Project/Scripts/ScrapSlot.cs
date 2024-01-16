@@ -6,17 +6,8 @@ using UnityEngine;
 
 public class ScrapSlot : MonoBehaviour
 {
-    public enum ScrapSlotState
-    {
-        Open,
-        Filled
-    }
-
-    public enum ScrapSlotType
-    {
-        Inventory,
-        Goon
-    }
+    public enum ScrapSlotState { Open, Filled }
+    public enum ScrapSlotType { Inventory, Goon }
 
     [SerializeField, ReadOnly]
     private ScrapSlotState _currentSlotState;
