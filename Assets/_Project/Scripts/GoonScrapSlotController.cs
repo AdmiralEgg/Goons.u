@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class GoonScrapSlotController : MonoBehaviour
 {
-    //[SerializeField]
-    //private ScrapSlot[] _goonScrapSlots;
-
     [SerializeField]
     private List<ScrapSlot> _goonScrapSlotsList;
 
@@ -16,21 +13,18 @@ public class GoonScrapSlotController : MonoBehaviour
     private bool _hasFixedWords;
 
     [SerializeField, ReadOnly]
-    private bool _usingFixedWords;
-
-    [SerializeField, ReadOnly]
     private int _nextSlotToPlayIndex;
 
     [SerializeField, ReadOnly]
     private ScrapSlot _nextSlotToPlay;
 
+    [SerializeField, ReadOnly]
+    private bool _slotsActive;
+
     private void Awake()
     {
         _hasFixedWords = false;
-        _usingFixedWords = false;
         _nextSlotToPlayIndex = 0;
-
-        //_goonScrapSlotsList.
 
         foreach (ScrapSlot slot in GetComponentsInChildren<ScrapSlot>())
         {
@@ -39,20 +33,23 @@ public class GoonScrapSlotController : MonoBehaviour
 
         Scrap.ScrapSelected += (scrap) =>
         {
-            ActivateSlots();
+            SetSlotsActive(true);
         };
 
-        InputManager.ScrapDeselected += DeactivateSlots;
+        ScrapSlot.ScrapAttachedToGoon += (scrap) =>
+        {
+            SetNextSlotToPlay();
+        };
+
+        InputManager.ScrapDeselected += () =>
+        {
+            SetSlotsActive(false);
+        };
     }
 
     private void Update()
     {
         CheckFixedWords();
-
-        if (_hasFixedWords && _usingFixedWords)
-        {
-            UpdateNextSlotToPlay();
-        }
     }
 
     private void CheckFixedWords()
@@ -69,61 +66,77 @@ public class GoonScrapSlotController : MonoBehaviour
         }
     }
 
-    private void UpdateNextSlotToPlay()
+    private void SetNextSlotToPlay()
     {
-        // starting from the current element, iterate through the length of the list to find the next filled slot
-        int currentIndex = _nextSlotToPlayIndex;
-        ScrapSlot currentItem = null;
+        List<ScrapSlot> filledSlots = new List<ScrapSlot>();
 
-        do
-        {
-            currentIndex = (currentIndex + 1) % _goonScrapSlotsList.Count;
-
-            if (_goonScrapSlotsList[currentIndex].GetCurrentSlotState() == ScrapSlot.ScrapSlotState.Filled)
-            {
-                var currentitem = _goonScrapSlotsList[currentIndex];
-            }
-
-        } while (currentIndex != _nextSlotToPlayIndex);
-
-        _nextSlotToPlayIndex = currentIndex;
-        _nextSlotToPlay = currentItem;
-    }
-
-    private void ToggleUsingFixedWords()
-    {
-        _usingFixedWords = !_usingFixedWords;
-
-        // TODO: set the SlotToPlayIndex to the first item from the top
-        for (int i = 0; i < _goonScrapSlotsList.Count; i++)
-        {
-            if (_goonScrapSlotsList[i].GetCurrentSlotState() == ScrapSlot.ScrapSlotState.Filled)
-            {
-                _nextSlotToPlayIndex = i;
-                _nextSlotToPlay = _goonScrapSlotsList[i];
-                break;
-            }
-        }
-    }
-
-    public void ActivateSlots()
-    {
-        foreach (ScrapSlot slot in _goonScrapSlotsList) 
-        {
-            slot.GetComponentInChildren<HingeJoint>().useMotor = true;
-        }
-    }
-
-    public void DeactivateSlots()
-    {
+        // If no active slots, then error. Shouldn't get to here.
         foreach (ScrapSlot slot in _goonScrapSlotsList)
         {
-            slot.GetComponentInChildren<HingeJoint>().useMotor = false;
+            if (slot.GetCurrentSlotState() == ScrapSlot.ScrapSlotState.Filled)
+            {
+                filledSlots.Add(slot);
+            };
+        }
+
+        switch (filledSlots.Count)
+        {
+            case 0:
+                Debug.LogError("ERROR: Tried to assign a NextSlotToPlay, but no slots are filled. Set next slot to null.");
+                _nextSlotToPlay = null;
+                _nextSlotToPlayIndex = 0;
+                break;
+            case 1:
+                Debug.Log("One slot filled, returning that slot.");
+                _nextSlotToPlay = filledSlots.FirstOrDefault<ScrapSlot>();
+                _nextSlotToPlayIndex = _goonScrapSlotsList.IndexOf(_nextSlotToPlay);
+                break;
+            case int n when (n >= 2):
+                {
+                    int currentSlotIndex = _nextSlotToPlayIndex;
+                    int checkingSlotIndex = _nextSlotToPlayIndex;
+
+                    Debug.Log($"Slots filled: {n}. Calculate next slot.");
+
+                    do
+                    {
+                        var currentCheckingSlotIndex = (checkingSlotIndex + 1) % _goonScrapSlotsList.Count;
+
+                        if (_goonScrapSlotsList[currentCheckingSlotIndex].GetCurrentSlotState() == ScrapSlot.ScrapSlotState.Open)
+                        {
+                            checkingSlotIndex++;
+                            continue;
+                        }
+
+                        _nextSlotToPlay = _goonScrapSlotsList[currentCheckingSlotIndex];
+                        _nextSlotToPlayIndex = currentCheckingSlotIndex;
+                        break;
+                    } 
+                    while (checkingSlotIndex != currentSlotIndex);
+
+                    Debug.Log($"Next slot Index: {_nextSlotToPlayIndex}.");
+
+                    break;
+                }
         }
     }
 
-    public bool GetUsingFixedWords()
-    { 
-        return _usingFixedWords;
+    public void SetSlotsActive(bool setActive)
+    {
+        _slotsActive = setActive;
+
+        foreach (ScrapSlot slot in _goonScrapSlotsList)
+        {
+            slot.GetComponentInChildren<HingeJoint>().useMotor = setActive;
+        }
+    }
+
+    public WordData GetNextSlotToPlay()
+    {
+        WordData wordData = _nextSlotToPlay.GetScrap().GetWordData();
+
+        SetNextSlotToPlay();
+
+        return wordData;
     }
 }

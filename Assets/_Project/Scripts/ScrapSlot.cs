@@ -54,7 +54,9 @@ public class ScrapSlot : MonoBehaviour
         // Move to the slot
         scrap.transform.SetParent(this.transform);
         scrap.transform.position = this.transform.position;
-        
+
+        _currentSlotState = ScrapSlotState.Filled;
+
         // Set the scrap state
         if (_slotType == ScrapSlotType.Inventory)
         {
@@ -81,7 +83,7 @@ public class ScrapSlot : MonoBehaviour
         return _currentSlotState;
     }
 
-    public Scrap GetSlotScrap()
+    public Scrap GetScrap()
     {
         return _slotScrap;
     }

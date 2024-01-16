@@ -42,6 +42,7 @@ public class Goon : MonoBehaviour
     private ScrapSlot[] _allScrapSlots;
 
     private GoonScrapSlotController _goonScrapSlotController;
+    private WordSelectorController _wordSelectorController;
     private ScrapGenerator _scrapGenerator;
     private AudioSource _faceAudioSource;
 
@@ -51,6 +52,7 @@ public class Goon : MonoBehaviour
         _scrapGenerator = GetComponentInChildren<ScrapGenerator>();
         _allScrapSlots = GetComponentsInChildren<ScrapSlot>();
         _goonScrapSlotController = GetComponentInChildren<GoonScrapSlotController>();
+        _wordSelectorController = GetComponentInChildren<WordSelectorController>();
 
         _niceCatchAudio = _goonData.NiceCatchAudio;
         _stickTouchAudio = _goonData.StickTouchAudio;
@@ -81,13 +83,14 @@ public class Goon : MonoBehaviour
             return;
         }
 
-        if (_goonScrapSlotController.GetUsingFixedWords() == true)
-        {
-            PlayNextFixedWord();
-        }
-        else
+        if (_wordSelectorController.GetSelectedButtonType() == ButtonController.ButtonType.Random)
         {
             PlayRandomWord();
+        }
+
+        if (_wordSelectorController.GetSelectedButtonType() == ButtonController.ButtonType.Fixed)
+        {
+            PlayNextFixedWord();
         }
     }
 
@@ -105,6 +108,7 @@ public class Goon : MonoBehaviour
     private void PlayNextFixedWord()
     {
         // TODO: This just plays the first fixed word, make it iterate through them.
+        /*
         foreach (ScrapSlot slot in _allScrapSlots)
         {
             if (slot.GetCurrentSlotState() == ScrapSlot.ScrapSlotState.Filled)
@@ -117,6 +121,14 @@ public class Goon : MonoBehaviour
                 return;
             }
         }
+        */
+
+        WordData wordData = _goonScrapSlotController.GetNextSlotToPlay();
+
+        // Play this word
+        StartCoroutine(Speak(wordData.WordAudio));
+        _scrapGenerator.PrintScrap(wordData);
+        return;
     }
 
     private void PlayRandomWord()
