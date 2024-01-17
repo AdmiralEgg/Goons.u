@@ -3918,6 +3918,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1158752763}
     m_Modifications:
+    - target: {fileID: 3427326919376029180, guid: b463c9ee5c3c4ef419c36781ee769423, type: 3}
+      propertyPath: _startOpen
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7009643874291741382, guid: b463c9ee5c3c4ef419c36781ee769423, type: 3}
       propertyPath: m_Name
       value: Curtains
@@ -3936,7 +3940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8757342969911724627, guid: b463c9ee5c3c4ef419c36781ee769423, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.31
       objectReference: {fileID: 0}
     - target: {fileID: 8757342969911724627, guid: b463c9ee5c3c4ef419c36781ee769423, type: 3}
       propertyPath: m_LocalRotation.w
