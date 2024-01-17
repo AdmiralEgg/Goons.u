@@ -11,7 +11,7 @@ public class ButtonController : MonoBehaviour
     private Material _buttonMaterial;
 
     [SerializeField, ReadOnly]
-    private Color _buttonColor = Color.white;
+    private Color _buttonColor = Color.white; 
 
     [SerializeField]
     public ButtonType CurrentButtonType;

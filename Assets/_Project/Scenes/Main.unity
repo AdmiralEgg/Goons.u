@@ -609,6 +609,7 @@ MonoBehaviour:
   _currentSlotState: 0
   _slotType: 0
   _slotScrap: {fileID: 0}
+  _attachedBulb: {fileID: 0}
 --- !u!1 &352288177
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,6 +1376,7 @@ MonoBehaviour:
   _currentSlotState: 0
   _slotType: 0
   _slotScrap: {fileID: 0}
+  _attachedBulb: {fileID: 0}
 --- !u!1 &583595832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1662,6 +1664,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 802419738930649363, guid: a6d909f5218af014caf1cc32fbf3f9f1, type: 3}
   m_PrefabInstance: {fileID: 5475969330136947446}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &841880064 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4010322954456896354, guid: 823c6f55a2e92a84dac5919653f28634, type: 3}
+  m_PrefabInstance: {fileID: 8980204085992038448}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ac54120f265da47b31cabd6d20e229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &842252009
 GameObject:
   m_ObjectHideFlags: 0
@@ -2895,6 +2908,7 @@ MonoBehaviour:
   _currentSlotState: 0
   _slotType: 0
   _slotScrap: {fileID: 0}
+  _attachedBulb: {fileID: 0}
 --- !u!4 &1797705643 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5535537315029371720, guid: 135f2fbe32d6a794e88a0a68f085540f, type: 3}
@@ -2958,6 +2972,7 @@ MonoBehaviour:
   _currentSlotState: 0
   _slotType: 0
   _slotScrap: {fileID: 0}
+  _attachedBulb: {fileID: 0}
 --- !u!1 &1838403116
 GameObject:
   m_ObjectHideFlags: 0
@@ -3678,6 +3693,7 @@ MonoBehaviour:
   _currentSlotState: 0
   _slotType: 0
   _slotScrap: {fileID: 0}
+  _attachedBulb: {fileID: 0}
 --- !u!1 &2129513425 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6118213465640615430, guid: 823c6f55a2e92a84dac5919653f28634, type: 3}
@@ -4211,6 +4227,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.27591228
       objectReference: {fileID: 0}
+    - target: {fileID: 3832985281163216565, guid: 823c6f55a2e92a84dac5919653f28634, type: 3}
+      propertyPath: _wordSelectorController
+      value: 
+      objectReference: {fileID: 841880064}
     - target: {fileID: 4042560670168055311, guid: 823c6f55a2e92a84dac5919653f28634, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0020959526

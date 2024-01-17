@@ -76,7 +76,7 @@ public class BulbController : MonoBehaviour
 
     private void OnClickedTrigger()
     {
-        Debug.Log("Clicked a bulb.");
+        Debug.Log("Clicked a bulb. If in fixed mode, select this as next slot.");
     }
 
     private void LateUpdate()

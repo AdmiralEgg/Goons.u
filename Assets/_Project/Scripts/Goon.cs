@@ -107,22 +107,6 @@ public class Goon : MonoBehaviour
 
     private void PlayNextFixedWord()
     {
-        // TODO: This just plays the first fixed word, make it iterate through them.
-        /*
-        foreach (ScrapSlot slot in _allScrapSlots)
-        {
-            if (slot.GetCurrentSlotState() == ScrapSlot.ScrapSlotState.Filled)
-            {
-                WordData wordData = slot.GetSlotScrap().GetWordData();
-
-                // Play this word
-                StartCoroutine(Speak(wordData.WordAudio));
-                _scrapGenerator.PrintScrap(wordData);
-                return;
-            }
-        }
-        */
-
         WordData wordData = _goonScrapSlotController.GetNextSlotToPlay();
 
         // Play this word
@@ -199,7 +183,7 @@ public class Goon : MonoBehaviour
         
         _faceAudioSource.PlayOneShot(clip);
 
-        yield return new WaitForSeconds(clip.length);
+        yield return new WaitForSeconds(0.75f);
 
         _currentState = GoonState.Idle;
     }

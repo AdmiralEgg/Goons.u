@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,23 @@ public class GoonScrapSlotController : MonoBehaviour
     [SerializeField, ReadOnly]
     private bool _slotsActive;
 
+    [SerializeField, ReadOnly]
+    private bool _refreshSlots;
+
+    [SerializeField, ReadOnly]
+    private ButtonController.ButtonType _currentButtonType;
+
+    [SerializeField]
+    private WordSelectorController _wordSelectorController;
+
+    public static Action<ScrapSlot> NewNextSlot;
+    
     private void Awake()
     {
         _hasFixedWords = false;
+        _refreshSlots = false;
         _nextSlotToPlayIndex = 0;
+
 
         foreach (ScrapSlot slot in GetComponentsInChildren<ScrapSlot>())
         {
@@ -38,12 +52,18 @@ public class GoonScrapSlotController : MonoBehaviour
 
         ScrapSlot.ScrapAttachedToGoon += (scrap) =>
         {
-            SetNextSlotToPlay();
+            _refreshSlots = true;
         };
 
         InputManager.ScrapDeselected += () =>
         {
             SetSlotsActive(false);
+        };
+
+        WordSelectorController.SwitchedMode += (buttonType) =>
+        {
+            _currentButtonType = buttonType;
+            _refreshSlots = true;
         };
     }
 
@@ -92,33 +112,35 @@ public class GoonScrapSlotController : MonoBehaviour
                 _nextSlotToPlayIndex = _goonScrapSlotsList.IndexOf(_nextSlotToPlay);
                 break;
             case int n when (n >= 2):
+            {
+                int currentSlotIndex = _nextSlotToPlayIndex;
+                int checkingSlotIndex = _nextSlotToPlayIndex;
+
+                Debug.Log($"Slots filled: {n}. Calculate next slot.");
+
+                do
                 {
-                    int currentSlotIndex = _nextSlotToPlayIndex;
-                    int checkingSlotIndex = _nextSlotToPlayIndex;
+                    var currentCheckingSlotIndex = (checkingSlotIndex + 1) % _goonScrapSlotsList.Count;
 
-                    Debug.Log($"Slots filled: {n}. Calculate next slot.");
-
-                    do
+                    if (_goonScrapSlotsList[currentCheckingSlotIndex].GetCurrentSlotState() == ScrapSlot.ScrapSlotState.Open)
                     {
-                        var currentCheckingSlotIndex = (checkingSlotIndex + 1) % _goonScrapSlotsList.Count;
+                        checkingSlotIndex++;
+                        continue;
+                    }
 
-                        if (_goonScrapSlotsList[currentCheckingSlotIndex].GetCurrentSlotState() == ScrapSlot.ScrapSlotState.Open)
-                        {
-                            checkingSlotIndex++;
-                            continue;
-                        }
-
-                        _nextSlotToPlay = _goonScrapSlotsList[currentCheckingSlotIndex];
-                        _nextSlotToPlayIndex = currentCheckingSlotIndex;
-                        break;
-                    } 
-                    while (checkingSlotIndex != currentSlotIndex);
-
-                    Debug.Log($"Next slot Index: {_nextSlotToPlayIndex}.");
-
+                    _nextSlotToPlay = _goonScrapSlotsList[currentCheckingSlotIndex];
+                    _nextSlotToPlayIndex = currentCheckingSlotIndex;
                     break;
-                }
+                } 
+                while (checkingSlotIndex != currentSlotIndex);
+
+                Debug.Log($"Next slot Index: {_nextSlotToPlayIndex}.");
+
+                break;
+            }        
         }
+        
+        NewNextSlot?.Invoke(_nextSlotToPlay);
     }
 
     public void SetSlotsActive(bool setActive)
@@ -135,8 +157,47 @@ public class GoonScrapSlotController : MonoBehaviour
     {
         WordData wordData = _nextSlotToPlay.GetScrap().GetWordData();
 
-        SetNextSlotToPlay();
+        _refreshSlots = true;
 
         return wordData;
+    }
+
+    private void UpdateBulbs()
+    {
+        // If in random state
+        if (_currentButtonType == ButtonController.ButtonType.Random)
+        {
+            foreach (ScrapSlot slot in _goonScrapSlotsList)
+            {
+                slot.GetAttachedBulb().SetActive(false);
+            }
+        }
+
+        // If in fixed state
+        if (_currentButtonType == ButtonController.ButtonType.Fixed)
+        {
+            foreach (ScrapSlot slot in _goonScrapSlotsList)
+            {
+                if (_nextSlotToPlay == slot)
+                {
+                    slot.GetAttachedBulb().SetActive(true);
+                }
+                else
+                {
+                    slot.GetAttachedBulb().SetActive(false);
+                }
+            }
+        }
+
+    }
+
+    public void LateUpdate()
+    {
+        if (_refreshSlots)
+        {
+            SetNextSlotToPlay();
+            UpdateBulbs();
+            _refreshSlots = false;
+        }
     }
 }

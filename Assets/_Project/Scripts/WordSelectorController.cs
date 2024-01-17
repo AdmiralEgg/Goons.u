@@ -12,7 +12,9 @@ public class WordSelectorController : MonoBehaviour
     private ButtonController _fixedButtonController;
 
     [SerializeField, ReadOnly]
-    private ButtonController.ButtonType _selectedButtonType;
+    private ButtonController.ButtonType _activeButtonType;
+
+    public static Action<ButtonController.ButtonType> SwitchedMode;
 
     void Awake()
     {
@@ -34,7 +36,9 @@ public class WordSelectorController : MonoBehaviour
 
     public void OnButtonClicked(ButtonController.ButtonType type)
     {
-        _selectedButtonType = type;
+        if (_activeButtonType == type) return;
+        
+        _activeButtonType = type;
 
         if (type == ButtonController.ButtonType.Random)
         {
@@ -47,10 +51,12 @@ public class WordSelectorController : MonoBehaviour
             _randomButtonController.ButtonLightOff();
             _fixedButtonController.ButtonLightOn();
         }
+
+        SwitchedMode?.Invoke(type);
     }
 
     public ButtonController.ButtonType GetSelectedButtonType()
     {
-        return _selectedButtonType;
+        return _activeButtonType;
     }
 }

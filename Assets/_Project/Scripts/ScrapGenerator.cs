@@ -60,11 +60,11 @@ public class ScrapGenerator : MonoBehaviour
     {
         // whirring sound
         _audioSource.PlayOneShot(_startupSound);
+        _currentState = GeneratorState.Running;
 
         yield return new WaitForSeconds(_startupSound.length);
 
         _audioSource.Play();
-        _currentState = GeneratorState.Running;
     }
 
     public void ShutdownGenerator()

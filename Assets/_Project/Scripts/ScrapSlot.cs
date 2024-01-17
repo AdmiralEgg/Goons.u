@@ -18,18 +18,31 @@ public class ScrapSlot : MonoBehaviour
     [SerializeField, ReadOnly]
     private Scrap _slotScrap;
 
+    [SerializeField, ReadOnly]
+    private BulbController _attachedBulb;
+
     public static Action<Scrap> ScrapAttachedToGoon;
     public static Action<Scrap> ScrapAttachedToInventory;
 
     void Awake()
     {
         _currentSlotState = ScrapSlotState.Open;
+
+        if (_slotType == ScrapSlotType.Goon) 
+        { 
+            _attachedBulb = GetComponentInChildren<BulbController>();
+        }
     }
 
     private void Update()
     {
+        RefreshSlotState();
+    }
+    
+    public void RefreshSlotState()
+    {
         Scrap scrap = GetComponentInChildren<Scrap>();
-        
+
         // Check for any scrap in this slot
         if (scrap != null)
         {
@@ -70,6 +83,8 @@ public class ScrapSlot : MonoBehaviour
             scrap.SetScrapAttachedState(Scrap.ScrapAttachedState.Goon);
             ScrapAttachedToGoon?.Invoke(scrap);
         }
+
+        RefreshSlotState();
     }
 
     private void OnDrawGizmos()
@@ -86,5 +101,10 @@ public class ScrapSlot : MonoBehaviour
     public Scrap GetScrap()
     {
         return _slotScrap;
+    }
+
+    public BulbController GetAttachedBulb()
+    {
+        return _attachedBulb;
     }
 }
