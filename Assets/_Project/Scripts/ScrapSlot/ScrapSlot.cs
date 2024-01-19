@@ -1,45 +1,36 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class ScrapSlot : MonoBehaviour
+public abstract class ScrapSlot : MonoBehaviour
 {
     public enum ScrapSlotState { Open, Filled }
-    public enum ScrapSlotType { Inventory, Goon }
 
     [SerializeField, ReadOnly]
     private ScrapSlotState _currentSlotState;
 
-    [SerializeField]
-    private ScrapSlotType _slotType;
-
     [SerializeField, ReadOnly]
     private Scrap _slotScrap;
 
-    [SerializeField, ReadOnly]
-    private BulbController _attachedBulb;
+    public static Action<Scrap> ScrapAttached;
 
-    public static Action<Scrap> ScrapAttachedToGoon;
-    public static Action<Scrap> ScrapAttachedToInventory;
-
-    void Awake()
+    protected void Awake()
     {
         _currentSlotState = ScrapSlotState.Open;
-
-        if (_slotType == ScrapSlotType.Goon) 
-        { 
-            _attachedBulb = GetComponentInChildren<BulbController>();
-        }
     }
 
-    private void Update()
+    protected void Update()
     {
         RefreshSlotState();
     }
-    
-    public void RefreshSlotState()
+
+    protected void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position, 0.25f);
+    }
+
+    protected void RefreshSlotState()
     {
         Scrap scrap = GetComponentInChildren<Scrap>();
 
@@ -71,27 +62,13 @@ public class ScrapSlot : MonoBehaviour
         _currentSlotState = ScrapSlotState.Filled;
 
         // Set the scrap state
-        if (_slotType == ScrapSlotType.Inventory)
-        {
-            scrap.SetScrapAttachedState(Scrap.ScrapAttachedState.Inventory);
-            ScrapAttachedToInventory?.Invoke(scrap);
-        }
-
-        // Set the scrap state
-        if (_slotType == ScrapSlotType.Goon)
-        {
-            scrap.SetScrapAttachedState(Scrap.ScrapAttachedState.Goon);
-            ScrapAttachedToGoon?.Invoke(scrap);
-        }
+        SetScrapAttachedState(scrap);
+        ScrapAttached?.Invoke(scrap);
 
         RefreshSlotState();
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, 0.25f);
-    }
+    public abstract void SetScrapAttachedState(Scrap scrap);
 
     public ScrapSlotState GetCurrentSlotState()
     {
@@ -101,10 +78,5 @@ public class ScrapSlot : MonoBehaviour
     public Scrap GetScrap()
     {
         return _slotScrap;
-    }
-
-    public BulbController GetAttachedBulb()
-    {
-        return _attachedBulb;
     }
 }

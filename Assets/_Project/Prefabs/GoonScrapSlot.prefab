@@ -199,8 +199,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1416809f7e99d6f468cf0602856600e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulbFlashSpeed: 1.5
   _bulbMaterial: {fileID: 0}
-  _connectedSlot: {fileID: 2875795713067757349}
+  _connectedSlot: {fileID: 0}
+  _goonEmissionColor: {r: 0, g: 0, b: 0, a: 0}
+  _snapIndicatorEmissionColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!33 &9196931607022039426
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -392,7 +395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4855613406438886244}
-  - component: {fileID: 2875795713067757349}
+  - component: {fileID: 3246475255270589784}
   m_Layer: 5
   m_Name: GoonScrapSlot
   m_TagString: Untagged
@@ -417,7 +420,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2875795713067757349
+--- !u!114 &3246475255270589784
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -426,9 +429,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7693922265742429551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9a39628db8c22341b1a8a48c6f982e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ecdfb34d53dbba4aadb7ab73530d269, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _currentSlotState: 0
-  _slotType: 1
   _slotScrap: {fileID: 0}
+  _attachedBulb: {fileID: 0}

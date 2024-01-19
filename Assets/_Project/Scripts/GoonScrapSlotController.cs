@@ -50,7 +50,7 @@ public class GoonScrapSlotController : MonoBehaviour
             SetSlotsActive(true);
         };
 
-        ScrapSlot.ScrapAttachedToGoon += (scrap) =>
+        GoonScrapSlot.ScrapAttached += (scrap) =>
         {
             _refreshSlots = true;
         };
@@ -167,7 +167,7 @@ public class GoonScrapSlotController : MonoBehaviour
         // If in random state
         if (_currentButtonType == ButtonController.ButtonType.Random)
         {
-            foreach (ScrapSlot slot in _goonScrapSlotsList)
+            foreach (GoonScrapSlot slot in _goonScrapSlotsList)
             {
                 slot.GetAttachedBulb().SetActive(false);
             }
@@ -176,7 +176,7 @@ public class GoonScrapSlotController : MonoBehaviour
         // If in fixed state
         if (_currentButtonType == ButtonController.ButtonType.Fixed)
         {
-            foreach (ScrapSlot slot in _goonScrapSlotsList)
+            foreach (GoonScrapSlot slot in _goonScrapSlotsList)
             {
                 if (_nextSlotToPlay == slot)
                 {
