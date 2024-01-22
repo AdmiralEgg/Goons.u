@@ -190,7 +190,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6a1143ee683302f4aa628c052723efc1, type: 2}
+  - {fileID: 2100000, guid: 31622372855b2cb41a43305e542100cc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -915,10 +915,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3055230406467400944}
     m_Modifications:
+    - target: {fileID: 502803070497294540, guid: 54efe53d3306ffe40aabdcae9da40449, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9aa271f585fa60c4d92988c00f0cf713, type: 2}
+    - target: {fileID: 1750755790571960493, guid: 54efe53d3306ffe40aabdcae9da40449, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e6e6b6fef60caac429ecb08271637eb6, type: 2}
+    - target: {fileID: 2828254852432750947, guid: 54efe53d3306ffe40aabdcae9da40449, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9aa271f585fa60c4d92988c00f0cf713, type: 2}
     - target: {fileID: 3132111161512618403, guid: 54efe53d3306ffe40aabdcae9da40449, type: 3}
       propertyPath: m_Name
       value: GoonEyes
       objectReference: {fileID: 0}
+    - target: {fileID: 4936553229618666012, guid: 54efe53d3306ffe40aabdcae9da40449, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e6e6b6fef60caac429ecb08271637eb6, type: 2}
+    - target: {fileID: 4992981629217297735, guid: 54efe53d3306ffe40aabdcae9da40449, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e6e6b6fef60caac429ecb08271637eb6, type: 2}
+    - target: {fileID: 5094222196261588794, guid: 54efe53d3306ffe40aabdcae9da40449, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e6e6b6fef60caac429ecb08271637eb6, type: 2}
     - target: {fileID: 6149859098981447714, guid: 54efe53d3306ffe40aabdcae9da40449, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -963,6 +987,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6484413065944120604, guid: 54efe53d3306ffe40aabdcae9da40449, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e6e6b6fef60caac429ecb08271637eb6, type: 2}
+    - target: {fileID: 6587362625716287787, guid: 54efe53d3306ffe40aabdcae9da40449, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3e74b025d293845458b593d7640a1f55, type: 2}
+    - target: {fileID: 7607236131254917721, guid: 54efe53d3306ffe40aabdcae9da40449, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3e74b025d293845458b593d7640a1f55, type: 2}
     - target: {fileID: 8508158932730469259, guid: 54efe53d3306ffe40aabdcae9da40449, type: 3}
       propertyPath: _goon
       value: 

@@ -16,30 +16,47 @@ public class GameManager : MonoBehaviour
         Sandbox
     }
 
+    [Header("Camera")]
     [SerializeField]
-    private GameObject[] _lights;
+    private GameObject _gameCamera;
+    [SerializeField]
+    private GameObject _projectorCamera;
 
+
+    [Header("Lights")]
+    [SerializeField]
+    private GameObject _houseLights;
+    [SerializeField]
+    private GameObject _goonLightsLeft;
+
+    [Header("Mechanism")]
+    [SerializeField]
+    private ProjectorMechanism _projector;
     [SerializeField]
     private CurtainController _curtains;
-
     [SerializeField]
-    private ProjectorController _screen;
-
+    private GameObject[] _scrap;
     [SerializeField]
-    private GameObject[] _scrapFeatures;
-
+    private GameObject[] _melody;
     [SerializeField]
-    private GameObject[] _melodyFeatures;
-
-    [SerializeField]
-    private GameObject[] _recordFeatures;
+    private GameObject[] _record;
 
     [SerializeField, ReadOnly]
     private GameState _currentGameState;
 
+    [SerializeField]
+    private bool _startSandbox = false;
+
     void Awake()
     {
-        SetState(GameState.Tutorial1);  
+        if(_startSandbox)
+        {
+            SetState(GameState.Sandbox);
+        }
+        else
+        {
+            SetState(GameState.Title);
+        }
     }
 
     private void SetState(GameState state)
@@ -49,9 +66,32 @@ public class GameManager : MonoBehaviour
         switch (state) 
         { 
             case GameState.Title:
-                // Zoom in on 
+                
+                _houseLights.SetActive(false);
+                _goonLightsLeft.SetActive(false);
+                _gameCamera.SetActive(false);
+                _projectorCamera.SetActive(true);
+
+                ProjectorMechanism.VideoPlaybackComplete += () =>
+                {
+                    SetState(GameState.Tutorial1);
+                };
+
                 break;
             case GameState.Tutorial1:
+                // Start
+                // Game Camera On
+                // House Lights On
+                // Goon Walk On
+                // Goon Intro
+
+                _houseLights.SetActive(true);
+                _goonLightsLeft.SetActive(true);
+                _gameCamera.SetActive(true);
+                _projectorCamera.SetActive(false);
+
+
+
                 break;
             case GameState.Tutorial2:
                 break;
@@ -62,6 +102,12 @@ public class GameManager : MonoBehaviour
             case GameState.Tutorial5:
                 break;
             case GameState.Sandbox:
+
+                _houseLights.SetActive(true);
+                _goonLightsLeft.SetActive(true);
+                _gameCamera.SetActive(true);
+                _projectorCamera.SetActive(false);
+
                 break;
         }
     }
