@@ -120,7 +120,7 @@ Transform:
   - {fileID: 8534198507654733393}
   - {fileID: 7801074470611920360}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8508158932730469259
 MonoBehaviour:
@@ -134,20 +134,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f065e8b1b017840bacc845e67d3529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentEyeState: 0
   _goon: {fileID: 0}
-  _eyes: []
+  _eyes:
+  - {fileID: 6363515367422681519}
+  - {fileID: 6617333184657233387}
   _focusLeft: {fileID: 2322547589544801072}
-  _focusStraight: {fileID: 0}
+  _focusStraight: {fileID: 8218389485829238343}
   _focusRight: {fileID: 3379365777648450919}
   _focusCeiling: {fileID: 6330986086767694268}
   _crowdLeft: {fileID: 0}
   _crowdRight: {fileID: 0}
   _crowdMember: {fileID: 0}
   _allCrowd: {fileID: 0}
-  _currentEyeState: 0
   _scanCrowdSpeed: 0.5
   _quickLookSpeed: 0.5
   _slowLookSpeed: 0.5
+  _currentFocusTransform: {fileID: 0}
+  _currentFocusSpeed: 0
+  _timeToNextIdleAction: 0
 --- !u!95 &8189903071592717296
 Animator:
   serializedVersion: 5
