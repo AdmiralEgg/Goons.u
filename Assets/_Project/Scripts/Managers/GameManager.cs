@@ -1,27 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class GameManager : MonoBehaviour
 {
     public enum GameState
     {
         Title,
-        Tutorial1,
-        Tutorial2,
-        Tutorial3,
-        Tutorial4,
-        Tutorial5,
+        Act1,
+        Act2,
+        Act3,
+        Act4,
+        Act5,
         Sandbox
     }
+
+    [Header("Game State")]
+    [SerializeField, ReadOnly]
+    private GameState _currentGameState;
+    [SerializeField]
+    private GameState _startingGameState = GameState.Title;
 
     [Header("Camera")]
     [SerializeField]
     private GameObject _gameCamera;
     [SerializeField]
     private GameObject _projectorCamera;
-
 
     [Header("Lights")]
     [SerializeField]
@@ -31,9 +40,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Mechanism")]
     [SerializeField]
-    private ProjectorMechanism _projector;
+    private ProjectorEnableMechanism _projector;
     [SerializeField]
-    private CurtainController _curtains;
+    private CurtainEnableMechanism[] _curtains;
     [SerializeField]
     private GameObject[] _scrap;
     [SerializeField]
@@ -41,17 +50,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject[] _record;
 
-    [SerializeField, ReadOnly]
-    private GameState _currentGameState;
-
+    [Header("TitleUI")]
     [SerializeField]
-    private bool _startSandbox = false;
+    private ActTitleTextController _actTitleTextController;
 
     void Awake()
     {
-        if(_startSandbox)
+        _actTitleTextController.gameObject.SetActive(false);
+        
+        if(_startingGameState != GameState.Title)
         {
-            SetState(GameState.Sandbox);
+            SetState(_startingGameState);
         }
         else
         {
@@ -59,56 +68,163 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void SetState(GameState state)
+    private async void SetState(GameState state)
     {
         _currentGameState = state;
 
         switch (state) 
         { 
             case GameState.Title:
-                
+
                 _houseLights.SetActive(false);
                 _goonLightsLeft.SetActive(false);
                 _gameCamera.SetActive(false);
                 _projectorCamera.SetActive(true);
 
-                ProjectorMechanism.VideoPlaybackComplete += () =>
+                _projector.EnableAfterAnimation();
+
+                // When the video finishes, end the act
+                ProjectorRunMechanism.VideoPlaybackComplete = () =>
                 {
-                    SetState(GameState.Tutorial1);
+                    _projector.DisableAfterAnimation();
+                    FinishAct(nextAct: GameState.Act1);
                 };
 
                 break;
-            case GameState.Tutorial1:
-                // Start
-                // Game Camera On
-                // House Lights On
-                // Goon Walk On
-                // Goon Intro
+            case GameState.Act1:
 
-                _houseLights.SetActive(true);
-                _goonLightsLeft.SetActive(true);
+                // Switch camera
                 _gameCamera.SetActive(true);
                 _projectorCamera.SetActive(false);
 
+                await StartAct(GameState.Act1);
+
+                // Goon walks on in darkness
+
+                // Wait a second before goon lights come on...
+                StartCoroutine(PauseThenActivate(3, _goonLightsLeft));
+
+                // Wait a second before house lights come on...
+                StartCoroutine(PauseThenActivate(5, _houseLights));
+
+                // If the crowd are entertained, finish the act
+                CrowdController.CrowdEntertained = () => FinishAct(nextAct: GameState.Act2);
+
+                break;
+            case GameState.Act2:
+
+                await StartAct(GameState.Act2);
+
+                _goonLightsLeft.SetActive(true);
+                _houseLights.SetActive(true);
+
+                CrowdController.CrowdEntertained = () => FinishAct(nextAct: GameState.Act3);
+
+                break;
+            case GameState.Act3:
+
+                await StartAct(GameState.Act3);
+
+                _goonLightsLeft.SetActive(true);
+                _houseLights.SetActive(true);
+
+                CrowdController.CrowdEntertained = () => FinishAct(nextAct: GameState.Act4);
+
+                break;
+            case GameState.Act4:
 
 
+                await StartAct(GameState.Act4);
+
+                _goonLightsLeft.SetActive(true);
+                _houseLights.SetActive(true);
+
+                CrowdController.CrowdEntertained = () => FinishAct(nextAct: GameState.Act5);
+
                 break;
-            case GameState.Tutorial2:
-                break;
-            case GameState.Tutorial3:
-                break;
-            case GameState.Tutorial4:
-                break;
-            case GameState.Tutorial5:
+            case GameState.Act5:
+
+                await StartAct(GameState.Act2);
+
+                _goonLightsLeft.SetActive(true);
+                _houseLights.SetActive(true);
+
+                CrowdController.CrowdEntertained = () => FinishAct(nextAct: GameState.Sandbox);
+
                 break;
             case GameState.Sandbox:
 
+                await StartAct(GameState.Sandbox);
+
                 _houseLights.SetActive(true);
                 _goonLightsLeft.SetActive(true);
                 _gameCamera.SetActive(true);
                 _projectorCamera.SetActive(false);
 
                 break;
+        }
+    }
+
+    public IEnumerator PauseThenActivate(float seconds, GameObject objectToActivate)
+    {
+        yield return new WaitForSeconds(seconds);
+        objectToActivate.SetActive(true);
+    }
+
+    async Task StartAct(GameState act)
+    {
+        // Title On
+        _actTitleTextController.DisplayActTitle(act);
+        _actTitleTextController.gameObject.SetActive(true);
+
+        // Play sound, wait a few seconds.
+        await Task.Delay(4000);
+
+        // Title Off
+        _actTitleTextController.gameObject.SetActive(false);
+
+        await Task.Delay(500);
+
+        // Curtain Opens
+        foreach (CurtainEnableMechanism curtain in _curtains)
+        {
+            curtain.EnableAfterAnimation();
+        }
+
+        // Wait for the curtain animation to complete
+        await WaitForEnableMechanismState(_curtains[0], BaseEnableMechanism.EnabledState.Enabled);
+
+        Debug.Log($"Start of Act: {_currentGameState}");
+    }
+
+    public async void FinishAct(GameState nextAct)
+    {
+        // Goon bowing
+
+        // Start Curtain closing
+        foreach (CurtainEnableMechanism curtain in _curtains)
+        {
+            curtain.DisableAfterAnimation();
+        }
+
+        // Wait for the curtain animation to complete
+        await WaitForEnableMechanismState(_curtains[0], BaseEnableMechanism.EnabledState.Disabled);
+
+        Debug.Log($"End of Act: {_currentGameState}");
+
+        // Turn off lights
+        _goonLightsLeft.SetActive(false);
+        _houseLights.SetActive(false);
+
+        // Set the next act
+        SetState(nextAct);
+    }
+
+    async Task WaitForEnableMechanismState(BaseEnableMechanism mechanism, BaseEnableMechanism.EnabledState requiredState)
+    {
+        while (mechanism.GetState() != requiredState)
+        {
+            await Task.Delay(1000);
         }
     }
 }

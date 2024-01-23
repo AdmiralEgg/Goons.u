@@ -93,8 +93,6 @@ public class GoonEyeController : MonoBehaviour
 
     private void PlayIdleAction(IdleAction action)
     {
-        Debug.Log($"Playing action: {action}");
-
         _animator.enabled = false;
         _currentEyeState = EyeState.Focusing;
 
@@ -220,7 +218,6 @@ public class GoonEyeController : MonoBehaviour
             // if either eye finishes, set the state back to Idle.
             if (eye.transform.rotation == Quaternion.LookRotation(direction))
             {
-                Debug.Log("Finished look!");
                 _currentEyeState = EyeState.Idle;
             }
         }

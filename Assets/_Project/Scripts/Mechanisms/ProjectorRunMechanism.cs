@@ -4,16 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
-public class ProjectorMechanism : BaseMechanism
+public class ProjectorRunMechanism : BaseRunMechanism
 {
+    VideoPlayer _player;
 
     public static Action VideoPlaybackComplete;
+
+    private void Awake()
+    {
+        _player = GetComponent<VideoPlayer>();
+    }
 
     public override void StartMechanism()
     {
         base.StartMechanism();
-    
-        StartCoroutine(PlayVideo(GetComponent<VideoPlayer>()));
+        
+        StartCoroutine(PlayVideo(_player));
     }
 
     public IEnumerator PlayVideo(VideoPlayer player)
@@ -25,7 +31,6 @@ public class ProjectorMechanism : BaseMechanism
             yield return new WaitForSeconds(1);
         }
 
-        VideoPlaybackComplete?.Invoke();
         StopMechanism();
 
         yield return null;
@@ -34,8 +39,14 @@ public class ProjectorMechanism : BaseMechanism
     public override void StopMechanism()
     {
         base.StopMechanism();
-        GetComponent<VideoPlayer>().Stop();
-        
-        DisableAfterAnimation();
+        _player.Stop();
+
+        VideoPlaybackComplete?.Invoke();
+    }
+
+    public override void OnClickedTrigger()
+    {
+        base.OnClickedTrigger();
+        StopMechanism();
     }
 }

@@ -88,7 +88,7 @@ public class InputManager : MonoBehaviour
 
     private void OnFreeAction(InputAction.CallbackContext context, Ray clickPositionRay)
     {
-        LayerMask mask = LayerMask.GetMask(new string[] { "Goon", "UI" } );
+        LayerMask mask = LayerMask.GetMask(new string[] { "Goon", "UI", "Crowd" } );
         Physics.Raycast(clickPositionRay, out RaycastHit hit, float.PositiveInfinity, mask);
 
         if (hit.collider == null) return;
@@ -101,6 +101,11 @@ public class InputManager : MonoBehaviour
         }
 
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("UI"))
+        {
+            hit.collider.SendMessageUpwards("OnClickedTrigger", hit.collider.gameObject);
+        }
+
+        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Crowd"))
         {
             hit.collider.SendMessageUpwards("OnClickedTrigger", hit.collider.gameObject);
         }

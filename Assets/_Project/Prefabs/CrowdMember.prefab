@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8457090736037127969}
   - component: {fileID: 5805247753554536342}
   - component: {fileID: 2635523208726235334}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CrowdMember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7601250337257618392
 MeshFilter:

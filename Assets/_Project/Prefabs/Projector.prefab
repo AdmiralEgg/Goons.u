@@ -120,7 +120,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5372099964605291096}
-  - component: {fileID: 6488302356851481780}
+  - component: {fileID: 4264531553238876082}
+  - component: {fileID: 1791398747832811956}
   - component: {fileID: 3708089706983335216}
   - component: {fileID: 6732190656469445321}
   - component: {fileID: 7375933056370819880}
@@ -151,7 +152,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 90}
---- !u!114 &6488302356851481780
+--- !u!114 &4264531553238876082
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,20 +161,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 3539221421386824199}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cfedbcfcc459bd4f8689468b09c4164, type: 3}
+  m_Script: {fileID: 11500000, guid: 1592e2ee578297d4dba2a6a8169913cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _currentEnabledState: 0
-  _currentRunningState: 0
-  _isDisabledOnAwake: 1
-  _enableOnStart: 1
-  _enabledPosition: {x: 0, y: 3.91, z: 5.5}
-  _enabledRotation: {x: 0.49999997, y: -0.49999997, z: 0.49999997, w: 0.49999997}
-  _disabledPosition: {x: 0, y: 16, z: 5.5}
-  _disabledRotation: {x: 0, y: -0.7071067, z: 0.7071067, w: 0}
+  _hasRunMechanism: 0
+  _onAwakeState: 1
+  _onStartTransitionTo: 1
+  _onEnableStartMechanism: 1
+  _onDisableDeactivateGameObject: 1
+  _enabledPosition: {x: 0, y: 0, z: 0}
+  _enabledRotation: {x: 0, y: 0, z: 0, w: 0}
+  _disabledWorldPosition: {x: 0, y: 16, z: 5.5}
+  _disabledWorldRotation: {x: -0.000000030903283, y: 0.70722884, z: -0.7069847, w: -0.000000030913956}
   _transitionDuration: 5
-  _hasPositionTransition: 0
-  _hasRotationTransition: 0
+--- !u!114 &1791398747832811956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3539221421386824199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ce3454f363e8404faff7416052b2221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentRunningState: 1
+  _onEnableStartMechanism: 1
 --- !u!33 &3708089706983335216
 MeshFilter:
   m_ObjectHideFlags: 0
