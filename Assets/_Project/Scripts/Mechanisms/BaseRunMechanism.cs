@@ -5,10 +5,10 @@ using UnityEngine;
 
 public abstract class BaseRunMechanism : MonoBehaviour
 {
-    private enum RunningState { Running, Shutdown }
+    protected enum RunningState { Running, Shutdown }
 
     [SerializeField, ReadOnly]
-    private RunningState _currentRunningState = RunningState.Shutdown;
+    protected RunningState _currentRunningState = RunningState.Shutdown;
 
     public virtual void StartMechanism()
     {

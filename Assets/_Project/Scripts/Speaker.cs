@@ -7,21 +7,21 @@ using UnityEngine.Events;
 
 public class Speaker : MonoBehaviour
 {
+    [Header("Audio Sources")]
     [SerializeField]
-    private AudioSource _speaker;
-
+    private AudioSource _musicSource;
     [SerializeField]
-    private AudioSource _startSoundPlayer;
-
+    private AudioSource _melodySourceLong;
     [SerializeField]
-    private AudioSource _stopSoundPlayer;
+    private AudioSource _melodySourceShort;
 
+    [Header("Music Start/Stop Clips")]
     [SerializeField]
     private AudioClip _startClip;
-
     [SerializeField]
     private AudioClip _stopClip;
 
+    [Header("Trigger actions on beat intervals")]
     [SerializeField]
     private Intervals[] _intervals;
 
@@ -31,16 +31,8 @@ public class Speaker : MonoBehaviour
     {
         _shaker = GetComponent<MMScaleShaker>();
         
-        _speaker.playOnAwake = false;
-        _speaker.loop = true;
-
-        _startSoundPlayer.clip = _startClip;
-        _startSoundPlayer.playOnAwake = false;
-        _startSoundPlayer.loop = false;
-
-        _stopSoundPlayer.clip = _stopClip;
-        _stopSoundPlayer.playOnAwake = false;
-        _stopSoundPlayer.loop = false;
+        _musicSource.playOnAwake = false;
+        _musicSource.loop = true;
     }
 
     public void StartMusic(SongData songData)
@@ -50,26 +42,26 @@ public class Speaker : MonoBehaviour
 
     public void StopMusic()
     {
-        Debug.Log($"Stopping clip: {_speaker.clip.name}");
-        _stopSoundPlayer.Play();
-        _speaker.Stop();
+        Debug.Log($"Stopping clip: {_musicSource.clip.name}");
+        _musicSource.Stop();
+        _musicSource.PlayOneShot(_stopClip);
         StopAllCoroutines();
     }
 
     private IEnumerator StartMusicClip(SongData songData)
     {
-        _startSoundPlayer.Play();
+        _musicSource.PlayOneShot(_startClip);
 
         yield return new WaitForSeconds(_startClip.length);
 
-        _speaker.clip = songData.AudioClip;
-        _speaker.Play();
+        _musicSource.clip = songData.AudioClip;
+        _musicSource.Play();
 
         while (true) 
         { 
             foreach (Intervals interval in _intervals)
             {
-                float sampledTime = (_speaker.timeSamples / (_speaker.clip.frequency * interval.GetBeatLength(songData.BPM)));
+                float sampledTime = (_musicSource.timeSamples / (_musicSource.clip.frequency * interval.GetBeatLength(songData.BPM)));
                 interval.CheckForNewBeat(sampledTime);
             }
 
@@ -83,7 +75,6 @@ public class Intervals
 {
     [SerializeField]
     private float _steps;
-
     [SerializeField]
     private UnityEvent _trigger;
 

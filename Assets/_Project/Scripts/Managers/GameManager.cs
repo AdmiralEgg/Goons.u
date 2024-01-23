@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject[] _scrap;
     [SerializeField]
-    private GameObject[] _melody;
+    private MelodyButtonEnableMechanism[] _melody;
     [SerializeField]
     private GameObject[] _record;
 
@@ -133,7 +133,6 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Act4:
 
-
                 await StartAct(GameState.Act4);
 
                 _goonLightsLeft.SetActive(true);
@@ -144,7 +143,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Act5:
 
-                await StartAct(GameState.Act2);
+                await StartAct(GameState.Act5);
 
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
