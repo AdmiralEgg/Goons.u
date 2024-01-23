@@ -78,13 +78,11 @@ public abstract class BaseEnableMechanism : MonoBehaviour
 
     public void EnableAfterAnimation()
     {
-        Debug.Log($"Mechanism: {gameObject.name} Enabled");
         StartCoroutine(StartEnabledTransition(EnabledState.Enabled));
     }
 
     public virtual void DisableAfterAnimation()
     {
-        Debug.Log($"Mechanism: {gameObject.name} Disabled");
         StartCoroutine(StartEnabledTransition(EnabledState.Disabled));
     }
 
@@ -93,6 +91,12 @@ public abstract class BaseEnableMechanism : MonoBehaviour
         if (_currentEnabledState == EnabledState.InTransition)
         {
             Debug.Log($"Mechanism {gameObject.name} already in transition. Will not start EnabledTransition coroutine.");
+            yield break;
+        }
+
+        if (_currentEnabledState == targetState)
+        {
+            Debug.Log($"Mechanism {gameObject.name} already required state. Will not start EnabledTransition coroutine.");
             yield break;
         }
 
@@ -118,21 +122,14 @@ public abstract class BaseEnableMechanism : MonoBehaviour
         Vector3 startPosition = this.transform.position;
         Quaternion startRotation = this.transform.rotation;
 
-        if (startPosition == targetPosition && startRotation == targetRotation)
+        while (t < _transitionDuration)
         {
-            Debug.Log($"Mechanism {gameObject.name} already in target position. Skipping transition.");
-        }
-        else
-        {
-            while (t < _transitionDuration)
-            {
-                transform.position = Vector3.Lerp(startPosition, targetPosition, t / _transitionDuration);
-                transform.rotation = Quaternion.RotateTowards(startRotation, targetRotation, t / _transitionDuration);
+            transform.position = Vector3.Lerp(startPosition, targetPosition, t / _transitionDuration);
+            transform.rotation = Quaternion.RotateTowards(startRotation, targetRotation, t / _transitionDuration);
 
-                t += Time.deltaTime;
-                yield return null;
-            }
-        }        
+            t += Time.deltaTime;
+            yield return null;
+        }   
 
         // Finish transition
         _currentEnabledState = targetState;
