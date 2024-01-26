@@ -15,6 +15,6 @@ MonoBehaviour:
   Goon: 0
   Word: Wicked
   wordSize: 1
-  WordAudio: {fileID: 8300000, guid: 5324a58364683d44d82c7e7b0d81e3e3, type: 3}
+  WordAudio: {fileID: 8300000, guid: 130240f1ec9d9854bb0162ed90280a90, type: 3}
   FaceClip: {fileID: 0}
   StickClip: {fileID: 0}

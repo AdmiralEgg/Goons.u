@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Loaf
-  Syllables: 1
-  WordAudio: {fileID: 8300000, guid: 5a49b11b2c8d29c4c9d41482f72742ef, type: 3}
+  wordSize: 0
+  WordAudio: {fileID: 8300000, guid: d34fe7c9835095742b705a0ad65167e2, type: 3}
   FaceClip: {fileID: 0}
   StickClip: {fileID: 0}

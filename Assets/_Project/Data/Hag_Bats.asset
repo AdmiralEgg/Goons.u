@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Bats
-  Syllables: 1
-  WordAudio: {fileID: 8300000, guid: 7f592209c2fdbf244b788fb4cfa04e33, type: 3}
+  wordSize: 0
+  WordAudio: {fileID: 8300000, guid: 1f2be7aea4186544ca9450defb4a76f3, type: 3}
   FaceClip: {fileID: 0}
   StickClip: {fileID: 0}

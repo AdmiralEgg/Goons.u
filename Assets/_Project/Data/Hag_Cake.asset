@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Cake
-  Syllables: 1
-  WordAudio: {fileID: 8300000, guid: 6f7221d36a4dc0c45b1ba2778b45fe12, type: 3}
+  wordSize: 0
+  WordAudio: {fileID: 8300000, guid: fe2027924ae54d84d996557ed4cf24b7, type: 3}
   FaceClip: {fileID: 0}
   StickClip: {fileID: 0}

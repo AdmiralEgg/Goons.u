@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Candle
-  Syllables: 2
-  WordAudio: {fileID: 8300000, guid: 3f782e816f23e084ba56aa754fa81e5c, type: 3}
+  wordSize: 0
+  WordAudio: {fileID: 8300000, guid: 32ae84996aec2674f91765ae6c246333, type: 3}
   FaceClip: {fileID: 0}
   StickClip: {fileID: 0}

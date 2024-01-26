@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Sweets
-  Syllables: 1
-  WordAudio: {fileID: 8300000, guid: 0addabcd493022443a5dde2afbcffd0d, type: 3}
+  wordSize: 0
+  WordAudio: {fileID: 8300000, guid: 410b4b9d2763f744883750fbcdfc3ca4, type: 3}
   FaceClip: {fileID: 0}
   StickClip: {fileID: 0}

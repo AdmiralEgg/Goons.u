@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class GoonScrapSlotController : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, ReadOnly]
     private List<ScrapSlot> _goonScrapSlotsList;
 
     [SerializeField, ReadOnly]
@@ -27,9 +27,6 @@ public class GoonScrapSlotController : MonoBehaviour
 
     [SerializeField, ReadOnly]
     private ButtonController.ButtonType _currentButtonType;
-
-    [SerializeField]
-    private WordSelectorController _wordSelectorController;
 
     public static Action<ScrapSlot> NewNextSlot;
     
@@ -60,7 +57,7 @@ public class GoonScrapSlotController : MonoBehaviour
             SetSlotsActive(false);
         };
 
-        WordSelectorController.SwitchedMode += (buttonType) =>
+        WordStateSelectorController.SwitchedMode += (buttonType) =>
         {
             _currentButtonType = buttonType;
             _refreshSlots = true;

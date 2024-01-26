@@ -1,13 +1,8 @@
-using MoreMountains.Feedbacks;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
-using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class GoonEyeController : MonoBehaviour
 {

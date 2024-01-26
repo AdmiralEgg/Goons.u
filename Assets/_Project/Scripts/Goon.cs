@@ -42,7 +42,7 @@ public class Goon : MonoBehaviour
     private ScrapSlot[] _allScrapSlots;
 
     private GoonScrapSlotController _goonScrapSlotController;
-    private WordSelectorController _wordSelectorController;
+    private WordStateSelectorController _wordSelectorController;
     private ScrapGenerator _scrapGenerator;
     private AudioSource _faceAudioSource;
 
@@ -52,7 +52,7 @@ public class Goon : MonoBehaviour
         _scrapGenerator = GetComponentInChildren<ScrapGenerator>();
         _allScrapSlots = GetComponentsInChildren<ScrapSlot>();
         _goonScrapSlotController = GetComponentInChildren<GoonScrapSlotController>();
-        _wordSelectorController = GetComponentInChildren<WordSelectorController>();
+        _wordSelectorController = GetComponentInChildren<WordStateSelectorController>();
 
         _niceCatchAudio = _goonData.NiceCatchAudio;
         _stickTouchAudio = _goonData.StickTouchAudio;

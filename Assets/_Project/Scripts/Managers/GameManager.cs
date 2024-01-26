@@ -1,11 +1,8 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sirenix.OdinInspector;
-using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 
 public class GameManager : MonoBehaviour
 {
@@ -44,9 +41,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private CurtainEnableMechanism[] _curtains;
     [SerializeField]
-    private GameObject[] _scrap;
+    private ScrapButtonEnableMechanism _scrap;
     [SerializeField]
-    private MelodyButtonEnableMechanism[] _melody;
+    private MelodyButtonEnableMechanism _melodyButtonLong;
+    [SerializeField]
+    private MelodyButtonEnableMechanism[] _melodyButtonShort;
     [SerializeField]
     private GameObject[] _record;
 
@@ -57,14 +56,28 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         _actTitleTextController.gameObject.SetActive(false);
-        
-        if(_startingGameState != GameState.Title)
+
+        if (_startingGameState == GameState.Title)
         {
-            SetState(_startingGameState);
+            _gameCamera.SetActive(false);
+            _projectorCamera.SetActive(true);
         }
         else
         {
+            _gameCamera.SetActive(true);
+            _projectorCamera.SetActive(false);
+        }
+    }
+
+    private void Start()
+    {
+        if (_startingGameState == GameState.Title)
+        {
             SetState(GameState.Title);
+        }
+        else
+        {
+            SetState(_startingGameState);
         }
     }
 
@@ -78,8 +91,6 @@ public class GameManager : MonoBehaviour
 
                 _houseLights.SetActive(false);
                 _goonLightsLeft.SetActive(false);
-                _gameCamera.SetActive(false);
-                _projectorCamera.SetActive(true);
 
                 _projector.EnableAfterAnimation();
 
@@ -107,6 +118,8 @@ public class GameManager : MonoBehaviour
                 // Wait a second before house lights come on...
                 StartCoroutine(PauseThenActivate(5, _houseLights));
 
+                _melodyButtonLong.EnableAfterAnimation();
+
                 // If the crowd are entertained, finish the act
                 CrowdController.CrowdEntertained = () => FinishAct(nextAct: GameState.Act2);
 
@@ -118,6 +131,11 @@ public class GameManager : MonoBehaviour
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
 
+                foreach (MelodyButtonEnableMechanism button in _melodyButtonShort)
+                {
+                    button.EnableAfterAnimation();
+                };
+
                 CrowdController.CrowdEntertained = () => FinishAct(nextAct: GameState.Act3);
 
                 break;
@@ -127,6 +145,7 @@ public class GameManager : MonoBehaviour
 
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
+                _scrap.EnableAfterAnimation();
 
                 CrowdController.CrowdEntertained = () => FinishAct(nextAct: GameState.Act4);
 

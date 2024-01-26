@@ -10,12 +10,20 @@ public abstract class BaseEnableMechanism : MonoBehaviour
 {
     [Tooltip("Is the mechanism in the scene, and able to start running")]
     public enum EnabledState { Enabled, Disabled, InTransition }
+    [Tooltip("How does the mechanism move between enabled states")]
+    public enum EnableMovement { Position, Hinge }
 
     [Header("Current States")]
     [SerializeField, ReadOnly]
     private EnabledState _currentEnabledState = EnabledState.Enabled;
     [SerializeField, ReadOnly, Tooltip("Whether GameObject has a RunMechanism component")]
     private bool _hasRunMechanism = false;
+
+    [Header("Movement Setup")]
+    [SerializeField]
+    private EnableMovement _enableMovement = EnableMovement.Position;
+    [SerializeField, ShowIf("_enableMovement", EnableMovement.Hinge)]
+    private HingeJoint _hinge;
 
     [Header("Action Setup")]
     [SerializeField, Tooltip("Awake in the disabled position, in the Disabled state")]
@@ -28,15 +36,15 @@ public abstract class BaseEnableMechanism : MonoBehaviour
     private bool _onDisableDeactivateGameObject = false;
 
     [Header("Position and rotations for disabling. Mechanisms start in their Enabled positions in the world.")]
-    [SerializeField, ReadOnly, Tooltip("Enabled position is the inital gameobject position on Awake")]
+    [ShowIf("_enableMovement", EnableMovement.Position), SerializeField, ReadOnly, Tooltip("Enabled position is the inital gameobject position on Awake")]
     private Vector3 _enabledPosition;
-    [SerializeField, ReadOnly, Tooltip("Enabled rotation is the inital gameobject rotation on Awake")]
+    [ShowIf("_enableMovement", EnableMovement.Position), SerializeField, ReadOnly, Tooltip("Enabled rotation is the inital gameobject rotation on Awake")]
     private Quaternion _enabledRotation;
-    [SerializeField]
+    [ShowIf("_enableMovement", EnableMovement.Position), SerializeField]
     private Vector3 _disabledWorldPosition;
-    [SerializeField]
+    [ShowIf("_enableMovement", EnableMovement.Position), SerializeField]
     private Quaternion _disabledWorldRotation;
-    [SerializeField]
+    [ShowIf("_enableMovement", EnableMovement.Position), SerializeField]
     private float _transitionDuration = 5f;
 
     /// <summary>
@@ -45,14 +53,29 @@ public abstract class BaseEnableMechanism : MonoBehaviour
     /// </summary>
     protected virtual void Awake()
     {
-        _enabledPosition = this.transform.position;
-        _enabledRotation = this.transform.rotation;
-
-        if (_onAwakeState == EnabledState.Disabled)
+        if (_enableMovement == EnableMovement.Position)
         {
-            this.transform.position = _disabledWorldPosition;
-            this.transform.rotation = _disabledWorldRotation;
-            _currentEnabledState = EnabledState.Disabled;
+            _enabledPosition = this.transform.position;
+            _enabledRotation = this.transform.rotation;
+
+            if (_onAwakeState == EnabledState.Disabled)
+            {
+                this.transform.position = _disabledWorldPosition;
+                this.transform.rotation = _disabledWorldRotation;
+                _currentEnabledState = EnabledState.Disabled;
+            }
+        }
+
+        if (_enableMovement == EnableMovement.Hinge)
+        {
+            if (_onAwakeState == EnabledState.Disabled)
+            {
+                SetHingeMotorState(true);
+            }
+            else
+            {
+                SetHingeMotorState(false);
+            }
         }
 
         if (GetComponent<BaseRunMechanism>() != null)
@@ -78,12 +101,51 @@ public abstract class BaseEnableMechanism : MonoBehaviour
 
     public void EnableAfterAnimation()
     {
-        StartCoroutine(StartEnabledTransition(EnabledState.Enabled));
+        if (_enableMovement == EnableMovement.Position)
+        {
+            StartCoroutine(StartEnabledTransition(EnabledState.Enabled));
+        }
+
+        if (_enableMovement == EnableMovement.Hinge)
+        {
+            Debug.Log("Enable with Hinge Motor");
+            SetHingeMotorState(false);
+
+            // Finish transition
+            _currentEnabledState = EnabledState.Enabled;
+
+            if (_onEnableStartMechanism == true && _hasRunMechanism == true)
+            {
+                GetComponent<BaseRunMechanism>().StartMechanism();
+            }
+        }
     }
 
     public virtual void DisableAfterAnimation()
     {
-        StartCoroutine(StartEnabledTransition(EnabledState.Disabled));
+        if (_enableMovement == EnableMovement.Position)
+        {
+            StartCoroutine(StartEnabledTransition(EnabledState.Disabled));
+        }
+
+        if (_enableMovement == EnableMovement.Hinge)
+        {
+            Debug.Log("Disable with Hinge Motor");
+            SetHingeMotorState(true);
+            
+            // Finish transition
+            _currentEnabledState = EnabledState.Disabled;
+
+            if (_onDisableDeactivateGameObject == true)
+            {
+                this.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void SetHingeMotorState(bool started)
+    {
+        _hinge.useMotor = started;
     }
 
     private IEnumerator StartEnabledTransition(EnabledState targetState)
