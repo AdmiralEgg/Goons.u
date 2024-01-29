@@ -53,6 +53,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private ActTitleTextController _actTitleTextController;
 
+    [Header("Goons")]
+    [SerializeField]
+    private Goon _hag;
+
+    [Header("Act 1")]
+    [SerializeField]
+    private StagePositionPoint _hagStagePositionAct1;
+
     void Awake()
     {
         _actTitleTextController.gameObject.SetActive(false);
@@ -111,6 +119,7 @@ public class GameManager : MonoBehaviour
                 await StartAct(GameState.Act1);
 
                 // Goon walks on in darkness
+                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePositionAct1);
 
                 // Wait a second before goon lights come on...
                 StartCoroutine(PauseThenActivate(3, _goonLightsLeft));

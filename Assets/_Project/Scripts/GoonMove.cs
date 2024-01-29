@@ -9,6 +9,8 @@ using Unity.Android.Types;
 
 public class GoonMove : MonoBehaviour
 {
+    enum GoonMoveState { Idle, Walking, Dancing };
+    
     [Header("Animation Control")]
     [SerializeField]
     private Animator _goonStickAnimator;
@@ -23,7 +25,7 @@ public class GoonMove : MonoBehaviour
     [SerializeField]
     private StagePositionPoint _targetPosition;
     [SerializeField, ReadOnly]
-    private bool _isWalking;
+    private GoonMoveState _currentMoveState;
 
     [SerializeField]
     float _moveSpeed = 3f;
@@ -41,25 +43,24 @@ public class GoonMove : MonoBehaviour
         {
             Debug.LogError($"Missing position {_awakePosition.name} from the Stage Position Points list");
         }
-    }
 
-    private void Update()
-    {
-        // Update CurrentPostion
+        _currentMoveState = GoonMoveState.Idle;
 
+        Speaker.MusicStopped += GoonIdle;
     }
 
     private void FixedUpdate()
     {
         // if targetposition is updated, stop the coroutine
-        
-        if ((_currentPosition != _targetPosition) && _isWalking == false)
+
+
+        if ((_currentPosition != _targetPosition) && (_currentMoveState != GoonMoveState.Walking))
         {
             // start the walk animation
             _goonStickAnimator.Play("Walk");
             _idleWiggle.enabled = false;
 
-            _isWalking = true;
+            _currentMoveState = GoonMoveState.Walking;
             StartCoroutine(MoveToTarget());
         }
     }
@@ -75,14 +76,14 @@ public class GoonMove : MonoBehaviour
         // Calculate target rotation based on whether we're walking left or right
         float walkRotationY = 35f;
         
-        if (initial.x < _targetPosition.GetPositionValue().x)
+        if (initial.x > _targetPosition.GetPositionValue().x)
         {
             walkRotationY = walkRotationY * -1;
         }
         
         Quaternion target = Quaternion.Euler(10, walkRotationY, 0);
 
-        while (_isWalking)
+        while (_currentMoveState == GoonMoveState.Walking)
         {            
             transform.rotation = Quaternion.RotateTowards(this.transform.rotation, target, 6);
 
@@ -107,9 +108,33 @@ public class GoonMove : MonoBehaviour
             _goonStickAnimator.Play("Idle");
             _currentPosition = _targetPosition;
             _idleWiggle.enabled = true;
-            _isWalking = false;
+            _currentMoveState = GoonMoveState.Idle;
 
             _targetPosition.OnEnterBounds -= EnteredTargetBounds;
         }
+    }
+
+    public void GoonDance()
+    {        
+        _idleWiggle.enabled = false;
+        _goonStickAnimator.applyRootMotion = false;
+        _goonStickAnimator.Play("DanceLeftRight");
+
+        _currentMoveState = GoonMoveState.Dancing;
+    }
+
+    public void GoonIdle()
+    {
+        _idleWiggle.enabled = true;
+        _goonStickAnimator.applyRootMotion = true;
+        this.transform.position = _currentPosition.GetPositionValue();
+        _goonStickAnimator.Play("Idle");
+
+        _currentMoveState = GoonMoveState.Idle;
+    }
+
+    public void SetTargetPosition(StagePositionPoint target)
+    {
+        _targetPosition = target;
     }
 }

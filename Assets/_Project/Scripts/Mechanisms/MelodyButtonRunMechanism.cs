@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,8 @@ public class MelodyButtonRunMechanism : BaseRunMechanism
     [SerializeField]
     private bool _allowManualDisable = false;
 
+    public static Action MelodyPlayed;
+
     private void Awake()
     {
         _currentRunningState = RunningState.Shutdown;
@@ -35,6 +38,8 @@ public class MelodyButtonRunMechanism : BaseRunMechanism
         _source.PlayOneShot(_clip);
         _light.color = _runningColor;
         _currentRunningState = RunningState.Running;
+
+        MelodyPlayed?.Invoke();
 
         // wait until complete then stop
         StartCoroutine(WaitForFinish());

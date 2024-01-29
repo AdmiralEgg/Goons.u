@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine.UIElements;
 using Sirenix.OdinInspector.Editor.Drawers;
 using UnityEngine.InputSystem.Interactions;
+using UnityEditor.PackageManager;
 
 public class Goon : MonoBehaviour
 {
@@ -45,6 +46,8 @@ public class Goon : MonoBehaviour
     private WordStateSelectorController _wordSelectorController;
     private ScrapGenerator _scrapGenerator;
     private AudioSource _faceAudioSource;
+
+    public static Action GoonSpeak;
 
     private void OnEnable()
     {
@@ -148,11 +151,6 @@ public class Goon : MonoBehaviour
         LoadRandomWords();
     }
 
-    public void Dance()
-    {
-        // dance left and right, or up and down
-    }
-
     public GoonData GetGoonData()
     {
         return _goonData;
@@ -180,8 +178,9 @@ public class Goon : MonoBehaviour
     private IEnumerator Speak(AudioClip clip)
     {
         _currentState = GoonState.Speaking;
-        
         _faceAudioSource.PlayOneShot(clip);
+
+        GoonSpeak?.Invoke();
 
         yield return new WaitForSeconds(0.75f);
 

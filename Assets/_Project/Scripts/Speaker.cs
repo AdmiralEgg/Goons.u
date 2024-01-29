@@ -1,7 +1,10 @@
 using MoreMountains.Feedbacks;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -23,17 +26,52 @@ public class Speaker : MonoBehaviour
 
     [Header("Trigger actions on beat intervals")]
     [SerializeField]
-    private Intervals[] _intervals;
+    private List<Intervals> _intervals;
+
+    [SerializeField]
+    private CrowdController _crowd;
+    [SerializeField, ReadOnly]
+    private CrowdMember[] _allCrowd;
+
+    public static Action MusicStopped;
 
     private MMScaleShaker _shaker;
 
     void Awake()
-    {
+    {        
+        // Get all the crowd and add them to random intervals
+        _allCrowd = _crowd.GetComponentsInChildren<CrowdMember>();
+
+
+
+        foreach (CrowdMember member in _allCrowd)
+        {
+            CrowdMember.Timing timing = member.GetTiming();
+
+            switch (timing)
+            {
+                case CrowdMember.Timing.Dragging:
+                    _intervals.Add(new Intervals(0.9f, member.BounceTrigger));
+                    break;
+                case CrowdMember.Timing.OnBeat:
+                    _intervals.Add(new Intervals(1f, member.BounceTrigger));
+                    break;
+                case CrowdMember.Timing.Rushing:
+                    _intervals.Add(new Intervals(1.1f, member.BounceTrigger));
+                    break;
+                case CrowdMember.Timing.Random:
+                    float randomTiming = UnityEngine.Random.Range(0.2f, 0.8f);
+                    _intervals.Add(new Intervals(randomTiming, member.BounceTrigger));
+                    break;
+            }
+        }
+
         _shaker = GetComponent<MMScaleShaker>();
         
         _musicSource.playOnAwake = false;
         _musicSource.loop = true;
     }
+
 
     public void StartMusic(SongData songData)
     {
@@ -46,6 +84,7 @@ public class Speaker : MonoBehaviour
         _musicSource.Stop();
         _musicSource.PlayOneShot(_stopClip);
         StopAllCoroutines();
+        MusicStopped?.Invoke();
     }
 
     private IEnumerator StartMusicClip(SongData songData)
@@ -80,6 +119,12 @@ public class Intervals
 
     private int _lastInterval;
 
+    public Intervals(float steps, UnityEvent trigger)
+    {
+        _steps = steps;
+        _trigger = trigger;
+    }
+
     public float GetBeatLength(float bpm)
     {
        return 60f / (bpm * _steps);
@@ -92,5 +137,10 @@ public class Intervals
             _lastInterval = Mathf.FloorToInt(interval);
             _trigger.Invoke();
         }
+    }
+
+    public float GetStepsValue()
+    {
+        return _steps;
     }
 }
