@@ -21,6 +21,9 @@ public class ToggleMusic : MonoBehaviour
     [SerializeField, Tooltip("The audio sources to play the main music from")]
     private Speaker[] _connectedSpeakers;
 
+    [SerializeField, Tooltip("The light that are switched when music is playing")]
+    private Light[] _connectedLights;
+
     [SerializeField, ReadOnly, Tooltip("The readiness of this toggle to be pressed")]
     private ToggleState _currentState;
 
@@ -43,6 +46,11 @@ public class ToggleMusic : MonoBehaviour
                 speaker.StartMusic(_songData);
             }
 
+            foreach (Light light in _connectedLights)
+            {
+                light.enabled = false;
+            }
+
             _currentState = ToggleState.RotateToStop;
 
             StartCoroutine(StartRotatingTrigger());
@@ -54,6 +62,11 @@ public class ToggleMusic : MonoBehaviour
             foreach (Speaker speaker in _connectedSpeakers)
             {
                 speaker.StopMusic();
+            }
+
+            foreach (Light light in _connectedLights)
+            {
+                light.enabled = true;
             }
 
             _currentState = ToggleState.RotateToStart;

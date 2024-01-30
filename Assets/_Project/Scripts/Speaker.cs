@@ -34,6 +34,7 @@ public class Speaker : MonoBehaviour
     private CrowdMember[] _allCrowd;
 
     public static Action MusicStopped;
+    public static Action MusicStarted;
 
     private MMScaleShaker _shaker;
 
@@ -90,6 +91,7 @@ public class Speaker : MonoBehaviour
     private IEnumerator StartMusicClip(SongData songData)
     {
         _musicSource.PlayOneShot(_startClip);
+        MusicStarted?.Invoke();
 
         yield return new WaitForSeconds(_startClip.length);
 

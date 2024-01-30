@@ -9,7 +9,7 @@ using Unity.Android.Types;
 
 public class GoonMove : MonoBehaviour
 {
-    enum GoonMoveState { Idle, Walking, Dancing };
+    enum GoonMoveState { Idle, Walking, Dancing, Bowing };
     
     [Header("Animation Control")]
     [SerializeField]
@@ -47,13 +47,12 @@ public class GoonMove : MonoBehaviour
         _currentMoveState = GoonMoveState.Idle;
 
         Speaker.MusicStopped += GoonIdle;
+        CrowdController.CrowdEntertained += GoonBow;
     }
 
     private void FixedUpdate()
     {
         // if targetposition is updated, stop the coroutine
-
-
         if ((_currentPosition != _targetPosition) && (_currentMoveState != GoonMoveState.Walking))
         {
             // start the walk animation
@@ -131,6 +130,16 @@ public class GoonMove : MonoBehaviour
         _goonStickAnimator.Play("Idle");
 
         _currentMoveState = GoonMoveState.Idle;
+    }
+
+    public void GoonBow()
+    {
+        _idleWiggle.enabled = false;
+        _goonStickAnimator.applyRootMotion = false;
+        this.transform.position = _currentPosition.GetPositionValue();
+        _goonStickAnimator.Play("Bow");
+
+        _currentMoveState = GoonMoveState.Bowing;
     }
 
     public void SetTargetPosition(StagePositionPoint target)

@@ -57,9 +57,15 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Goon _hag;
 
+    [Header("Points Manager")]
+    [SerializeField]
+    private PointsManager _pointsManager;
+
     [Header("Act 1")]
     [SerializeField]
     private StagePositionPoint _hagStagePositionAct1;
+    [SerializeField]
+    private PointsData _act1PointsData;
 
     void Awake()
     {
@@ -111,6 +117,9 @@ public class GameManager : MonoBehaviour
 
                 break;
             case GameState.Act1:
+
+                // Set points data
+                _pointsManager.SetupPointsData(_act1PointsData);
 
                 // Switch camera
                 _gameCamera.SetActive(true);
@@ -226,7 +235,8 @@ public class GameManager : MonoBehaviour
 
     public async void FinishAct(GameState nextAct)
     {
-        // Goon bowing
+        // Wait for crowd react and goon bowing
+        await Task.Delay(2000);
 
         // Start Curtain closing
         foreach (CurtainEnableMechanism curtain in _curtains)
