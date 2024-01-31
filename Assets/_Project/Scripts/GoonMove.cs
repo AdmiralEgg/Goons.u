@@ -1,11 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using UnityEditor.Experimental.GraphView;
 using MoreMountains.Feedbacks;
-using static StagePositionPoint;
-using Unity.Android.Types;
 
 public class GoonMove : MonoBehaviour
 {

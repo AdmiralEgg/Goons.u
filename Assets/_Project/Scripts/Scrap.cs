@@ -1,12 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using MoreMountains.Feedbacks;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Scrap : MonoBehaviour
 {

@@ -4,10 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Linq;
-using UnityEngine.UIElements;
-using Sirenix.OdinInspector.Editor.Drawers;
-using UnityEngine.InputSystem.Interactions;
-using UnityEditor.PackageManager;
 
 public class Goon : MonoBehaviour
 {

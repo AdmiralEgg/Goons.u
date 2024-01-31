@@ -32,7 +32,7 @@ Transform:
   - {fileID: 4931909214727007212}
   - {fileID: 1082064744924890157}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4085977879956614405
 MonoBehaviour:
@@ -49,6 +49,7 @@ MonoBehaviour:
   _songData: {fileID: 11400000, guid: b39b0bc1cdbdd1a44bb30c2c2f16b955, type: 2}
   _connectedSpeakers:
   - {fileID: 0}
+  _connectedLights: []
   _currentState: 0
   _rotateTimeSeconds: 5
 --- !u!1 &3873642365815055502
@@ -347,8 +348,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.8116356, y: 1.7262009, z: 1}
+  m_Center: {x: 0.054618124, y: 0.0041169496, z: 0.0000005774627}
 --- !u!114 &8707330341461748058
 MonoBehaviour:
   m_ObjectHideFlags: 0
