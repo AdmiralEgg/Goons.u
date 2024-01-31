@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/PointsData", order = 4)]
 public class PointsData : ScriptableObject
 {
-    public GameManager.GameState GameState;
-
     public float PointsTarget;
 
     [Header("Goon Points")]

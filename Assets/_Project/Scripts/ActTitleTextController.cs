@@ -10,34 +10,29 @@ public class ActTitleTextController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _actSubtitle;
 
-    private void Awake()
-    {
-        
-    }
-
     public void DisplayActTitle(GameManager.GameState act)
     {
         switch (act)
         {
             case GameManager.GameState.Act1:
                 _actTitle.text = "Act 1";
-                _actSubtitle.text = "Act 1 Subtitle Text";
+                _actSubtitle.text = "The Cult of Celebrity";
                 break;
             case GameManager.GameState.Act2:
                 _actTitle.text = "Act 2";
-                _actSubtitle.text = "Act 2 Subtitle Text";
+                _actSubtitle.text = "A Fool with more Tools";
                 break;
             case GameManager.GameState.Act3:
                 _actTitle.text = "Act 3";
-                _actSubtitle.text = "Act 3 Subtitle Text";
+                _actSubtitle.text = "Between Two Fools";
                 break;
             case GameManager.GameState.Act4:
                 _actTitle.text = "Act 4";
-                _actSubtitle.text = "Act 4 Subtitle Text";
+                _actSubtitle.text = "Scraps";
                 break;
             case GameManager.GameState.Act5:
                 _actTitle.text = "Act 5";
-                _actSubtitle.text = "Act 5 Subtitle Text";
+                _actSubtitle.text = "All Three";
                 break;
             case GameManager.GameState.Sandbox:
                 _actTitle.text = "Sandbox";

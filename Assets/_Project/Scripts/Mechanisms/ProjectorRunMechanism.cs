@@ -39,6 +39,10 @@ public class ProjectorRunMechanism : BaseRunMechanism
     public override void StopMechanism()
     {
         base.StopMechanism();
+        
+        // Stop the play video coroutine if it's running.
+        StopAllCoroutines();
+
         _player.Stop();
 
         VideoPlaybackComplete?.Invoke();

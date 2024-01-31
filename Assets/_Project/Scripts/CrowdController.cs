@@ -6,18 +6,23 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.VFX;
 using System.IO;
+using static CrowdMember;
 
 public class CrowdController : MonoBehaviour
 {
-    public enum CrowdIntensity { Low, LowMedium, Medium, MediumHigh, High}
-    
+    public enum CrowdIntensity { None, Murmering, Hushed, Low, LowMedium, Medium, MediumHigh, High }
+
     [SerializeField]
     private PointsManager PointsManager;
 
     [SerializeField, ReadOnly]
-    private CrowdIntensity _currentCrowdIntensity;
+    private CrowdIntensity _currentCrowdIntensity = CrowdIntensity.None;
 
     [Header("Crowd Audio")]
+    [SerializeField]
+    private AudioClip _crowdHush;
+    [SerializeField]
+    private AudioClip _crowdMurmer;
     [SerializeField]
     private AudioClip[] _smallCheer;
     [SerializeField]
@@ -25,7 +30,9 @@ public class CrowdController : MonoBehaviour
     [SerializeField]
     private AudioClip[] _bigCheer;
     [SerializeField]
-    private AudioSource _audioSource;
+    private AudioSource _audioSourceCrowdChatter;
+    [SerializeField]
+    private AudioSource _audioSourceCrowdReact;
 
     [SerializeField]
     private VisualEffect[] _streamers;
@@ -35,11 +42,12 @@ public class CrowdController : MonoBehaviour
 
     private void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
         _allCrowd = GetComponentsInChildren<CrowdMember>();
 
-        PointsManager.ActCompleted += PlayFinalCrowdCheer;
+        PointsManager.PointsReached += PlayFinalCrowdCheer;
         PointsManager.UpdatedCrowdIntensity += PlayCrowdReaction;
+        GameManager.ActFinished += ResetCrowd;
+        GameManager.ActStarted += HushCrowd;
 
         foreach (VisualEffect streamer in _streamers)
         {
@@ -48,76 +56,122 @@ public class CrowdController : MonoBehaviour
         }
     }
 
-    public void PlayCrowdReaction(CrowdIntensity intensity)
+    private void Start()
+    {
+        ResetCrowd();
+    }
+
+    public void PlayCrowdReaction(CrowdIntensity intensity = CrowdIntensity.None)
     {
         if (intensity <= _currentCrowdIntensity) return;
 
         switch (intensity)
-        { 
+        {
             case (CrowdIntensity.High):
-                PlayFinalCrowdCheer();
-                break;
-            case (CrowdIntensity.MediumHigh):
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.Medium);
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.Medium);
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.Medium);
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.Medium);
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.Medium);
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.Medium);
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.High);
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.High);
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.High);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
 
                 // play medium cheer
-                _audioSource.PlayOneShot(_mediumCheer[UnityEngine.Random.Range(0, (_mediumCheer.Length - 1))]);
+                _audioSourceCrowdReact.PlayOneShot(_mediumCheer[UnityEngine.Random.Range(0, (_mediumCheer.Length - 1))]);
+                break;
+            case (CrowdIntensity.MediumHigh):
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
+
+                // play medium cheer
+                _audioSourceCrowdReact.PlayOneShot(_mediumCheer[UnityEngine.Random.Range(0, (_mediumCheer.Length - 1))]);
                 break;
             case (CrowdIntensity.Medium):
                 // get 3 crowd members, switch to Medium intensite
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.Medium);
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.Medium);
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.Medium);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
 
                 // play low cheer
-                _audioSource.PlayOneShot(_mediumCheer[UnityEngine.Random.Range(0, (_mediumCheer.Length - 1))]);
+                _audioSourceCrowdReact.PlayOneShot(_mediumCheer[UnityEngine.Random.Range(0, (_mediumCheer.Length - 1))]);
                 break;
             case (CrowdIntensity.LowMedium):
                 // get 3 crowd members, switch to Medium intensite
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.Medium);
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.Medium);
-                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetCurrentIntensity(CrowdMember.Intensity.Medium);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
+                _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
 
                 // play low cheer
-                _audioSource.PlayOneShot(_smallCheer[UnityEngine.Random.Range(0, (_smallCheer.Length - 1))]);
+                _audioSourceCrowdReact.PlayOneShot(_smallCheer[UnityEngine.Random.Range(0, (_smallCheer.Length - 1))]);
                 break;
             case (CrowdIntensity.Low):
                 // Play low cheer
-                _audioSource.PlayOneShot(_smallCheer[UnityEngine.Random.Range(0, (_smallCheer.Length - 1))]);
+                _audioSourceCrowdReact.PlayOneShot(_smallCheer[UnityEngine.Random.Range(0, (_smallCheer.Length - 1))]);
+                break;
+            case (CrowdIntensity.Hushed):
+                StartCoroutine(VolumeChange(_audioSourceCrowdChatter, 0.05f, 2f));
+                //_audioSourceCrowdReact.PlayOneShot(_crowdHush);
+                break;
+            case (CrowdIntensity.Murmering):
+                _audioSourceCrowdChatter.volume = 0.2f;
+                _audioSourceCrowdChatter.PlayOneShot(_crowdMurmer);
                 break;
         }
-    }
 
-    // Temporary trigger to entertain the crowd.
-    public void OnClickedTrigger()
-    {
-        PlayFinalCrowdCheer();
+        _currentCrowdIntensity = intensity;
     }
 
     private void PlayFinalCrowdCheer()
     {
-        Debug.Log("Final cheer");
-        
         foreach (CrowdMember member in _allCrowd)
         {
-            //member.SetCurrentIntensity(CrowdMember.Intensity.High);
+            member.SetMemberIntensity(CrowdMember.Intensity.High);
             member.FinalCheer();
         }
-        
-        _audioSource.PlayOneShot(_bigCheer[UnityEngine.Random.Range(0, (_mediumCheer.Length - 1))]);
+
+        _audioSourceCrowdReact.PlayOneShot(_bigCheer[UnityEngine.Random.Range(0, (_bigCheer.Length - 1))]);
 
         StartCoroutine(PlayStreamers());
 
-        // Goon bow?
         CrowdEntertained?.Invoke();
+    }
+
+    private void ResetCrowd()
+    {
+        _currentCrowdIntensity = CrowdIntensity.None;
+
+        foreach (CrowdMember member in _allCrowd)
+        {
+            member.SetMemberIntensity(CrowdMember.Intensity.None);
+            member.ResetMember();
+        }
+
+        PlayCrowdReaction(CrowdIntensity.Murmering);
+    }
+
+    private void HushCrowd()
+    {
+        PlayCrowdReaction(CrowdIntensity.Hushed);
+    }
+
+    private IEnumerator VolumeChange(AudioSource source, float targetVolume, float lerpTime)
+    {
+        float elapsedTime = 0;
+        float initialVolume = source.volume;
+
+        while (elapsedTime < lerpTime)
+        {
+            source.volume = Mathf.Lerp(initialVolume, targetVolume, (elapsedTime / lerpTime));
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
     }
 
     private IEnumerator PlayStreamers()

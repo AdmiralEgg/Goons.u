@@ -24,6 +24,8 @@ public class GoonMove : MonoBehaviour
     private StagePositionPoint _currentPosition;
     [SerializeField]
     private StagePositionPoint _targetPosition;
+    [SerializeField]
+    private StagePositionPoint _offStagePosition;
     [SerializeField, ReadOnly]
     private GoonMoveState _currentMoveState;
 
@@ -47,7 +49,7 @@ public class GoonMove : MonoBehaviour
         _currentMoveState = GoonMoveState.Idle;
 
         Speaker.MusicStopped += GoonIdle;
-        CrowdController.CrowdEntertained += GoonBow;
+        PointsManager.PointsReached += GoonBow;
     }
 
     private void FixedUpdate()
@@ -134,12 +136,19 @@ public class GoonMove : MonoBehaviour
 
     public void GoonBow()
     {
+        Debug.Log("Goon bowing...");
+        
         _idleWiggle.enabled = false;
         _goonStickAnimator.applyRootMotion = false;
         this.transform.position = _currentPosition.GetPositionValue();
         _goonStickAnimator.Play("Bow");
 
         _currentMoveState = GoonMoveState.Bowing;
+    }
+
+    public void GoonOffstage()
+    {
+        _targetPosition = _offStagePosition;
     }
 
     public void SetTargetPosition(StagePositionPoint target)

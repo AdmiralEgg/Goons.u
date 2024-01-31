@@ -9,7 +9,7 @@ public class CrowdMember : MonoBehaviour
 {
     public enum Timing { Dragging, OnBeat, Rushing, Random }
 
-    public enum Intensity { Low, Medium, High }
+    public enum Intensity { None, Low, Medium, High }
 
     [SerializeField, Tooltip("Vigor when bouncing to the beat")]
     private Intensity _currentIntensity;
@@ -22,11 +22,7 @@ public class CrowdMember : MonoBehaviour
     [SerializeField, ReadOnly]
     private GameObject _activeHat;
     [SerializeField, ReadOnly]
-    private Rigidbody _activeHatRigidbody;
-    [SerializeField, ReadOnly]
     private GameObject _activeItem;
-    [SerializeField, ReadOnly]
-    private Rigidbody _activeItemRigidbody;
 
     [Header("Animations")]
     private MMPositionShaker _positionShaker;
@@ -38,9 +34,7 @@ public class CrowdMember : MonoBehaviour
     public UnityEvent BounceTrigger;
 
     void Awake()
-    {
-        _currentIntensity = Intensity.Low;
-        
+    {        
         _positionShaker = GetComponent<MMPositionShaker>();
         _positionShaker.enabled = false;
         _rotationShaker = GetComponent<MMRotationShaker>();
@@ -66,42 +60,24 @@ public class CrowdMember : MonoBehaviour
                 _timing = Timing.OnBeat;
                 break;
         }
-
-        // Randomise a hat
-        float hatRand = Random.Range(0f, 1f);
-
-        if (hatRand > 0.85)
-        {
-            _activeHat = _hats[Random.Range(0, _hats.Length)];
-
-            _activeHatRigidbody = _activeHat.AddComponent<Rigidbody>();
-            _activeHatRigidbody.isKinematic = true;
-
-            _activeHat.transform.Rotate(new Vector3(0, Random.Range(-10,10),0));
-            _activeHat.SetActive(true);
-        }
-
-        // Randomise an item
-        float itemRand = Random.Range(0f, 1f);
-
-        if (itemRand > 0.85)
-        {
-            _activeItem = _items[Random.Range(0, _items.Length)];
-
-            _activeItemRigidbody = _activeItem.AddComponent<Rigidbody>();
-            _activeItemRigidbody.isKinematic = true;
-
-            _activeItem.transform.Rotate(new Vector3(0, Random.Range(-10, 10), 0));
-            _activeItem.SetActive(true);
-        }
     }
 
     public void Bounce()
     {
-        switch (_currentIntensity)
+        _positionShaker.Play();
+    }
+
+    public void SetMemberIntensity(Intensity newIntensity)
+    {
+        switch (newIntensity)
         {
-            case Intensity.Low:
+            case Intensity.None:
                 _positionShaker.ShakeSpeed = 10;
+                _positionShaker.ShakeRange = 0.2f;
+                _positionShaker.ShakeMainDirection = new Vector3(0, 1, 0);
+                break;
+            case Intensity.Low:
+                _positionShaker.ShakeSpeed = 12;
                 _positionShaker.ShakeRange = 0.2f;
                 _positionShaker.ShakeMainDirection = new Vector3(0, 1, 0);
                 break;
@@ -116,36 +92,63 @@ public class CrowdMember : MonoBehaviour
                 _positionShaker.ShakeMainDirection = new Vector3(0.1f, 1, 0);
                 break;
         }
+
+        _currentIntensity = newIntensity;
+    }
+
+    public void ResetMember()
+    {
+        SetMemberIntensity(Intensity.None);
         
-        _positionShaker.Play();
+        // Randomise a hat
+        float hatRand = Random.Range(0f, 1f);
+
+        if (hatRand > 0.85)
+        {
+            _activeHat = _hats[Random.Range(0, _hats.Length)];
+
+            _activeHat.transform.Rotate(new Vector3(0, Random.Range(-10, 10), 0));
+            _activeHat.SetActive(true);
+        }
+
+        // Randomise an item
+        float itemRand = Random.Range(0f, 1f);
+
+        if (itemRand > 0.85)
+        {
+            _activeItem = _items[Random.Range(0, _items.Length)];
+
+            _activeItem.transform.Rotate(new Vector3(0, Random.Range(-10, 10), 0));
+            _activeItem.SetActive(true);
+        }
     }
 
     // Throw hats, throw items
     public void FinalCheer()
     {
+        SetMemberIntensity(Intensity.High);
+        
         if (_activeHat != null)
         {
-            _activeHatRigidbody.isKinematic = false;
-            _activeHatRigidbody.AddForce(new Vector3(UnityEngine.Random.Range(0, 1), UnityEngine.Random.Range(8, 12), UnityEngine.Random.Range(-0.5f, -2)), ForceMode.Impulse);
-            _activeHatRigidbody.AddTorque(new Vector3(UnityEngine.Random.Range(-5, 5), UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.5f, 1)), ForceMode.Impulse);
+            Rigidbody activeHatRigidbody = _activeHat.GetComponent<Rigidbody>();
+
+            activeHatRigidbody.isKinematic = false;
+            activeHatRigidbody.AddForce(new Vector3(UnityEngine.Random.Range(0, 1), UnityEngine.Random.Range(8, 12), UnityEngine.Random.Range(-0.5f, -2)), ForceMode.Impulse);
+            activeHatRigidbody.AddTorque(new Vector3(UnityEngine.Random.Range(-5, 5), UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.5f, 1)), ForceMode.Impulse);
         }
 
-        if (_activeItemRigidbody != null)
+        if (_activeItem != null)
         {
-            Debug.Log("Throw item!");
-            _activeItemRigidbody.isKinematic = false;
-            _activeItemRigidbody.AddForce(new Vector3(UnityEngine.Random.Range(-2, 2), UnityEngine.Random.Range(8, 11), UnityEngine.Random.Range(3, 5)), ForceMode.Impulse);
-            _activeItemRigidbody.AddTorque(new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), 0, UnityEngine.Random.Range(0.5f, 1)), ForceMode.Impulse);
+            Rigidbody activeItemRigidbody = _activeItem.GetComponent<Rigidbody>();
+
+            activeItemRigidbody.isKinematic = false;
+            activeItemRigidbody.AddForce(new Vector3(UnityEngine.Random.Range(-2, 2), UnityEngine.Random.Range(8, 11), UnityEngine.Random.Range(3, 5)), ForceMode.Impulse);
+            activeItemRigidbody.AddTorque(new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), 0, UnityEngine.Random.Range(0.5f, 1)), ForceMode.Impulse);
         }
     }
 
     public Timing GetTiming()
     {
         return _timing;
-    }
-
-    public void SetCurrentIntensity(Intensity newIntensity)
-    {
-        _currentIntensity = newIntensity;
     }
 }

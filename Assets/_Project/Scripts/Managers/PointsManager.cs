@@ -4,12 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using static CrowdController;
+using static GameManager;
 
 public class PointsManager : MonoBehaviour
 {
     [SerializeField]
     private Speaker _speakerData;
+
+    [Header("Point Data")]
+    [SerializeField]
+    private List<GameStatePointsData> _gameStatePointsData;
 
     [Header("Points")]
     [SerializeField, ReadOnly]
@@ -37,32 +43,30 @@ public class PointsManager : MonoBehaviour
     private double _lastEightMode;
 
     public static Action<CrowdIntensity> UpdatedCrowdIntensity;
-    public static Action ActCompleted;
+    public static Action PointsReached;
 
     void Awake()
     {
-        ClearPoints();
-        
-        _previousBeatTime = AudioSettings.dspTime;
-        _currentBeatTime = AudioSettings.dspTime;
-
-        _lastEightBeats = new Queue<double>(8);
+        ClearPointsData();
     }
 
-    public void SetupPointsData(PointsData data)
+    public void SetupPointsData(GameState gameState)
     {
-        _targetPoints = data.PointsTarget;
-        
+        ClearPointsData();
+
+        // Get points data linked to game state, then set up
+        PointsData pointsData = _gameStatePointsData.FirstOrDefault(p => p.GameState == gameState).PointsData;
+                
         Speaker.MusicStarted = () =>
         {
             // Add beat based points
-            AddPoints(data.MusicPointsPerBeat);
+            AddPoints(pointsData.MusicPointsPerBeat);
         };
 
         MelodyButtonRunMechanism.MelodyPlayed = () =>
         {
             // Add standard points
-            AddPoints(data.MelodyPoints);
+            AddPoints(pointsData.MelodyPoints);
 
             // Add beat based points
         };
@@ -70,7 +74,7 @@ public class PointsManager : MonoBehaviour
         Goon.GoonSpeak += () =>
         {
             // Add standard points
-            AddPoints(data.GoonSpeakPoints);
+            AddPoints(pointsData.GoonSpeakPoints);
 
             // Add beat based points
         };
@@ -78,8 +82,10 @@ public class PointsManager : MonoBehaviour
         Scrap.ScrapCaught += (scrap) =>
         {
             // Add standard points
-            AddPoints(data.ScrapCaught);
+            AddPoints(pointsData.ScrapCaught);
         };
+
+        _targetPoints = pointsData.PointsTarget;
     }
 
     private void AddPoints(float points = 0)
@@ -98,19 +104,19 @@ public class PointsManager : MonoBehaviour
         if (_totalPoints >= _targetPoints)
         {
             // Act complete!
-            ActCompleted?.Invoke();
+            PointsReached?.Invoke();
         }
         else
         {
             switch (_percentageToTarget)
             {
-                case float x when (x > 0.95):
+                case float x when (x > 0.90):
                     UpdatedCrowdIntensity?.Invoke(CrowdIntensity.High);
                     break;
-                case float x when (x > 0.85):
+                case float x when (x > 0.75):
                     UpdatedCrowdIntensity?.Invoke(CrowdIntensity.MediumHigh);
                     break;
-                case float x when (x > 0.65):
+                case float x when (x > 0.45):
                     UpdatedCrowdIntensity?.Invoke(CrowdIntensity.Medium);
                     break;
                 case float x when (x > 0.35):
@@ -143,13 +149,26 @@ public class PointsManager : MonoBehaviour
             .Key;
     }
 
-    public void ClearPoints()
+    public void ClearPointsData()
     {
         _totalPoints = 0;
+        _percentageToTarget = 0;
+
+        _previousBeatTime = AudioSettings.dspTime;
+        _currentBeatTime = AudioSettings.dspTime;
+
+        _lastEightBeats = new Queue<double>(8);
     }
 
     public float GetPercentageToTarget()
     {
         return _percentageToTarget;
     }
+}
+
+[Serializable]
+public class GameStatePointsData
+{
+    public GameState GameState;
+    public PointsData PointsData;
 }

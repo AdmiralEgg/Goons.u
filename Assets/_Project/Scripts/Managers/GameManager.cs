@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
     private MelodyButtonEnableMechanism[] _melodyButtonShort;
     [SerializeField]
     private GameObject[] _record;
+    [SerializeField]
+    private ToggleMusic _musicButton;
 
     [Header("TitleUI")]
     [SerializeField]
@@ -61,11 +63,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PointsManager _pointsManager;
 
-    [Header("Act 1")]
+    [Header("Positioning")]
+    [SerializeField]
+    private StagePositionPoint _hagOffStage;
     [SerializeField]
     private StagePositionPoint _hagStagePositionAct1;
+    
     [SerializeField]
     private PointsData _act1PointsData;
+
+    public static Action ActFinished;
+    public static Action ActStarted;
 
     void Awake()
     {
@@ -111,15 +119,14 @@ public class GameManager : MonoBehaviour
                 // When the video finishes, end the act
                 ProjectorRunMechanism.VideoPlaybackComplete = () =>
                 {
+                    Debug.Log($"Next act is: {GetNextAct()}");
+                    
                     _projector.DisableAfterAnimation();
                     FinishAct(nextAct: GameState.Act1);
                 };
 
                 break;
             case GameState.Act1:
-
-                // Set points data
-                _pointsManager.SetupPointsData(_act1PointsData);
 
                 // Switch camera
                 _gameCamera.SetActive(true);
@@ -131,12 +138,12 @@ public class GameManager : MonoBehaviour
                 _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePositionAct1);
 
                 // Wait a second before goon lights come on...
-                StartCoroutine(PauseThenActivate(3, _goonLightsLeft));
+                StartCoroutine(PauseThenActivate(3.5f, _goonLightsLeft));
+
+                _melodyButtonLong.EnableAfterAnimation();
 
                 // Wait a second before house lights come on...
                 StartCoroutine(PauseThenActivate(5, _houseLights));
-
-                _melodyButtonLong.EnableAfterAnimation();
 
                 // If the crowd are entertained, finish the act
                 CrowdController.CrowdEntertained = () => FinishAct(nextAct: GameState.Act2);
@@ -145,6 +152,8 @@ public class GameManager : MonoBehaviour
             case GameState.Act2:
 
                 await StartAct(GameState.Act2);
+
+                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePositionAct1);
 
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
@@ -160,6 +169,8 @@ public class GameManager : MonoBehaviour
             case GameState.Act3:
 
                 await StartAct(GameState.Act3);
+
+                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePositionAct1);
 
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
@@ -209,17 +220,15 @@ public class GameManager : MonoBehaviour
 
     async Task StartAct(GameState act)
     {
+        // Set points requirements
+        _pointsManager.SetupPointsData(act);
+        
         // Title On
         _actTitleTextController.DisplayActTitle(act);
         _actTitleTextController.gameObject.SetActive(true);
 
         // Play sound, wait a few seconds.
-        await Task.Delay(4000);
-
-        // Title Off
-        _actTitleTextController.gameObject.SetActive(false);
-
-        await Task.Delay(500);
+        await Task.Delay(2000);
 
         // Curtain Opens
         foreach (CurtainEnableMechanism curtain in _curtains)
@@ -227,8 +236,15 @@ public class GameManager : MonoBehaviour
             curtain.EnableAfterAnimation();
         }
 
-        // Wait for the curtain animation to complete
-        await WaitForEnableMechanismState(_curtains[0], BaseEnableMechanism.EnabledState.Enabled);
+        // Play sound, wait a few seconds.
+        await Task.Delay(2000);
+
+        // Title Off
+        _actTitleTextController.gameObject.SetActive(false);
+
+        ActStarted?.Invoke();
+
+        await Task.Delay(500);
 
         Debug.Log($"Start of Act: {_currentGameState}");
     }
@@ -236,13 +252,17 @@ public class GameManager : MonoBehaviour
     public async void FinishAct(GameState nextAct)
     {
         // Wait for crowd react and goon bowing
-        await Task.Delay(2000);
+        await Task.Delay(4000);
 
         // Start Curtain closing
         foreach (CurtainEnableMechanism curtain in _curtains)
         {
             curtain.DisableAfterAnimation();
         }
+        
+        // Go offstage
+        await Task.Delay(1000);
+        _hag.GetComponent<GoonMove>().GoonOffstage();
 
         // Wait for the curtain animation to complete
         await WaitForEnableMechanismState(_curtains[0], BaseEnableMechanism.EnabledState.Disabled);
@@ -251,10 +271,19 @@ public class GameManager : MonoBehaviour
 
         // Turn off lights
         _goonLightsLeft.SetActive(false);
+        await Task.Delay(200);
         _houseLights.SetActive(false);
+
+        // calm the crowd, reset points
+        ActFinished?.Invoke();
 
         // Set the next act
         SetState(nextAct);
+    }
+
+    private GameState GetNextAct()
+    {
+        return (GameState)((int)_currentGameState + 1);
     }
 
     async Task WaitForEnableMechanismState(BaseEnableMechanism mechanism, BaseEnableMechanism.EnabledState requiredState)

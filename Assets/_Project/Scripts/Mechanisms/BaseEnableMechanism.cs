@@ -152,13 +152,11 @@ public abstract class BaseEnableMechanism : MonoBehaviour
     {
         if (_currentEnabledState == EnabledState.InTransition)
         {
-            Debug.Log($"Mechanism {gameObject.name} already in transition. Will not start EnabledTransition coroutine.");
             yield break;
         }
 
         if (_currentEnabledState == targetState)
         {
-            Debug.Log($"Mechanism {gameObject.name} already required state. Will not start EnabledTransition coroutine.");
             yield break;
         }
 

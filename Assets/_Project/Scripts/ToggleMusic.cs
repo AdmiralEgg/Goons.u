@@ -33,6 +33,16 @@ public class ToggleMusic : MonoBehaviour
     void Awake()
     {
         _currentState = ToggleState.WaitingForStart;
+
+        PointsManager.PointsReached += StopMusic;
+    }
+
+    private void StopMusic()
+    {
+        if (_currentState == ToggleState.WaitingForStop)
+        {
+            OnClickedTrigger();
+        }
     }
 
     private void OnClickedTrigger()

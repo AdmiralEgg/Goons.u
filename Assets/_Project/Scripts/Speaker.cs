@@ -43,8 +43,6 @@ public class Speaker : MonoBehaviour
         // Get all the crowd and add them to random intervals
         _allCrowd = _crowd.GetComponentsInChildren<CrowdMember>();
 
-
-
         foreach (CrowdMember member in _allCrowd)
         {
             CrowdMember.Timing timing = member.GetTiming();
@@ -81,6 +79,8 @@ public class Speaker : MonoBehaviour
 
     public void StopMusic()
     {
+        if (_musicSource.isPlaying == false) return;
+        
         Debug.Log($"Stopping clip: {_musicSource.clip.name}");
         _musicSource.Stop();
         _musicSource.PlayOneShot(_stopClip);
