@@ -3019,7 +3019,7 @@ GameObject:
   - component: {fileID: 6958088494115906417}
   - component: {fileID: 4395990237688706409}
   - component: {fileID: 974027564928602008}
-  - component: {fileID: 7139814260470409188}
+  - component: {fileID: 7102439383638902135}
   - component: {fileID: 3829746430844325336}
   m_Layer: 6
   m_Name: GoonStick
@@ -3036,7 +3036,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7299083665477588454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.038, z: 0.102}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.20460004, y: 4.5016937, z: 0.053766508}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3119,7 +3119,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.1937222, y: 1, z: 1}
   m_Center: {x: -0.1891407, y: 0, z: 0}
---- !u!95 &7139814260470409188
+--- !u!95 &7102439383638902135
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -3758,7 +3758,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7733768938301103766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.36, y: 0.82, z: -1.52}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3801,7 +3801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627764fa5a5b4dd49ae3d8ee13529376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _goonStickAnimator: {fileID: 7139814260470409188}
+  _goonStickAnimator: {fileID: 7102439383638902135}
   _idleWiggle: {fileID: 3829746430844325336}
   _awakePosition: {fileID: 0}
   _currentPosition: {fileID: 0}

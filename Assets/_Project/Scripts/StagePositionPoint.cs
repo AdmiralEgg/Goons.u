@@ -12,7 +12,8 @@ public class StagePositionPoint : MonoBehaviour
         Middle,
         RightMid,
         Right,
-        OffStageRight
+        OffStageRight1,
+        OffStageRight2
     }
 
     [SerializeField]

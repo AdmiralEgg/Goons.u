@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e976e6e20ad86d84985f66affff92a18, type: 3}
+  m_Name: Goon_Toff
+  m_EditorClassIdentifier: 
+  GoonType: 1
+  WordFont: {fileID: 0}
+  WordColour: {r: 0.21586864, g: 0.33753592, b: 0.7264151, a: 0}
+  NiceCatchAudio: {fileID: 0}
+  StickTouchAudio: {fileID: 0}
+  SpeakerTouchAudio: {fileID: 0}
+  CrowdTouchAudio: {fileID: 0}
+  WordData:
+  - {fileID: 11400000, guid: 8f3bec6703923ef4183108011ff2c7a3, type: 2}
+  - {fileID: 11400000, guid: fb6054ac08176f4459c85b47b7f1c30f, type: 2}
+  - {fileID: 11400000, guid: 24d047628159ec54b82c2d8a174f2b83, type: 2}
+  - {fileID: 11400000, guid: cc626cef61dacd044856e021a5abb467, type: 2}
+  - {fileID: 11400000, guid: eeff79ecb2d345c458c30459de134469, type: 2}
+  - {fileID: 11400000, guid: 138bc934e8f2efc45abe8e323f56b46b, type: 2}
+  - {fileID: 11400000, guid: 8dc3fb9d0a6831847b317c08ebf57d4e, type: 2}
+  - {fileID: 11400000, guid: 3db7b94fb35d8714ead9df909eccadd8, type: 2}
+  - {fileID: 11400000, guid: da305a83360e1a94e92ea4fc8a0e9ecc, type: 2}
+  - {fileID: 11400000, guid: 8cb9290e7588a794e8282e857eafa558, type: 2}
+  - {fileID: 11400000, guid: 41c3eb897071cf24eb42c4ade9a67987, type: 2}
+  - {fileID: 11400000, guid: 5a5b9e07eecda9343b1b666de12b42dd, type: 2}
+  - {fileID: 11400000, guid: 43f4dfd84f29fa847b43844733b2b1cb, type: 2}
+  - {fileID: 11400000, guid: e1fd91d0322769447802e1d043cba909, type: 2}
+  - {fileID: 11400000, guid: 2c42dc4befdffb94b900616e9a196401, type: 2}

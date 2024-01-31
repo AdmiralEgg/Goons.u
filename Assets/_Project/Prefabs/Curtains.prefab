@@ -33,7 +33,7 @@ Transform:
   - {fileID: 5721748383293605275}
   - {fileID: 2460007152450081681}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5081643012589954371
 MonoBehaviour:
@@ -584,6 +584,7 @@ Transform:
   - {fileID: 2949835177957633580}
   - {fileID: 1414117393466749077}
   - {fileID: 8687716328038798756}
+  - {fileID: 5476189673299239640}
   m_Father: {fileID: 1319874960728893339}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1191,6 +1192,76 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
   m_PrefabInstance: {fileID: 62085303965377524}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &494588066663391527
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2460007152450081681}
+    m_Modifications:
+    - target: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.7089
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.7200001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6990184237783993189, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: m_Name
+      value: OffStageRight2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8349011443701109801, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: _stagePosition
+      value: 7
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9240e193088c2df469666ff04a694953, type: 3}
+--- !u!4 &5476189673299239640 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+  m_PrefabInstance: {fileID: 494588066663391527}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2139953347315482463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1385,7 +1456,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6990184237783993189, guid: 9240e193088c2df469666ff04a694953, type: 3}
       propertyPath: m_Name
-      value: OffStageRight
+      value: OffStageRight1
       objectReference: {fileID: 0}
     - target: {fileID: 8349011443701109801, guid: 9240e193088c2df469666ff04a694953, type: 3}
       propertyPath: _stagePosition
