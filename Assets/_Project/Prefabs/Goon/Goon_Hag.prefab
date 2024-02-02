@@ -134,14 +134,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7733768938301103766, guid: c03cbee97d407fa45a2357f01f56fcd1, type: 3}
       propertyPath: m_Name
-      value: Goon_Hag Variant
+      value: Goon_Hag
       objectReference: {fileID: 0}
     - target: {fileID: 7733768938301103766, guid: c03cbee97d407fa45a2357f01f56fcd1, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 1354934508475610188, guid: c03cbee97d407fa45a2357f01f56fcd1, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 8277442515422544852, guid: c03cbee97d407fa45a2357f01f56fcd1, type: 3}
+    - {fileID: 984166289639603190, guid: c03cbee97d407fa45a2357f01f56fcd1, type: 3}
+    - {fileID: 3968959786635597303, guid: c03cbee97d407fa45a2357f01f56fcd1, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c03cbee97d407fa45a2357f01f56fcd1, type: 3}

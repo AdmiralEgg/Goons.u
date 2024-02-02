@@ -122,7 +122,7 @@ public class CrowdMember : MonoBehaviour
     }
 
     // Throw hats, throw items
-    public void FinalCheer()
+    public void ThrowCosmetics()
     {
         SetMemberIntensity(Intensity.High);
         

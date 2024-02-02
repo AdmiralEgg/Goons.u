@@ -71,7 +71,7 @@ public class PointsManager : MonoBehaviour
             // Add beat based points
         };
 
-        Goon.GoonSpeak += () =>
+        Goon.GoonSpeak += (wordData) =>
         {
             // Add standard points
             AddPoints(pointsData.GoonSpeakPoints);

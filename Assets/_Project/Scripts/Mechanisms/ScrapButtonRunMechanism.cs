@@ -4,9 +4,9 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
 {
     [Header("Triggered Mechanisms")]
     [SerializeField]
-    private GameObject[] _trapDoors;
+    private ActivateTrapDoor _trapDoor;
     [SerializeField]
-    private GameObject[] _generators;
+    private ScrapGenerator _scrapGenerator;
 
     [Header("Light Setup")]
     [SerializeField]
@@ -34,16 +34,8 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
         _buttonLight.intensity = _enabledIntesity;
         _buttonLight.color = _enabledColour;
 
-        foreach (GameObject generator in _generators)
-        {
-            generator.GetComponent<ScrapGenerator>().StartGenerator();
-        }
-
-        foreach (GameObject trapdoor in _trapDoors)
-        {
-            // Open the trapdoors
-            trapdoor.GetComponent<ActivateTrapDoor>().OpenTrapDoor();
-        }
+        _scrapGenerator.StartGenerator();
+        _trapDoor.OpenTrapDoor();
     }
 
     public override void StopMechanism()
@@ -54,16 +46,8 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
         _buttonLight.intensity = _disabledIntesity;
         _buttonLight.color = _disabledColour;
 
-        foreach (GameObject generator in _generators)
-        {
-            generator.GetComponent<ScrapGenerator>().ShutdownGenerator();
-        }
-
-        foreach (GameObject trapdoor in _trapDoors)
-        {
-            // Close the trapdoors
-            trapdoor.GetComponent<ActivateTrapDoor>().CloseTrapDoor();
-        }
+        _scrapGenerator.ShutdownGenerator();
+        _trapDoor.CloseTrapDoor();
     }
 
     public override void OnClickedTrigger()

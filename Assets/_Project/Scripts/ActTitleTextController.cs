@@ -14,7 +14,7 @@ public class ActTitleTextController : MonoBehaviour
         {
             case GameManager.GameState.Act1:
                 _actTitle.text = "Act 1";
-                _actSubtitle.text = "The Cult of Celebrity";
+                _actSubtitle.text = "Cult of Celebrity";
                 break;
             case GameManager.GameState.Act2:
                 _actTitle.text = "Act 2";

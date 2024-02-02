@@ -7,27 +7,24 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    public enum InputState
-    {
-        Free,
-        ScrapSelected
-    }
-
+    public enum GameMode { None, Music, Scrap }
+    public enum InputState { Free, ScrapSelected }
+    
+    [Header("Game States")]
+    [SerializeField, ReadOnly]
+    private GameMode _currentGameMode;
     [SerializeField, ReadOnly]
     private InputState _currentInputState;
-
-    private static InputState s_currentInputState;
-
-    public static InputManager s_instance { get; private set; }
-
-    public static PlayerInput s_playerInput { get; private set; }
-
     [SerializeField, ReadOnly]
     private Scrap _currentSelectedScrap;
 
-    public static Action ScrapDeselected;
+    private static InputState s_currentInputState;
+    public static InputManager s_instance { get; private set; }
+    public static PlayerInput s_playerInput { get; private set; }
+
     public static Action<GameObject> ReportHit;
     public static Action<InputState> ChangedInputState;
+    public static Action<GameMode> ChangedGameMode;
 
     void Awake()
     {
@@ -43,7 +40,7 @@ public class InputManager : MonoBehaviour
 
         s_playerInput = this.GetComponent<PlayerInput>();
 
-        // On click, figure out what has been hit.
+        // On click, figure out what has been hit. Nothing, or scrap.
         s_playerInput.actions["Select"].performed += (InputAction.CallbackContext context) =>
         {
             Vector2 clickPosition = s_playerInput.actions["Position"].ReadValue<Vector2>();
@@ -67,14 +64,10 @@ public class InputManager : MonoBehaviour
         Scrap.ScrapSelected += (scrap) =>
         {
             _currentSelectedScrap = scrap;
-            UpdateState(InputState.ScrapSelected);
+            UpdateInputState(InputState.ScrapSelected);
         };
 
-        InputManager.ScrapDeselected += () =>
-        {
-            _currentSelectedScrap = null;
-            UpdateState(InputState.Free);
-        };
+        SetGameMode(GameMode.None);
     }
 
     private void Update()
@@ -119,28 +112,15 @@ public class InputManager : MonoBehaviour
         if (hit.collider == null)
         {
             // Go back to free mode and turn off selection lights
-            //UpdateState(InputState.Free);
             _currentSelectedScrap.SetScrapState(Scrap.ScrapState.Free);
-            //_currentSelectedScrap = null;
-            ScrapDeselected?.Invoke();
+            _currentSelectedScrap = null;
+            UpdateInputState(InputState.Free);
             return;
         }
 
         ReportHit?.Invoke(hit.collider.gameObject);
 
-        if (hit.collider.gameObject.GetComponent<BulbController>())
-        {
-            // attach to the slot
-            Debug.Log("Clicked a slot, attach the scrap");
-            hit.collider.gameObject.GetComponent<BulbController>().SendMessageUpwards("AddScrapToSlot", _currentSelectedScrap);
-
-            //UpdateState(InputState.Free);
-
-            _currentSelectedScrap.SetScrapState(Scrap.ScrapState.Free);
-            //_currentSelectedScrap = null;
-            ScrapDeselected?.Invoke();
-        }
-        else if (hit.collider.gameObject.GetComponent<Scrap>())
+        if (hit.collider.gameObject.GetComponent<Scrap>())
         {
             // Select a scrap
             Debug.Log("Clicked a scrap, switch selected to that one");
@@ -150,9 +130,17 @@ public class InputManager : MonoBehaviour
             _currentSelectedScrap = newScrap;
             newScrap.SetScrapState(Scrap.ScrapState.Selected);
         }
+
+        if (hit.collider.tag == "ScrapDelete")
+        {
+            Debug.Log("Clicked the hole with scrap selected. Burn the scrap!");
+            Destroy(_currentSelectedScrap.gameObject);
+            _currentSelectedScrap = null;
+            UpdateInputState(InputState.Free);
+        }
     }
 
-    private void UpdateState(InputState newState)
+    private void UpdateInputState(InputState newState)
     {
         ChangedInputState?.Invoke(newState);
         
@@ -164,5 +152,31 @@ public class InputManager : MonoBehaviour
     public static InputState GetCurrentInputState() 
     {
         return s_currentInputState;
+    }
+
+    public GameMode GetCurrentGameMode()
+    {
+        return _currentGameMode;
+    }
+
+    public void SetGameMode(GameMode newGameMode)
+    {
+        if (newGameMode == _currentGameMode) return;
+        
+        switch (newGameMode)
+        {
+            case GameMode.Scrap:
+                // Deactivate the Play button, ignore clicks
+                break;
+            case GameMode.Music:
+                // Deactivate the Scrap button, ignore clicks
+                break;
+            case GameMode.None:
+                // Activate both the Play and Scrap buttons
+                break;   
+        }
+
+        _currentGameMode = newGameMode;
+        ChangedGameMode?.Invoke(newGameMode);
     }
 }

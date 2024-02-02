@@ -8,7 +8,7 @@ public class GoonData : ScriptableObject
 
     [Header("Scrap Details")]
     public TMP_FontAsset WordFont;
-    public Color WordColour;
+    public Color WordColor;
 
     [Header("Audio Clips")]
     public AudioClip NiceCatchAudio;

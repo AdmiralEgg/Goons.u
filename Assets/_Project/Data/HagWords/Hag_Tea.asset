@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Hag_Tea
   m_EditorClassIdentifier: 
   Goon: 0
-  Word: Cake
-  wordSize: 0
+  Word: Tea
+  SizeOfWord: 0
   WordAudio: {fileID: 8300000, guid: 4960aa4aabba9cb47a5a35d923172935, type: 3}
   FaceClip: {fileID: 0}
   StickClip: {fileID: 0}
+  Font: {fileID: 11400000, guid: 8b4a42c44429bb94da1d4b57b8fad159, type: 2}
+  FontColor: {r: 0.10034709, g: 0.5188679, b: 0.1311668, a: 0}

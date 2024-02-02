@@ -59,12 +59,12 @@ public class GameManager : MonoBehaviour
     private PointsManager _pointsManager;
 
     [Header("Positioning")]
+    [SerializeField] 
+    private StagePositionPoint _hagStagePosition1, _hagStagePosition2;
     [SerializeField]
-    private StagePositionPoint _hagStagePosition;
+    private StagePositionPoint _toffStagePosition1, _toffStagePosition2;
     [SerializeField]
-    private StagePositionPoint _toffStagePosition;
-    [SerializeField]
-    private StagePositionPoint _yorkyStagePosition;
+    private StagePositionPoint _yorkyStagePosition1;
 
     public static Action ActFinished;
     public static Action ActStarted;
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
                 await StartAct(GameState.Act1);
 
                 // Goon walks on in darkness
-                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition);
+                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition1);
 
                 // Wait a second before goon lights come on...
                 StartCoroutine(PauseThenActivate(3.5f, _goonLightsLeft));
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
 
                 await StartAct(GameState.Act2);
 
-                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition);
+                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition1);
 
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
@@ -164,12 +164,12 @@ public class GameManager : MonoBehaviour
 
                 await StartAct(GameState.Act3);
 
-                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition);
-                _toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition);
+                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition1);
+                _toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition1);
 
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
-                _scrap.EnableAfterAnimation();
+                
 
                 CrowdController.CrowdEntertained = () => FinishAct(nextAct: GameState.Act4);
 
@@ -178,10 +178,10 @@ public class GameManager : MonoBehaviour
 
                 await StartAct(GameState.Act4);
 
-                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition);
-                _toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition);
-                _yorky.GetComponent<GoonMove>().SetTargetPosition(_yorkyStagePosition);
-
+                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition1);
+                _toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition1);
+                
+                _scrap.EnableAfterAnimation();
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
 
@@ -192,6 +192,9 @@ public class GameManager : MonoBehaviour
 
                 await StartAct(GameState.Act5);
 
+                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition2);
+                _toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition2);
+                _yorky.GetComponent<GoonMove>().SetTargetPosition(_yorkyStagePosition1);
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
 

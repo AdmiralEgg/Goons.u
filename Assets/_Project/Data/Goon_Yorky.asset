@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Goon_Yorky
   m_EditorClassIdentifier: 
   GoonType: 2
-  WordFont: {fileID: 0}
-  WordColour: {r: 0.6037736, g: 0.44395736, b: 0.15663938, a: 0}
+  WordFont: {fileID: 11400000, guid: 6c9ea451f1924ef47b14d05b258addcd, type: 2}
+  WordColor: {r: 0.5660378, g: 0.38725516, b: 0.16820933, a: 0}
   NiceCatchAudio: {fileID: 0}
   StickTouchAudio: {fileID: 0}
   SpeakerTouchAudio: {fileID: 0}

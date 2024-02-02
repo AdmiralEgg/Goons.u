@@ -6,7 +6,7 @@ using UnityEngine.VFX;
 
 public class CrowdController : MonoBehaviour
 {
-    public enum CrowdIntensity { None, Murmering, Hushed, Low, LowMedium, Medium, MediumHigh, High }
+    public enum CrowdIntensity { None, Murmering, Hushed, Low, LowMedium, Medium, MediumHigh, High, Maximum }
 
     [SerializeField]
     private PointsManager PointsManager;
@@ -63,6 +63,16 @@ public class CrowdController : MonoBehaviour
 
         switch (intensity)
         {
+            case (CrowdIntensity.Maximum):
+
+                foreach (CrowdMember member in _allCrowd)
+                {
+                    member.SetMemberIntensity(CrowdMember.Intensity.High);
+                    member.ThrowCosmetics();
+                }
+
+                _audioSourceCrowdReact.PlayOneShot(_bigCheer[UnityEngine.Random.Range(0, (_bigCheer.Length - 1))]);
+                break;
             case (CrowdIntensity.High):
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
@@ -125,16 +135,10 @@ public class CrowdController : MonoBehaviour
 
     private void PlayFinalCrowdCheer()
     {
-        foreach (CrowdMember member in _allCrowd)
-        {
-            member.SetMemberIntensity(CrowdMember.Intensity.High);
-            member.FinalCheer();
-        }
+        if (_currentCrowdIntensity == CrowdIntensity.Maximum) return;
 
-        _audioSourceCrowdReact.PlayOneShot(_bigCheer[UnityEngine.Random.Range(0, (_bigCheer.Length - 1))]);
-
+        PlayCrowdReaction(CrowdIntensity.Maximum);
         StartCoroutine(PlayStreamers());
-
         CrowdEntertained?.Invoke();
     }
 
@@ -144,7 +148,6 @@ public class CrowdController : MonoBehaviour
 
         foreach (CrowdMember member in _allCrowd)
         {
-            member.SetMemberIntensity(CrowdMember.Intensity.None);
             member.ResetMember();
         }
 

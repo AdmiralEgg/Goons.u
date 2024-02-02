@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Scrap
   - Stick
+  - ScrapDelete
   layers:
   - Default
   - TransparentFX

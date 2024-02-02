@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class ScrapInventory : MonoBehaviour
 {
-    [Tooltip("Maximum slots that can be used to hold words")]
-    public int _maxSlots = 5;
-
-    [SerializeField, ReadOnly, Tooltip("Number of scraps currently being held")]
-    private int _scrapsHeldCount;
-
     [SerializeField, ReadOnly, Tooltip("Scraps currently being held")]
     private List<Scrap> _scrapsHeld;
 
     [SerializeField, ReadOnly]
     private List<ScrapSlot> _scrapSlots;
 
-    [Tooltip("Plane on which scraps are arranged")]
-    private Mesh _scrapMesh;
+    [SerializeField, ReadOnly]
+    private Goon _assignedGoon;
+    [SerializeField, ReadOnly, Tooltip("Used to check scrap slots")]
+    private Goon.GoonType _assignedGoonType;
 
     void Awake()
     {
@@ -38,15 +34,16 @@ public class ScrapInventory : MonoBehaviour
             {
                 _scrapsHeld.Add(scrap);
             }
-
-            _scrapsHeldCount = _scrapsHeld.Count;
         }
     }
 
     public void AddScrapToInventory(Scrap scrap)
     {
+        // Check this slot is for our goon
+        if (scrap.GetScrapGoonType() != _assignedGoonType) return;
+
         // Check we have slots available
-        if (CountScrapHeld() >= _maxSlots)
+        if (CountScrapHeld() >= _scrapSlots.Count)
         {
             Debug.Log("Get rid of the oldest scrap? Or 'Oops, no room!'?");
             return;
@@ -61,32 +58,16 @@ public class ScrapInventory : MonoBehaviour
                 return;
             }
         }
-
-        //OrganiseInventory();
-    }
-
-    /// <summary>
-    /// Organises the scraps held
-    /// </summary>
-    private void OrganiseInventory()
-    {
-        /*
-        // Iterate through all slots and find a spare
-        foreach (ScrapSlot scrap in _scrapSlots)
-        {
-
-        }
-
-        // Check for children of the scrap object
-        foreach (ScrapSlot scrap in _scrapSlots)
-        {
-            scrap.transform.position = new Vector3(slotStart, this.transform.position.y, this.transform.position.z);
-        }
-        */
     }
 
     private int CountScrapHeld()
     {
         return _scrapsHeld.Count;
+    }
+
+    public void AssignGoon(Goon goon)
+    {
+        _assignedGoon = goon;
+        _assignedGoonType = goon.GetGoonData().GoonType;
     }
 }

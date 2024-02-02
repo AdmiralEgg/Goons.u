@@ -4,44 +4,26 @@ using Sirenix.OdinInspector;
 
 public class ScrapGenerator : MonoBehaviour
 {
-    public enum GeneratorState
-    {
-        Stopped,
-        InTransition,
-        Running
-    }
+    public enum GeneratorState { Stopped, InTransition, Running }
     
     [SerializeField, AssetsOnly]
     private GameObject _scrapPrefab;
 
+    [Header("Audio")]
     [SerializeField]
-    private AudioClip _startupSound;
-
-    [SerializeField]
-    private AudioClip _shutdownSound;
-
-    [SerializeField]
-    private AudioClip _runningSound;
-
-    [SerializeField]
-    private AudioClip _printSound;
-
-    [SerializeField]
-    private GeneratorState _currentState;
-
+    private AudioClip _startupSound, _shutdownSound, _printSound;
     private AudioSource _audioSource;
-    private GoonData _goonData;
+
+    [SerializeField, ReadOnly]
+    private GeneratorState _currentState;
 
     void Awake()
     {
-        _goonData = this.GetComponentInParent<Goon>().GetGoonData();
-
         _audioSource = this.GetComponent<AudioSource>();
-        SetupAudioSource();
-
-
 
         _currentState = GeneratorState.Stopped;
+
+        Goon.GoonSpeak += PrintScrap;
     }
 
     public void StartGenerator()
@@ -85,14 +67,6 @@ public class ScrapGenerator : MonoBehaviour
         _currentState = GeneratorState.Stopped;
     }
 
-    private void SetupAudioSource()
-    {
-        _audioSource = this.GetComponent<AudioSource>();
-        _audioSource.loop = true;
-        _audioSource.playOnAwake = false;
-        _audioSource.clip = _runningSound;
-    }
-
     public void PrintScrap(WordData word)
     {
         if (_currentState != GeneratorState.Running) return;
@@ -104,7 +78,9 @@ public class ScrapGenerator : MonoBehaviour
 
         // apply font and colour to scrap
         scrap.GetComponent<Scrap>().SetWordData(word);
-        if (_goonData.WordFont != null) scrap.GetComponent<Scrap>().SetFont(_goonData.WordFont);
-        if (_goonData.WordColour != null) scrap.GetComponent<Scrap>().SetFontColor(_goonData.WordColour);
+
+        // TODO: Set scrap font and colour depending on goon the scrap is coming from
+        //if (_goonData.WordFont != null) scrap.GetComponent<Scrap>().SetFont(_goonData.WordFont);
+        //if (_goonData.WordColour != null) scrap.GetComponent<Scrap>().SetFontColor(_goonData.WordColour);
     }
 }

@@ -25,21 +25,18 @@ public class Goon : MonoBehaviour
     [SerializeField, ReadOnly]
     private List<WordData> _wordQueue;
 
-    [SerializeField, ReadOnly]
-    private ScrapSlot[] _allScrapSlots;
+    [SerializeField]
+    private ScrapInventory _assignedScrapInventory;
 
-    private GoonScrapSlotController _goonScrapSlotController;
-    private ScrapGenerator _scrapGenerator;
     private AudioSource _faceAudioSource;
 
-    public static Action GoonSpeak;
+    public static Action<WordData> GoonSpeak;
 
     private void OnEnable()
     {
+        _assignedScrapInventory.AssignGoon(this);
+        
         _faceAudioSource = GetComponentInChildren<AudioSource>();
-        _scrapGenerator = GetComponentInChildren<ScrapGenerator>();
-        _allScrapSlots = GetComponentsInChildren<ScrapSlot>();
-        _goonScrapSlotController = GetComponentInChildren<GoonScrapSlotController>();
 
         _niceCatchAudio = _goonData.NiceCatchAudio;
         _stickTouchAudio = _goonData.StickTouchAudio;
@@ -49,11 +46,6 @@ public class Goon : MonoBehaviour
         _wordData = _goonData.WordData;
 
         _currentState = GoonState.Idle;
-
-        foreach (BulbController bulb in GetComponentsInChildren<BulbController>()) 
-        {
-            bulb.SetGoonEmissionColor(_goonData.WordColour);
-        }
 
         // Load two words into the queue
         LoadRandomWords(2);
@@ -71,7 +63,6 @@ public class Goon : MonoBehaviour
         }
 
         PlayRandomWord();
-        //PlayNextFixedWord();
     }
 
     private void LoadRandomWords(int wordsToLoad = 1)
@@ -85,16 +76,6 @@ public class Goon : MonoBehaviour
         }
     }
 
-    private void PlayNextFixedWord()
-    {
-        WordData wordData = _goonScrapSlotController.GetNextSlotToPlay();
-
-        // Play this word
-        StartCoroutine(Speak(wordData.WordAudio));
-        _scrapGenerator.PrintScrap(wordData);
-        return;
-    }
-
     private void PlayRandomWord()
     {
         if (_currentState == GoonState.Speaking) return;
@@ -106,23 +87,19 @@ public class Goon : MonoBehaviour
         }
 
         WordData wordData = _wordQueue.First<WordData>();
+        wordData.SetFont(_goonData.WordFont);
+        wordData.SetFontColor(_goonData.WordColor);
 
-        string word = wordData.Word;
-        AudioClip wordAudio = wordData.WordAudio;
         _wordQueue.RemoveAt(0);
         
-        if (wordAudio != null ) 
+        if (wordData.WordAudio != null)
         {
-            StartCoroutine(Speak(wordAudio));
-
-            if (_scrapGenerator.gameObject.activeInHierarchy)
-            {
-                _scrapGenerator.PrintScrap(wordData);
-            }
+            StartCoroutine(Speak(wordData.WordAudio));
+            GoonSpeak?.Invoke(wordData);
         }
         else
         {
-            Debug.LogError($"Word audio for {word} is not defined.");
+            Debug.LogError($"Word audio for {wordData.Word} is not defined.");
         }
 
         LoadRandomWords();
@@ -156,8 +133,6 @@ public class Goon : MonoBehaviour
     {
         _currentState = GoonState.Speaking;
         _faceAudioSource.PlayOneShot(clip);
-
-        GoonSpeak?.Invoke();
 
         yield return new WaitForSeconds(0.75f);
 

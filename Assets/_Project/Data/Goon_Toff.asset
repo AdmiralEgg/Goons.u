@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Goon_Toff
   m_EditorClassIdentifier: 
   GoonType: 1
-  WordFont: {fileID: 0}
-  WordColour: {r: 0.21586864, g: 0.33753592, b: 0.7264151, a: 0}
+  WordFont: {fileID: 11400000, guid: 50c8c10bfafdb5d46a48fcd0fe016ee4, type: 2}
+  WordColor: {r: 0.12428801, g: 0.31071827, b: 0.5377358, a: 0}
   NiceCatchAudio: {fileID: 0}
   StickTouchAudio: {fileID: 0}
   SpeakerTouchAudio: {fileID: 0}

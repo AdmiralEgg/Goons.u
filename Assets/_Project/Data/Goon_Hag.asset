@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Goon_Hag
   m_EditorClassIdentifier: 
   GoonType: 0
-  WordFont: {fileID: 0}
-  WordColour: {r: 0.122641504, g: 0.49056602, b: 0.1282112, a: 1}
+  WordFont: {fileID: 11400000, guid: 8b4a42c44429bb94da1d4b57b8fad159, type: 2}
+  WordColor: {r: 0.10034709, g: 0.5188679, b: 0.1311668, a: 0}
   NiceCatchAudio: {fileID: 8300000, guid: 84526e0bcf0933c488282184d72555b4, type: 3}
   StickTouchAudio: {fileID: 8300000, guid: 0a307e3af2fa3dc498e8d337aece0625, type: 3}
   SpeakerTouchAudio: {fileID: 8300000, guid: 07006fab8c804f14e9da129a637bda11, type: 3}

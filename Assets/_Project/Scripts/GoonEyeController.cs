@@ -149,11 +149,18 @@ public class GoonEyeController : MonoBehaviour
     }
 
     private void PlayAnimation(string animationName)
-    {
+    {        
         _animator.enabled = true;
 
         //_currentEyeState = EyeState.Focusing;
-        _animator.Play(animationName);
+        try
+        {
+            _animator.Play(animationName);
+        }
+        catch (Exception e)
+        {
+            Debug.Log($"Tried to play animation {animationName} and failed");
+        }
     }
 
     private CrowdMember PickRandomCrowdMember()
