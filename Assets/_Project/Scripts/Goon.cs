@@ -29,7 +29,6 @@ public class Goon : MonoBehaviour
     private ScrapSlot[] _allScrapSlots;
 
     private GoonScrapSlotController _goonScrapSlotController;
-    private WordStateSelectorController _wordSelectorController;
     private ScrapGenerator _scrapGenerator;
     private AudioSource _faceAudioSource;
 
@@ -41,7 +40,6 @@ public class Goon : MonoBehaviour
         _scrapGenerator = GetComponentInChildren<ScrapGenerator>();
         _allScrapSlots = GetComponentsInChildren<ScrapSlot>();
         _goonScrapSlotController = GetComponentInChildren<GoonScrapSlotController>();
-        _wordSelectorController = GetComponentInChildren<WordStateSelectorController>();
 
         _niceCatchAudio = _goonData.NiceCatchAudio;
         _stickTouchAudio = _goonData.StickTouchAudio;
@@ -72,15 +70,8 @@ public class Goon : MonoBehaviour
             return;
         }
 
-        if (_wordSelectorController.GetSelectedButtonType() == ButtonController.ButtonType.Random)
-        {
-            PlayRandomWord();
-        }
-
-        if (_wordSelectorController.GetSelectedButtonType() == ButtonController.ButtonType.Fixed)
-        {
-            PlayNextFixedWord();
-        }
+        PlayRandomWord();
+        //PlayNextFixedWord();
     }
 
     private void LoadRandomWords(int wordsToLoad = 1)

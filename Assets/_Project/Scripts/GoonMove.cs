@@ -2,16 +2,15 @@ using System.Collections;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using MoreMountains.Feedbacks;
+using UnityEngine.InputSystem.LowLevel;
 
 public class GoonMove : MonoBehaviour
 {
     enum GoonMoveState { Idle, Walking, Dancing, Bowing };
-    
+
     [Header("Animation Control")]
     [SerializeField]
     private Animator _goonStickAnimator;
-    [SerializeField]
-    private MMWiggle _idleWiggle;
 
     [Header("Goon position on stage values")]
     [SerializeField]
@@ -56,9 +55,8 @@ public class GoonMove : MonoBehaviour
         {
             // start the walk animation
             _goonStickAnimator.Play("Walk");
-            _idleWiggle.enabled = false;
-
             _currentMoveState = GoonMoveState.Walking;
+
             StartCoroutine(MoveToTarget());
         }
     }
@@ -70,16 +68,16 @@ public class GoonMove : MonoBehaviour
 
         // Calculate target rotation based on whether we're walking left or right
         float walkRotationY = 35f;
-        
+
         if (initial.x > _targetPosition.GetPositionValue().x)
         {
             walkRotationY = walkRotationY * -1;
         }
-        
+
         Quaternion target = Quaternion.Euler(10, walkRotationY, 0);
 
         while (_targetPosition != _currentPosition)
-        {            
+        {
             transform.rotation = Quaternion.RotateTowards(this.transform.rotation, target, 6);
             transform.position = Vector3.SmoothDamp(transform.position, _targetPosition.GetPositionValue(), ref velocity, smoothTime: 0.2f, _moveSpeed);
             yield return null;
@@ -95,33 +93,22 @@ public class GoonMove : MonoBehaviour
         GoonIdle();
     }
 
-    public void GoonDance()
-    {        
-        _idleWiggle.enabled = false;
-
-        // Play a random dance
-        _goonStickAnimator.Play(_danceMove);
-
-        _currentMoveState = GoonMoveState.Dancing;
-    }
-
     public void GoonIdle()
     {
-        _idleWiggle.enabled = true;
         _goonStickAnimator.Play("Idle");
-
         _currentMoveState = GoonMoveState.Idle;
     }
 
     public void GoonBow()
     {
-        Debug.Log("Goon bowing...");
-        
-        _idleWiggle.enabled = false;
-        this.transform.position = _currentPosition.GetPositionValue();
         _goonStickAnimator.Play("Bow");
-
         _currentMoveState = GoonMoveState.Bowing;
+    }
+
+    public void GoonDance()
+    {
+        _goonStickAnimator.Play(_danceMove);
+        _currentMoveState = GoonMoveState.Dancing;
     }
 
     public void GoonOffstage()
@@ -137,5 +124,10 @@ public class GoonMove : MonoBehaviour
     public void NewStagePosition(StagePositionPoint newPosition)
     {
         _currentPosition = newPosition;
+    }
+
+    private void OnGoonSelected(GameObject gameObject)
+    {
+        _goonStickAnimator.Play("Prod", _goonStickAnimator.GetLayerIndex("ProdLayer"));
     }
 }
