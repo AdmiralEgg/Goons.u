@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 
 public class StagePositionPoint : MonoBehaviour
 {
-    public enum StagePosition
+    public enum StagePosition 
     {
         OffStageLeft,
         Left,
@@ -22,9 +22,7 @@ public class StagePositionPoint : MonoBehaviour
     private SphereCollider _sphereCollider;
 
     [SerializeField]
-    private float _boundsRadius = 1f;
-
-    public event Action<Collider> OnEnterBounds;
+    private float _boundsRadius = 0.15f;
 
     private void Awake()
     {
@@ -45,6 +43,9 @@ public class StagePositionPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        OnEnterBounds?.Invoke(other);
+        if (other.tag == "Stick")
+        {
+            other.SendMessageUpwards("NewStagePosition", this);
+        }
     }
 }

@@ -49,7 +49,9 @@ MonoBehaviour:
   _songData: {fileID: 11400000, guid: b39b0bc1cdbdd1a44bb30c2c2f16b955, type: 2}
   _connectedSpeakers:
   - {fileID: 0}
-  _connectedLights: []
+  _connectedLights:
+  - {fileID: 1590236055754014590}
+  - {fileID: 5392065143883535354}
   _currentState: 0
   _rotateTimeSeconds: 5
 --- !u!1 &3873642365815055502
@@ -65,7 +67,7 @@ GameObject:
   - component: {fileID: 8347414759240804536}
   - component: {fileID: 6453876626937894151}
   m_Layer: 5
-  m_Name: Cube
+  m_Name: StopButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,7 +84,8 @@ Transform:
   m_LocalPosition: {x: -0.022, y: -0.003, z: 0.57}
   m_LocalScale: {x: 0.52, y: 0.52, z: 0.52}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 8501903987643784625}
   m_Father: {fileID: 1082064744924890157}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -3.076, y: -0.125, z: 2.328}
@@ -114,7 +117,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 54b6e59c6dd681047997b5c8ebdebd0f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -272,8 +275,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 0.2865601}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4929841620989992242}
-  - {fileID: 8501903987643784625}
   - {fileID: 1904381331093805197}
   - {fileID: 6167522294008147166}
   m_Father: {fileID: 802419738930649363}
@@ -377,7 +378,7 @@ GameObject:
   - component: {fileID: 7077595158134875003}
   - component: {fileID: 5033999663707428785}
   m_Layer: 0
-  m_Name: triangle
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -394,7 +395,8 @@ Transform:
   m_LocalPosition: {x: 0.14, y: 0, z: 0.44318804}
   m_LocalScale: {x: 36.409573, y: 36.53885, z: 127.39161}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 4929841620989992242}
   m_Father: {fileID: 1082064744924890157}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 178.9, z: 0}
@@ -426,7 +428,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2277b12965ac6244f8dce795e862f3fe, type: 2}
+  - {fileID: 2100000, guid: b4654ea982b5cf74e9fae846b0d0a008, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -473,12 +475,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8177348512757589365}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 2.62}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.026856601, y: 0.00054491137, z: -0.020278167, w: 0.9994335}
+  m_LocalPosition: {x: 0.042507097, y: -0.06, z: 1.21}
+  m_LocalScale: {x: 1.9230771, y: 1.9230771, z: 1.9230769}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1082064744924890157}
+  m_Father: {fileID: 1904381331093805197}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &1590236055754014590
@@ -591,12 +593,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8876986080481601951}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.09}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.0000000074502373, y: -0.9999539, z: 7.152044e-11, w: 0.009599311}
+  m_LocalPosition: {x: 0.0043, y: 0, z: 0.0181}
+  m_LocalScale: {x: 0.027440034, y: 0.02736813, z: 0.007851878}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1082064744924890157}
+  m_Father: {fileID: 6167522294008147166}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &5392065143883535354
@@ -611,8 +613,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.034784317, g: 1, b: 0, a: 1}
-  m_Intensity: 0.54
-  m_Range: 1
+  m_Intensity: 1.4
+  m_Range: 0.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10

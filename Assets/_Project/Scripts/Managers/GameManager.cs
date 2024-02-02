@@ -6,16 +6,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public enum GameState
-    {
-        Title,
-        Act1,
-        Act2,
-        Act3,
-        Act4,
-        Act5,
-        Sandbox
-    }
+    public enum GameState { Title, Act1, Act2, Act3, Act4, Act5, Sandbox }
 
     [Header("Game State")]
     [SerializeField, ReadOnly]
@@ -58,6 +49,10 @@ public class GameManager : MonoBehaviour
     [Header("Goons")]
     [SerializeField]
     private Goon _hag;
+    [SerializeField]
+    private Goon _toff;
+    [SerializeField]
+    private Goon _yorky;
 
     [Header("Points Manager")]
     [SerializeField]
@@ -65,12 +60,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Positioning")]
     [SerializeField]
-    private StagePositionPoint _hagOffStage;
+    private StagePositionPoint _hagStagePosition;
     [SerializeField]
-    private StagePositionPoint _hagStagePositionAct1;
-    
+    private StagePositionPoint _toffStagePosition;
     [SerializeField]
-    private PointsData _act1PointsData;
+    private StagePositionPoint _yorkyStagePosition;
 
     public static Action ActFinished;
     public static Action ActStarted;
@@ -135,7 +129,7 @@ public class GameManager : MonoBehaviour
                 await StartAct(GameState.Act1);
 
                 // Goon walks on in darkness
-                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePositionAct1);
+                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition);
 
                 // Wait a second before goon lights come on...
                 StartCoroutine(PauseThenActivate(3.5f, _goonLightsLeft));
@@ -153,7 +147,7 @@ public class GameManager : MonoBehaviour
 
                 await StartAct(GameState.Act2);
 
-                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePositionAct1);
+                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition);
 
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
@@ -170,7 +164,8 @@ public class GameManager : MonoBehaviour
 
                 await StartAct(GameState.Act3);
 
-                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePositionAct1);
+                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition);
+                _toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition);
 
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
@@ -182,6 +177,10 @@ public class GameManager : MonoBehaviour
             case GameState.Act4:
 
                 await StartAct(GameState.Act4);
+
+                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition);
+                _toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition);
+                _yorky.GetComponent<GoonMove>().SetTargetPosition(_yorkyStagePosition);
 
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
@@ -263,6 +262,8 @@ public class GameManager : MonoBehaviour
         // Go offstage
         await Task.Delay(1000);
         _hag.GetComponent<GoonMove>().GoonOffstage();
+        _toff.GetComponent<GoonMove>().GoonOffstage();
+        _yorky.GetComponent<GoonMove>().GoonOffstage();
 
         // Wait for the curtain animation to complete
         await WaitForEnableMechanismState(_curtains[0], BaseEnableMechanism.EnabledState.Disabled);

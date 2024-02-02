@@ -1448,7 +1448,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3455044277081684117}
   m_LocalRotation: {x: 0.021619655, y: -0.03283943, z: 0.24062164, w: 0.9698224}
-  m_LocalPosition: {x: 0.25599998, y: 0.98500013, z: 0.000000029802322}
+  m_LocalPosition: {x: 0.25600004, y: 0.98500013, z: 0}
   m_LocalScale: {x: 1.0098985, y: 0.62419116, z: 0.13200003}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3018,12 +3018,13 @@ GameObject:
   - component: {fileID: 2241312976451290140}
   - component: {fileID: 6958088494115906417}
   - component: {fileID: 4395990237688706409}
+  - component: {fileID: 4720596837840818641}
   - component: {fileID: 974027564928602008}
-  - component: {fileID: 7102439383638902135}
   - component: {fileID: 3829746430844325336}
+  - component: {fileID: 1869278974651910523}
   m_Layer: 6
   m_Name: GoonStick
-  m_TagString: Untagged
+  m_TagString: Stick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3036,7 +3037,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7299083665477588454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.01744765, y: 0.09066528, z: 0.28385103}
   m_LocalScale: {x: 0.20460004, y: 4.5016937, z: 0.053766508}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3098,6 +3099,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &4720596837840818641
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7299083665477588454}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &974027564928602008
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3117,29 +3145,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.1937222, y: 1, z: 1}
-  m_Center: {x: -0.1891407, y: 0, z: 0}
---- !u!95 &7102439383638902135
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7299083665477588454}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c26bef655d510134da2e5fa359455519, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_Size: {x: 1.3149983, y: 0.3041839, z: 1}
+  m_Center: {x: 0.0012282167, y: -0.0485303, z: 0}
 --- !u!114 &3829746430844325336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3460,6 +3467,27 @@ MonoBehaviour:
     NoiseShiftMin: {x: 0, y: 0, z: 0}
     NoiseShiftMax: {x: 0, y: 0, z: 0}
   DebugWiggleDuration: 2
+--- !u!95 &1869278974651910523
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7299083665477588454}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c26bef655d510134da2e5fa359455519, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7427424242313395602
 GameObject:
   m_ObjectHideFlags: 0
@@ -3742,7 +3770,6 @@ GameObject:
   - component: {fileID: 3517296787084675255}
   - component: {fileID: 5649418320940154872}
   - component: {fileID: 1354934508475610188}
-  - component: {fileID: 8268685087503844787}
   m_Layer: 6
   m_Name: Goon
   m_TagString: Untagged
@@ -3766,7 +3793,7 @@ Transform:
   - {fileID: 981758712438577070}
   - {fileID: 7297975042523838462}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3517296787084675255
 MonoBehaviour:
@@ -3801,12 +3828,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627764fa5a5b4dd49ae3d8ee13529376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _goonStickAnimator: {fileID: 7102439383638902135}
+  _goonStickAnimator: {fileID: 1869278974651910523}
   _idleWiggle: {fileID: 3829746430844325336}
-  _awakePosition: {fileID: 0}
+  _offStagePosition: {fileID: 0}
   _currentPosition: {fileID: 0}
   _targetPosition: {fileID: 0}
-  _offStagePosition: {fileID: 0}
   _currentMoveState: 0
   _moveSpeed: 3
   velocity: {x: 0, y: 0, z: 0}
@@ -3829,33 +3855,6 @@ MonoBehaviour:
   _slotsActive: 0
   _refreshSlots: 0
   _currentButtonType: 0
---- !u!54 &8268685087503844787
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7733768938301103766}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &7786583435822880501
 GameObject:
   m_ObjectHideFlags: 0
@@ -4406,7 +4405,7 @@ MonoBehaviour:
   _focusStraight: {fileID: 6340515859968726751}
   _focusRight: {fileID: 3207331356476240899}
   _focusCeiling: {fileID: 3058947877555945888}
-  _crowdLeft: {fileID: 0}
+  _crowdLeft: {fileID: 3510325223075428756}
   _crowdRight: {fileID: 0}
   _crowdMember: {fileID: 0}
   _allCrowd: {fileID: 0}

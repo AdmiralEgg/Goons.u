@@ -15,15 +15,16 @@ public class GoonMove : MonoBehaviour
 
     [Header("Goon position on stage values")]
     [SerializeField]
-    private StagePositionPoint _awakePosition;
+    private StagePositionPoint _offStagePosition;
     [SerializeField, ReadOnly]
     private StagePositionPoint _currentPosition;
     [SerializeField]
     private StagePositionPoint _targetPosition;
-    [SerializeField]
-    private StagePositionPoint _offStagePosition;
     [SerializeField, ReadOnly]
     private GoonMoveState _currentMoveState;
+
+    [SerializeField]
+    string _danceMove = "DanceLeftRight";
 
     [SerializeField]
     float _moveSpeed = 3f;
@@ -32,14 +33,14 @@ public class GoonMove : MonoBehaviour
 
     void Awake()
     {
-        if (_awakePosition != null)
+        if (_offStagePosition != null)
         {
-            this.transform.position = _awakePosition.GetPositionValue();
-            _currentPosition = _awakePosition;
+            this.transform.position = _offStagePosition.GetPositionValue();
+            _currentPosition = _offStagePosition;
         }
         else
         {
-            Debug.LogError($"Missing position {_awakePosition.name} from the Stage Position Points list");
+            Debug.LogError($"Missing off stage position {_offStagePosition.name} from the Stage Position Points list");
         }
 
         _currentMoveState = GoonMoveState.Idle;
@@ -64,9 +65,6 @@ public class GoonMove : MonoBehaviour
 
     private IEnumerator MoveToTarget()
     {
-        // when we're close, stop walking
-        _targetPosition.OnEnterBounds += EnteredTargetBounds;
-
         // initial rotation
         Quaternion initial = this.transform.rotation;
 
@@ -80,12 +78,10 @@ public class GoonMove : MonoBehaviour
         
         Quaternion target = Quaternion.Euler(10, walkRotationY, 0);
 
-        while (_currentMoveState == GoonMoveState.Walking)
+        while (_targetPosition != _currentPosition)
         {            
             transform.rotation = Quaternion.RotateTowards(this.transform.rotation, target, 6);
-
             transform.position = Vector3.SmoothDamp(transform.position, _targetPosition.GetPositionValue(), ref velocity, smoothTime: 0.2f, _moveSpeed);
-
             yield return null;
         }
 
@@ -93,29 +89,18 @@ public class GoonMove : MonoBehaviour
         while (transform.rotation != initial)
         {
             transform.rotation = Quaternion.RotateTowards(this.transform.rotation, initial, 0.5f);
-
             yield return null;
         }
-    }
 
-    private void EnteredTargetBounds(Collider collider)
-    {
-        if (this == collider.GetComponentInParent<GoonMove>())
-        {
-            _goonStickAnimator.Play("Idle");
-            _currentPosition = _targetPosition;
-            _idleWiggle.enabled = true;
-            _currentMoveState = GoonMoveState.Idle;
-
-            _targetPosition.OnEnterBounds -= EnteredTargetBounds;
-        }
+        GoonIdle();
     }
 
     public void GoonDance()
     {        
         _idleWiggle.enabled = false;
-        _goonStickAnimator.applyRootMotion = false;
-        _goonStickAnimator.Play("DanceLeftRight");
+
+        // Play a random dance
+        _goonStickAnimator.Play(_danceMove);
 
         _currentMoveState = GoonMoveState.Dancing;
     }
@@ -123,8 +108,6 @@ public class GoonMove : MonoBehaviour
     public void GoonIdle()
     {
         _idleWiggle.enabled = true;
-        _goonStickAnimator.applyRootMotion = true;
-        this.transform.position = _currentPosition.GetPositionValue();
         _goonStickAnimator.Play("Idle");
 
         _currentMoveState = GoonMoveState.Idle;
@@ -135,7 +118,6 @@ public class GoonMove : MonoBehaviour
         Debug.Log("Goon bowing...");
         
         _idleWiggle.enabled = false;
-        _goonStickAnimator.applyRootMotion = false;
         this.transform.position = _currentPosition.GetPositionValue();
         _goonStickAnimator.Play("Bow");
 
@@ -150,5 +132,10 @@ public class GoonMove : MonoBehaviour
     public void SetTargetPosition(StagePositionPoint target)
     {
         _targetPosition = target;
+    }
+
+    public void NewStagePosition(StagePositionPoint newPosition)
+    {
+        _currentPosition = newPosition;
     }
 }

@@ -7,18 +7,8 @@ using System.Linq;
 
 public class Goon : MonoBehaviour
 {
-    public enum GoonType
-    {
-        Hag,
-        Toff,
-        Yorky
-    }
-
-    public enum GoonState
-    {
-        Idle,
-        Speaking
-    }
+    public enum GoonType { Hag, Toff, Yorky }
+    public enum GoonState { Idle, Speaking }
 
     [SerializeField, Required]
     private GoonData _goonData;
