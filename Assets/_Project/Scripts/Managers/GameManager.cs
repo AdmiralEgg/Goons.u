@@ -39,8 +39,6 @@ public class GameManager : MonoBehaviour
     private MelodyButtonEnableMechanism[] _melodyButtonShort;
     [SerializeField]
     private GameObject[] _record;
-    [SerializeField]
-    private ToggleMusic _musicButton;
 
     [Header("TitleUI")]
     [SerializeField]

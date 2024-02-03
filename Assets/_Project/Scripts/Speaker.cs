@@ -69,10 +69,19 @@ public class Speaker : MonoBehaviour
         _musicSource.loop = true;
     }
 
+    public void PlayMusicStartupSound()
+    {
+        _musicSource.PlayOneShot(_startClip);
+    }
 
     public void StartMusic(SongData songData)
     {
         StartCoroutine(StartMusicClip(songData));
+    }
+
+    public void PlayMusicStopSound()
+    {
+        _musicSource.PlayOneShot(_stopClip);
     }
 
     public void StopMusic()
@@ -81,17 +90,13 @@ public class Speaker : MonoBehaviour
         
         Debug.Log($"Stopping clip: {_musicSource.clip.name}");
         _musicSource.Stop();
-        _musicSource.PlayOneShot(_stopClip);
         StopAllCoroutines();
         MusicStopped?.Invoke();
     }
 
     private IEnumerator StartMusicClip(SongData songData)
     {
-        _musicSource.PlayOneShot(_startClip);
         MusicStarted?.Invoke();
-
-        yield return new WaitForSeconds(_startClip.length);
 
         _musicSource.clip = songData.AudioClip;
         _musicSource.Play();

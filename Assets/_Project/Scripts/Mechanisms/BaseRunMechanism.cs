@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class BaseRunMechanism : MonoBehaviour
 {
-    protected enum RunningState { Running, Shutdown }
+    protected enum RunningState { Running, TransitionToShutdown, Shutdown, TransitionToRunning }
 
     [SerializeField, ReadOnly]
     protected RunningState _currentRunningState = RunningState.Shutdown;

@@ -18,6 +18,10 @@ public class InputManager : MonoBehaviour
     [SerializeField, ReadOnly]
     private Scrap _currentSelectedScrap;
 
+    [Header("Button Activation")]
+    [SerializeField]
+    private ScrapButtonEnableMechanism _scrapEnable;
+
     private static InputState s_currentInputState;
     public static InputManager s_instance { get; private set; }
     public static PlayerInput s_playerInput { get; private set; }
@@ -167,13 +171,22 @@ public class InputManager : MonoBehaviour
         {
             case GameMode.Scrap:
                 // Deactivate the Play button, ignore clicks
+                /*
+                if (_playButton.GetCurrentState() == ToggleMusic.ToggleState.WaitingForStop ||
+                    _playButton.GetCurrentState() == ToggleMusic.ToggleState.RotateToStart)
+                {
+                    Debug.Log("Hide the music button");
+                }
+                */
                 break;
             case GameMode.Music:
                 // Deactivate the Scrap button, ignore clicks
+                _scrapEnable.DisableAfterAnimation();
                 break;
             case GameMode.None:
                 // Activate both the Play and Scrap buttons
-                break;   
+                _scrapEnable.EnableAfterAnimation();
+                break;
         }
 
         _currentGameMode = newGameMode;

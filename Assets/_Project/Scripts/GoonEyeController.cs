@@ -157,7 +157,7 @@ public class GoonEyeController : MonoBehaviour
         {
             _animator.Play(animationName);
         }
-        catch (Exception e)
+        catch
         {
             Debug.Log($"Tried to play animation {animationName} and failed");
         }
