@@ -7,12 +7,31 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public enum GameState { Title, Act1, Act2, Act3, Act4, Act5, Sandbox }
+    public enum GameMode { None, Music, Scrap }
 
     [Header("Game State")]
     [SerializeField, ReadOnly]
     private GameState _currentGameState;
+    [SerializeField, ReadOnly]
+    private GameMode _currentGameMode;
     [SerializeField]
     private GameState _startingGameState = GameState.Title;
+
+    [Header("Act Data")]
+    [SerializeField]
+    private ActData _title;
+    [SerializeField]
+    private ActData _act1;
+    [SerializeField]
+    private ActData _act2;
+    [SerializeField]
+    private ActData _act3;
+    [SerializeField]
+    private ActData _act4;
+    [SerializeField]
+    private ActData _act5;
+    [SerializeField]
+    private ActData _sandbox;
 
     [Header("Camera")]
     [SerializeField]
@@ -32,13 +51,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private CurtainEnableMechanism[] _curtains;
     [SerializeField]
+    private MusicButtonEnableMechanism _music;
+    [SerializeField]
     private ScrapButtonEnableMechanism _scrap;
     [SerializeField]
     private MelodyButtonEnableMechanism _melodyButtonLong;
     [SerializeField]
     private MelodyButtonEnableMechanism[] _melodyButtonShort;
-    [SerializeField]
-    private GameObject[] _record;
 
     [Header("TitleUI")]
     [SerializeField]
@@ -56,19 +75,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PointsManager _pointsManager;
 
-    [Header("Positioning")]
-    [SerializeField] 
-    private StagePositionPoint _hagStagePosition1, _hagStagePosition2;
-    [SerializeField]
-    private StagePositionPoint _toffStagePosition1, _toffStagePosition2;
-    [SerializeField]
-    private StagePositionPoint _yorkyStagePosition1;
-
     public static Action ActFinished;
     public static Action ActStarted;
+    public static Action<GameMode> ChangedGameMode;
 
     void Awake()
     {
+        SetGameMode(GameMode.None);
         _actTitleTextController.gameObject.SetActive(false);
 
         if (_startingGameState == GameState.Title)
@@ -81,6 +94,9 @@ public class GameManager : MonoBehaviour
             _gameCamera.SetActive(true);
             _projectorCamera.SetActive(false);
         }
+
+        MusicButtonRunMechanism.MusicMechanismRunStateUpdate += MechanismRunStateCheck;
+        ScrapButtonRunMechanism.ScrapMechanismRunStateUpdate += MechanismRunStateCheck;
     }
 
     private void Start()
@@ -127,7 +143,7 @@ public class GameManager : MonoBehaviour
                 await StartAct(GameState.Act1);
 
                 // Goon walks on in darkness
-                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition1);
+                //_hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition1);
 
                 // Wait a second before goon lights come on...
                 StartCoroutine(PauseThenActivate(3.5f, _goonLightsLeft));
@@ -145,7 +161,7 @@ public class GameManager : MonoBehaviour
 
                 await StartAct(GameState.Act2);
 
-                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition1);
+                //_hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition1);
 
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
@@ -162,8 +178,8 @@ public class GameManager : MonoBehaviour
 
                 await StartAct(GameState.Act3);
 
-                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition1);
-                _toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition1);
+                //_hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition1);
+                //_toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition1);
 
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
@@ -176,8 +192,8 @@ public class GameManager : MonoBehaviour
 
                 await StartAct(GameState.Act4);
 
-                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition1);
-                _toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition1);
+                //_hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition1);
+                //_toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition1);
                 
                 _scrap.EnableAfterAnimation();
                 _goonLightsLeft.SetActive(true);
@@ -190,9 +206,9 @@ public class GameManager : MonoBehaviour
 
                 await StartAct(GameState.Act5);
 
-                _hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition2);
-                _toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition2);
-                _yorky.GetComponent<GoonMove>().SetTargetPosition(_yorkyStagePosition1);
+                //_hag.GetComponent<GoonMove>().SetTargetPosition(_hagStagePosition2);
+                //_toff.GetComponent<GoonMove>().SetTargetPosition(_toffStagePosition2);
+                //_yorky.GetComponent<GoonMove>().SetTargetPosition(_yorkyStagePosition1);
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
 
@@ -294,5 +310,73 @@ public class GameManager : MonoBehaviour
         {
             await Task.Delay(1000);
         }
+    }
+
+    public GameMode GetCurrentGameMode()
+    {
+        return _currentGameMode;
+    }
+
+    private void MechanismRunStateCheck(Type mechanismType, bool isStarting)
+    {
+        if (mechanismType == typeof(MusicButtonRunMechanism))
+        {
+            if (isStarting)
+            {
+                SetGameMode(GameMode.Music);
+            }
+            else
+            {
+                SetGameMode(GameMode.None);
+            }
+        }
+
+        if (mechanismType == typeof(ScrapButtonRunMechanism))
+        {
+            if (isStarting)
+            {
+                SetGameMode(GameMode.Scrap);
+            }
+            else
+            {
+                SetGameMode(GameMode.None);
+            }
+        }
+    }
+
+    public void SetGameMode(GameMode newGameMode)
+    {
+        if (newGameMode == _currentGameMode) return;
+
+        switch (newGameMode)
+        {
+            case GameMode.Scrap:
+
+                _music.DisableAfterAnimation();
+                _scrap.EnableAfterAnimation();
+
+                // Deactivate the Play button, ignore clicks
+                /*
+                if (_playButton.GetCurrentState() == ToggleMusic.ToggleState.WaitingForStop ||
+                    _playButton.GetCurrentState() == ToggleMusic.ToggleState.RotateToStart)
+                {
+                    Debug.Log("Hide the music button");
+                }
+                */
+                break;
+            case GameMode.Music:
+                // Deactivate the Scrap button, ignore clicks
+                _music.EnableAfterAnimation();
+                _scrap.DisableAfterAnimation();
+                break;
+            case GameMode.None:
+                // Activate both the Play and Scrap buttons
+                _music.EnableAfterAnimation();
+                _scrap.EnableAfterAnimation();
+                break;
+        }
+
+        _currentGameMode = newGameMode;
+        ChangedGameMode?.Invoke(newGameMode);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ScrapButtonRunMechanism : BaseRunMechanism
@@ -20,8 +21,11 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
     [SerializeField]
     private Color _disabledColour = new Color(0.3294118f, 0.2039216f, 0.1215686f);
 
+    public static Action<Type, bool> ScrapMechanismRunStateUpdate;
+
     void Awake()
     {
+        _enableMechanism = this.GetComponent<ScrapButtonEnableMechanism>();
         _buttonLight.intensity = _disabledIntesity;
         _buttonLight.color = _disabledColour;
     }
@@ -36,6 +40,7 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
 
         _scrapGenerator.StartGenerator();
         _trapDoor.OpenTrapDoor();
+        ScrapMechanismRunStateUpdate?.Invoke(this.GetType(), true);
     }
 
     public override void StopMechanism()
@@ -48,11 +53,14 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
 
         _scrapGenerator.ShutdownGenerator();
         _trapDoor.CloseTrapDoor();
+        ScrapMechanismRunStateUpdate?.Invoke(this.GetType(), false);
     }
 
     public override void OnClickedTrigger()
     {
         base.OnClickedTrigger();
+
+        if (_enableMechanism?.GetState() != BaseEnableMechanism.EnabledState.Enabled) return;
 
         if (_currentRunningState == RunningState.Shutdown)
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -17,8 +18,11 @@ public class MusicButtonRunMechanism : BaseRunMechanism
     [SerializeField]
     private Light _startButtonLight, _stopButtonLight;
 
+    public static Action<Type, bool> MusicMechanismRunStateUpdate;
+
     private void Awake()
     {
+        _enableMechanism = this.GetComponent<MusicButtonEnableMechanism>();
         _currentRunningState = RunningState.Shutdown;
         PointsManager.PointsReached += StopMechanism;
     }
@@ -36,6 +40,8 @@ public class MusicButtonRunMechanism : BaseRunMechanism
     public override void OnClickedTrigger()
     {
         base.OnClickedTrigger();
+
+        if (_enableMechanism?.GetState() != BaseEnableMechanism.EnabledState.Enabled) return;
 
         switch (_currentRunningState) 
         {
@@ -82,6 +88,7 @@ public class MusicButtonRunMechanism : BaseRunMechanism
             _currentRunningState = RunningState.TransitionToRunning;
             SwitchAllLights(false);
             _speaker.PlayMusicStartupSound();
+            MusicMechanismRunStateUpdate?.Invoke(this.GetType(), true);
         }
 
         if (targetState == RunningState.Shutdown)
@@ -90,6 +97,7 @@ public class MusicButtonRunMechanism : BaseRunMechanism
             SwitchAllLights(false);
             _speaker.StopMusic();
             _speaker.PlayMusicStopSound();
+            MusicMechanismRunStateUpdate?.Invoke(this.GetType(), false);
         }
 
         float t = 0;

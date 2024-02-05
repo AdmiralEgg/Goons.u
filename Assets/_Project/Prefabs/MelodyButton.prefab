@@ -610,7 +610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b3091f04b7cc0a4fb2abbe98e3dd999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentRunningState: 1
+  _currentRunningState: 2
   _melodyClip: {fileID: 0}
   _mechanismRunStartClip: {fileID: 8300000, guid: 6e3edecedde869746a375efddf0d13cc, type: 3}
   _mechanismRunStopClip: {fileID: 8300000, guid: 77daf034130801c4f98236820483a619, type: 3}

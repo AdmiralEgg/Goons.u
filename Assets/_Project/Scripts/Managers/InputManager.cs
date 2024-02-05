@@ -7,20 +7,13 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    public enum GameMode { None, Music, Scrap }
     public enum InputState { Free, ScrapSelected }
     
     [Header("Game States")]
     [SerializeField, ReadOnly]
-    private GameMode _currentGameMode;
-    [SerializeField, ReadOnly]
     private InputState _currentInputState;
     [SerializeField, ReadOnly]
     private Scrap _currentSelectedScrap;
-
-    [Header("Button Activation")]
-    [SerializeField]
-    private ScrapButtonEnableMechanism _scrapEnable;
 
     private static InputState s_currentInputState;
     public static InputManager s_instance { get; private set; }
@@ -28,7 +21,6 @@ public class InputManager : MonoBehaviour
 
     public static Action<GameObject> ReportHit;
     public static Action<InputState> ChangedInputState;
-    public static Action<GameMode> ChangedGameMode;
 
     void Awake()
     {
@@ -70,8 +62,6 @@ public class InputManager : MonoBehaviour
             _currentSelectedScrap = scrap;
             UpdateInputState(InputState.ScrapSelected);
         };
-
-        SetGameMode(GameMode.None);
     }
 
     private void Update()
@@ -156,40 +146,5 @@ public class InputManager : MonoBehaviour
     public static InputState GetCurrentInputState() 
     {
         return s_currentInputState;
-    }
-
-    public GameMode GetCurrentGameMode()
-    {
-        return _currentGameMode;
-    }
-
-    public void SetGameMode(GameMode newGameMode)
-    {
-        if (newGameMode == _currentGameMode) return;
-        
-        switch (newGameMode)
-        {
-            case GameMode.Scrap:
-                // Deactivate the Play button, ignore clicks
-                /*
-                if (_playButton.GetCurrentState() == ToggleMusic.ToggleState.WaitingForStop ||
-                    _playButton.GetCurrentState() == ToggleMusic.ToggleState.RotateToStart)
-                {
-                    Debug.Log("Hide the music button");
-                }
-                */
-                break;
-            case GameMode.Music:
-                // Deactivate the Scrap button, ignore clicks
-                _scrapEnable.DisableAfterAnimation();
-                break;
-            case GameMode.None:
-                // Activate both the Play and Scrap buttons
-                _scrapEnable.EnableAfterAnimation();
-                break;
-        }
-
-        _currentGameMode = newGameMode;
-        ChangedGameMode?.Invoke(newGameMode);
     }
 }

@@ -13,12 +13,13 @@ GameObject:
   - component: {fileID: 5689003791075449099}
   - component: {fileID: 3485627555552474500}
   - component: {fileID: 2349550105084587904}
+  - component: {fileID: 1067243192832456050}
   m_Layer: 7
   m_Name: Hole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 126
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &5535537315029371720
 Transform:
@@ -70,6 +71,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5985240b21bc30408ce49c1a8bd3614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _igniteScrap: {fileID: 8300000, guid: 3687486e79aa2b54ab94bcfd3cc04de1, type: 3}
+  _flame: {fileID: 8300000, guid: 9d0a32be0f2c2f240b48d2cfcad9064e, type: 3}
 --- !u!33 &3485627555552474500
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -120,6 +123,102 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!82 &1067243192832456050
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532944009596410790}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7701998011778446961
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,9 +229,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3106939457427739104}
   - component: {fileID: 4430115499540262903}
-  m_Layer: 7
-  m_Name: ScrapDeleteCollider
-  m_TagString: Untagged
+  m_Layer: 5
+  m_Name: ScrapDeleteTrigger
+  m_TagString: ScrapDelete
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -171,8 +270,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10.933357, y: 38.015713, z: 10.036544}
-  m_Center: {x: 0.12494391, y: 18.50785, z: -0.008445957}
+  m_Size: {x: 10.933357, y: 42.511936, z: 11.308823}
+  m_Center: {x: 0.12494391, y: 16.259727, z: -0.6445853}
 --- !u!1001 &1741890743038392449
 PrefabInstance:
   m_ObjectHideFlags: 0

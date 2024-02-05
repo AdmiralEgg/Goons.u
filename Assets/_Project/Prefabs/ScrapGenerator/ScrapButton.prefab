@@ -503,14 +503,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4678656114687742565}
-  m_LocalRotation: {x: 0.12688427, y: -0.11398891, z: -0.33523035, w: 0.9265676}
+  m_LocalRotation: {x: 0.12688418, y: -0.11398576, z: -0.33523402, w: 0.92656666}
   m_LocalPosition: {x: -4.83, y: 5.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3413093747205668878}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 9.132, y: -17.464, z: -41.186}
 --- !u!114 &4768441036887838821
 MonoBehaviour:
@@ -549,11 +549,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a93afb6ed6bc9584994a5d82a99891d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentRunningState: 1
-  _trapDoors:
-  - {fileID: 0}
-  _generators:
-  - {fileID: 0}
+  _currentRunningState: 2
+  _trapDoor: {fileID: 0}
+  _scrapGenerator: {fileID: 0}
   _buttonLight: {fileID: 305708883052810789}
   _enabledIntesity: 0.5
   _enabledColour: {r: 0.7830189, g: 0.7396523, b: 0.4986205, a: 1}

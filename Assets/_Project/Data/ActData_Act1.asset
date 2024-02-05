@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecc078a5ab285cb4fa5271aad2338657, type: 3}
+  m_Name: ActData_Act1
+  m_EditorClassIdentifier: 
+  Act: 1
+  ProjectorEnabled: 0
+  MusicEnabled: 1
+  ScrapEnabled: 0
+  MelodyLong1Enabled: 1
+  MelodyShort1Enabled: 0
+  MelodyShort2Enabled: 0
+  HagEnabled: 1
+  HagStagePosition: {fileID: 0}
+  ToffEnabled: 0
+  ToffStagePosition: {fileID: 0}
+  YorkyEnabled: 0
+  YorkyStagePosition: {fileID: 0}
+  GoonLightsLeftEnabled: 1
+  GoonLightsLeftMidEnabled: 0
+  GoonLightsMiddleEnabled: 0
+  GoonLightsRightMidEnabled: 0
+  GoonLightsRightEnabled: 0
+  HouseLightLeftEnabled: 0
+  HouseLightRightEnabled: 0
+  CrowdLightEnabled: 1

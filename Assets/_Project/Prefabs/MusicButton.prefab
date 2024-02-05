@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4063002aad7da4ca7aab12e45729a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentRunningState: 1
+  _currentRunningState: 2
   _songData: {fileID: 11400000, guid: b39b0bc1cdbdd1a44bb30c2c2f16b955, type: 2}
   _speaker: {fileID: 0}
   _rotateTimeSeconds: 4
@@ -208,7 +208,6 @@ GameObject:
   - component: {fileID: 3133785804791139011}
   - component: {fileID: 9101763417232720252}
   - component: {fileID: 3667335857744334246}
-  - component: {fileID: 8424746996017268881}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -304,21 +303,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.8116356, y: 1.7262009, z: 1}
   m_Center: {x: 0.054618124, y: 0.0041169496, z: 0.0000005774627}
---- !u!114 &8424746996017268881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3826426063631478478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34785ea3986b6d448ab3fb3a9e53f2ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lights:
-  - {fileID: 5256965294499779103}
-  - {fileID: 6141654189083412129}
 --- !u!1 &3955419725307988185
 GameObject:
   m_ObjectHideFlags: 0
