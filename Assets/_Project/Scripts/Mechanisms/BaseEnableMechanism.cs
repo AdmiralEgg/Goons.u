@@ -88,18 +88,18 @@ public abstract class BaseEnableMechanism : MonoBehaviour
     {
         if ((_onStartTransitionTo == EnabledState.Disabled) && (_currentEnabledState != EnabledState.Disabled))
         {
-            this.DisableAfterAnimation();
+            DisableAfterAnimation();
             return;
         }
 
         if ((_onStartTransitionTo) == EnabledState.Enabled && (_currentEnabledState != EnabledState.Enabled))
         {
-            this.EnableAfterAnimation();
+            EnableAfterAnimation();
             return;
         }
     }
 
-    public void EnableAfterAnimation()
+    public virtual void EnableAfterAnimation()
     {
         if (_enableMovement == EnableMovement.Position)
         {

@@ -42,8 +42,8 @@ public class CrowdController : MonoBehaviour
 
         PointsManager.PointsReached += PlayFinalCrowdCheer;
         PointsManager.UpdatedCrowdIntensity += PlayCrowdReaction;
-        GameManager.ActFinished += ResetCrowd;
-        GameManager.ActStarted += HushCrowd;
+        StageManager.ActFinished += ResetCrowd;
+        StageManager.ActStarted += HushCrowd;
 
         foreach (VisualEffect streamer in _streamers)
         {

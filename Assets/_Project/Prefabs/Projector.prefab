@@ -166,15 +166,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentEnabledState: 0
   _hasRunMechanism: 0
+  _enableMovement: 0
+  _hinge: {fileID: 0}
   _onAwakeState: 1
   _onStartTransitionTo: 1
   _onEnableStartMechanism: 1
   _onDisableDeactivateGameObject: 1
   _enabledPosition: {x: 0, y: 0, z: 0}
   _enabledRotation: {x: 0, y: 0, z: 0, w: 0}
-  _disabledWorldPosition: {x: 0, y: 16, z: 5.5}
+  _disabledWorldPosition: {x: 0, y: 11, z: 5.5}
   _disabledWorldRotation: {x: -0.000000030903283, y: 0.70722884, z: -0.7069847, w: -0.000000030913956}
-  _transitionDuration: 5
+  _transitionDuration: 2
+  _projectorCamera: {fileID: 0}
 --- !u!114 &1791398747832811956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,8 +190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce3454f363e8404faff7416052b2221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentRunningState: 1
-  _onEnableStartMechanism: 1
+  _currentRunningState: 2
+  _enableMechanism: {fileID: 4264531553238876082}
 --- !u!33 &3708089706983335216
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -269,7 +272,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3539221421386824199}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 4d11c22ef0d57f1479e6539ca678ef36, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: b00479f67e82ec0438e389450138b218, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -286,7 +289,7 @@ VideoPlayer:
   m_TargetAudioSources:
   - {fileID: 0}
   m_DirectAudioVolumes:
-  - 0.2
+  - 1
   m_Url: 
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
@@ -564,9 +567,9 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.751342, g: 0.8018868, b: 0.6997597, a: 1}
-  m_Intensity: 20
+  m_Intensity: 80
   m_Range: 10
-  m_SpotAngle: 119.29036
+  m_SpotAngle: 152.11224
   m_InnerSpotAngle: 80.3926
   m_CookieSize: 10
   m_Shadows:

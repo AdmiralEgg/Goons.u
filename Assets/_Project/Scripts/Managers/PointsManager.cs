@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using static CrowdController;
-using static GameManager;
+using static StageManager;
 
 public class PointsManager : MonoBehaviour
 {
@@ -24,6 +24,8 @@ public class PointsManager : MonoBehaviour
     private float _targetPoints;
     [SerializeField, ReadOnly]
     private float _percentageToTarget;
+    [SerializeField, ReadOnly]
+    private bool _collectingPoints;
 
     [SerializeField, ReadOnly]
     private double _lastClickPercentageFromBeat;
@@ -48,6 +50,21 @@ public class PointsManager : MonoBehaviour
     void Awake()
     {
         ClearPointsData();
+
+        _collectingPoints = false;
+
+        Speaker.MusicStarted += CollectPoints;
+        Speaker.MusicStopped += StopCollectingPoints;
+    }
+
+    private void CollectPoints()
+    {
+        _collectingPoints = true;
+    }
+
+    private void StopCollectingPoints()
+    {
+        _collectingPoints = false;
     }
 
     public void SetupPointsData(GameState gameState)
@@ -56,8 +73,8 @@ public class PointsManager : MonoBehaviour
 
         // Get points data linked to game state, then set up
         PointsData pointsData = _gameStatePointsData.FirstOrDefault(p => p.GameState == gameState).PointsData;
-                
-        Speaker.MusicStarted = () =>
+
+        Speaker.MusicStarted += () =>
         {
             // Add beat based points
             AddPoints(pointsData.MusicPointsPerBeat);
@@ -90,6 +107,8 @@ public class PointsManager : MonoBehaviour
 
     private void AddPoints(float points = 0)
     {
+        if (_collectingPoints == false) return;
+        
         double clickTime = AudioSettings.dspTime;
 
         // time from previous beat

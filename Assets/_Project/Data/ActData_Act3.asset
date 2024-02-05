@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ecc078a5ab285cb4fa5271aad2338657, type: 3}
-  m_Name: ActData_Title
+  m_Name: ActData_Act3
   m_EditorClassIdentifier: 
-  Act: 0
-  ActTitle: 
-  ActSubtitle: 
-  NextAct: 1
-  ProjectorEnabled: 1
-  MusicEnabled: 0
+  Act: 3
+  ActTitle: Act 3
+  ActSubtitle: Between Two Fools
+  NextAct: 4
+  ProjectorEnabled: 0
+  MusicEnabled: 1
   ScrapEnabled: 0
-  MelodyLong1Enabled: 0
-  MelodyShort1Enabled: 0
-  MelodyShort2Enabled: 0
-  HagEnabled: 0
+  MelodyLong1Enabled: 1
+  MelodyShort1Enabled: 1
+  MelodyShort2Enabled: 1
+  HagEnabled: 1
   HagStagePosition: {fileID: 0}
-  ToffEnabled: 0
+  ToffEnabled: 1
   ToffStagePosition: {fileID: 0}
   YorkyEnabled: 0
   YorkyStagePosition: {fileID: 0}
   GoonLightsLeftEnabled: 0
-  GoonLightsLeftMidEnabled: 0
+  GoonLightsLeftMidEnabled: 1
   GoonLightsMiddleEnabled: 0
-  GoonLightsRightMidEnabled: 0
+  GoonLightsRightMidEnabled: 1
   GoonLightsRightEnabled: 0
   HouseLightLeftEnabled: 0
   HouseLightRightEnabled: 0
-  CrowdLightEnabled: 0
+  CrowdLightEnabled: 1

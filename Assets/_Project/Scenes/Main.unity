@@ -414,7 +414,7 @@ GameObject:
   - component: {fileID: 383565965}
   - component: {fileID: 383565966}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: StageManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -448,17 +448,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentGameState: 0
-  _currentGameMode: 0
-  _startingGameState: 4
-  _title: {fileID: 11400000, guid: ff312832034c48a4abf89bfe77fa3bdf, type: 2}
-  _act1: {fileID: 11400000, guid: eed20a9b228a5e54d83965dec534b213, type: 2}
-  _act2: {fileID: 0}
-  _act3: {fileID: 0}
-  _act4: {fileID: 0}
-  _act5: {fileID: 0}
-  _sandbox: {fileID: 0}
-  _gameCamera: {fileID: 718564388}
-  _projectorCamera: {fileID: 942125248}
+  _startingGameState: 0
+  _actData:
+  - GameState: 0
+    ActData: {fileID: 11400000, guid: ff312832034c48a4abf89bfe77fa3bdf, type: 2}
+  - GameState: 1
+    ActData: {fileID: 11400000, guid: eed20a9b228a5e54d83965dec534b213, type: 2}
+  - GameState: 2
+    ActData: {fileID: 11400000, guid: bd710d34d7e42cb408ecb40072ba62b2, type: 2}
+  - GameState: 3
+    ActData: {fileID: 11400000, guid: 9718804cef31aa14aa560297e99c3a7b, type: 2}
+  - GameState: 4
+    ActData: {fileID: 11400000, guid: 62733956b38314d48bbe9389d2744bb1, type: 2}
+  - GameState: 5
+    ActData: {fileID: 11400000, guid: a4beba5af73d42148a2a1c862cb241ec, type: 2}
+  - GameState: 6
+    ActData: {fileID: 11400000, guid: 71e8153b288658f45a1ecd5d69e4d959, type: 2}
   _houseLights: {fileID: 2116913769}
   _goonLightsLeft: {fileID: 375315593}
   _projector: {fileID: 1534923634}
@@ -476,6 +481,7 @@ MonoBehaviour:
   _toff: {fileID: 1710526649}
   _yorky: {fileID: 526081779}
   _pointsManager: {fileID: 645358142}
+  _gameModeManager: {fileID: 1610963259}
 --- !u!4 &490090553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6429074978574856181, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
@@ -946,6 +952,7 @@ MonoBehaviour:
   _totalPoints: 0
   _targetPoints: 0
   _percentageToTarget: 0
+  _collectingPoints: 0
   _lastClickPercentageFromBeat: 0
   _previousBeatTime: 0
   _currentBeatTime: 0
@@ -1347,6 +1354,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 383565965}
+  - {fileID: 1610963258}
   - {fileID: 586715777}
   - {fileID: 645358141}
   m_Father: {fileID: 0}
@@ -1634,7 +1642,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 11
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
@@ -2959,6 +2967,55 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2477668220379172893, guid: b3d693e45039a6448a53c39d43972af1, type: 3}
   m_PrefabInstance: {fileID: 7312524976734277926}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1610963257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1610963258}
+  - component: {fileID: 1610963259}
+  m_Layer: 0
+  m_Name: GameModeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1610963258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610963257}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 870711446}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1610963259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610963257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d188462ce38a854eb663946903d540e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentGameMode: 0
+  _music: {fileID: 7503681090261414214}
+  _scrap: {fileID: 3531582927532157410}
+  _houseLights: {fileID: 2116913769}
+  _goonLightsLeft: {fileID: 375315593}
 --- !u!1 &1620841510
 GameObject:
   m_ObjectHideFlags: 0
@@ -5007,34 +5064,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1158752763}
     m_Modifications:
-    - target: {fileID: -4608461158344034228, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
-      propertyPath: m_VideoClip
-      value: 
-      objectReference: {fileID: 32900000, guid: b00479f67e82ec0438e389450138b218, type: 3}
-    - target: {fileID: -4608461158344034228, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
-      propertyPath: m_DirectAudioVolumes.Array.data[0]
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3539221421386824199, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
       propertyPath: m_Name
       value: Projector
       objectReference: {fileID: 0}
     - target: {fileID: 4264531553238876082, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
-      propertyPath: _transitionDuration
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4264531553238876082, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
-      propertyPath: _disabledWorldPosition.y
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 5221998699342230196, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
-      propertyPath: m_Intensity
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 5221998699342230196, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
-      propertyPath: m_SpotAngle
-      value: 152.11224
-      objectReference: {fileID: 0}
+      propertyPath: _projectorCamera
+      value: 
+      objectReference: {fileID: 942125248}
     - target: {fileID: 5372099964605291096, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -5740,6 +5777,10 @@ PrefabInstance:
       propertyPath: _speaker
       value: 
       objectReference: {fileID: 1805573389}
+    - target: {fileID: 5298029959539604440, guid: 810f116b347df974f874d0121a5f6d11, type: 3}
+      propertyPath: _onStartTransitionTo
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7961397013261236973, guid: 810f116b347df974f874d0121a5f6d11, type: 3}
       propertyPath: m_RootOrder
       value: -1

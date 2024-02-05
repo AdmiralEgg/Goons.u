@@ -96,6 +96,8 @@ public class Speaker : MonoBehaviour
 
     private IEnumerator StartMusicClip(SongData songData)
     {
+        Debug.Log("Starting music clip...");
+        
         MusicStarted?.Invoke();
 
         _musicSource.clip = songData.AudioClip;

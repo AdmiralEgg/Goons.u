@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: ActData_Act1
   m_EditorClassIdentifier: 
   Act: 1
+  ActTitle: Act 1
+  ActSubtitle: Cult of Celebrity
+  NextAct: 2
   ProjectorEnabled: 0
   MusicEnabled: 1
   ScrapEnabled: 0

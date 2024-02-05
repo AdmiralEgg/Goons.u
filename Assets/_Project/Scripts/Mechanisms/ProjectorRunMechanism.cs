@@ -27,7 +27,7 @@ public class ProjectorRunMechanism : BaseRunMechanism
 
         while (player.isPlaying == true)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.1f);
         }
 
         StopMechanism();

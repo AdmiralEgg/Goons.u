@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using TMPro;
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/ActData", order = 5)]
 public class ActData : ScriptableObject
 {
-    public GameManager.GameState Act = GameManager.GameState.Act1;
+    [Header("Act")]
+    public StageManager.GameState Act = StageManager.GameState.Act1;
+    public string ActTitle = "Act 1";
+    public string ActSubtitle = "Cult of Celebrity";
+    public StageManager.GameState NextAct = StageManager.GameState.Act2;
 
     [Header("Mechanisms")]
     public bool ProjectorEnabled;
@@ -19,15 +24,15 @@ public class ActData : ScriptableObject
     [Header("Goons")]
     public bool HagEnabled = true;
     [ShowIf("HagEnabled", true), Required]
-    public StagePositionPoint HagStagePosition;
+    public GameObject HagStagePosition;
 
     public bool ToffEnabled;
     [ShowIf("ToffEnabled", true), Required]
-    public StagePositionPoint ToffStagePosition;
+    public GameObject ToffStagePosition;
     
     public bool YorkyEnabled;
     [ShowIf("YorkyEnabled", true), Required]
-    public StagePositionPoint YorkyStagePosition;
+    public GameObject YorkyStagePosition;
 
     [Header("Goon Lights")]
     public bool GoonLightsLeftEnabled = true;
