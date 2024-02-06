@@ -13,7 +13,11 @@ public class InputManager : MonoBehaviour
     [SerializeField, ReadOnly]
     private InputState _currentInputState;
     [SerializeField, ReadOnly]
+    private GameModeManager.GameMode _currentGameMode;
+    [SerializeField, ReadOnly]
     private Scrap _currentSelectedScrap;
+    [SerializeField]
+    private GameModeManager _gameModeManager;
 
     private static InputState s_currentInputState;
     public static InputManager s_instance { get; private set; }
@@ -21,6 +25,7 @@ public class InputManager : MonoBehaviour
 
     public static Action<GameObject> ReportHit;
     public static Action<InputState> ChangedInputState;
+    public static Action<WordData> InventoryScrapClicked;
 
     void Awake()
     {
@@ -37,31 +42,16 @@ public class InputManager : MonoBehaviour
         s_playerInput = this.GetComponent<PlayerInput>();
 
         // On click, figure out what has been hit. Nothing, or scrap.
-        s_playerInput.actions["Select"].performed += (InputAction.CallbackContext context) =>
-        {
-            Vector2 clickPosition = s_playerInput.actions["Position"].ReadValue<Vector2>();
-
-            Ray clickPositionRay = Camera.main.ScreenPointToRay(new Vector3(clickPosition.x, clickPosition.y, 0));
-
-            if (clickPosition == null) return;
-
-            switch (s_currentInputState)
-            {
-                case InputState.Free:
-                    OnFreeAction(context, clickPositionRay);
-                    break;
-                case InputState.ScrapSelected:
-                    OnScrapSelectedAction(context, clickPositionRay);
-                    break;
-            }
-        };
+        s_playerInput.actions["Select"].performed += OnPlayerSelect;
 
         // If scrap has been selected, update the state.
         Scrap.ScrapSelected += (scrap) =>
         {
-            _currentSelectedScrap = scrap;
-            UpdateInputState(InputState.ScrapSelected);
+            UpdateInputState(InputState.ScrapSelected, scrap);
         };
+
+        GameModeManager.ChangedGameMode += CheckGameMode;
+        _currentGameMode = GameModeManager.GameMode.None;
     }
 
     private void Update()
@@ -69,6 +59,35 @@ public class InputManager : MonoBehaviour
         // Show statics in the inspector. 
         // TODO: Sort this into a best practice pattern
         _currentInputState = s_currentInputState;
+    }
+
+    private void CheckGameMode(GameModeManager.GameMode gameMode)
+    {
+        Debug.Log("Input manager checking game mode");
+        _currentGameMode = gameMode;
+        
+        if (gameMode == GameModeManager.GameMode.Music || gameMode == GameModeManager.GameMode.None)
+        {
+            UpdateInputState(InputState.Free);
+        }
+    }
+
+    private void OnPlayerSelect(InputAction.CallbackContext context)
+    {
+        Vector2 clickPosition = s_playerInput.actions["Position"].ReadValue<Vector2>();
+        if (clickPosition == null) return;
+
+        Ray clickPositionRay = Camera.main.ScreenPointToRay(new Vector3(clickPosition.x, clickPosition.y, 0));
+
+        switch (s_currentInputState)
+        {
+            case InputState.Free:
+                OnFreeAction(context, clickPositionRay);
+                break;
+            case InputState.ScrapSelected:
+                OnScrapSelectedAction(context, clickPositionRay);
+                break;
+        }
     }
 
     private void OnFreeAction(InputAction.CallbackContext context, Ray clickPositionRay)
@@ -79,6 +98,28 @@ public class InputManager : MonoBehaviour
         if (hit.collider == null) return;
 
         ReportHit?.Invoke(hit.collider.gameObject);
+
+        if (hit.collider.gameObject.tag == "Scrap")
+        {
+            if (_currentGameMode == GameModeManager.GameMode.Music || _currentGameMode == GameModeManager.GameMode.None)
+            {
+                // Send message to all goons that scrap has been clicked.
+                // Play animation on the scrap.
+                Scrap scrap = hit.collider.gameObject.GetComponent<Scrap>();
+                WordData wordData = scrap.GetWordData();
+
+                Debug.Log("Play the scrap through the goon");
+                InventoryScrapClicked?.Invoke(wordData);
+                scrap.PlayProdAnimation();
+                return;
+            }
+
+            if (_currentGameMode == GameModeManager.GameMode.Scrap)
+            {
+                hit.collider.SendMessageUpwards("OnClickedTrigger", hit.collider.gameObject);
+                return;
+            }
+        }
 
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Goon"))
         {
@@ -106,8 +147,6 @@ public class InputManager : MonoBehaviour
         if (hit.collider == null)
         {
             // Go back to free mode and turn off selection lights
-            _currentSelectedScrap.SetScrapState(Scrap.ScrapState.Free);
-            _currentSelectedScrap = null;
             UpdateInputState(InputState.Free);
             return;
         }
@@ -119,25 +158,44 @@ public class InputManager : MonoBehaviour
             // Select a scrap
             Debug.Log("Clicked a scrap, switch selected to that one");
 
+            UpdateInputState(InputState.Free);
             Scrap newScrap = hit.collider.gameObject.GetComponent<Scrap>();
-            _currentSelectedScrap.SetScrapState(Scrap.ScrapState.Free);
-            _currentSelectedScrap = newScrap;
-            newScrap.SetScrapState(Scrap.ScrapState.Selected);
+            UpdateInputState(InputState.ScrapSelected, newScrap);
+            return;
         }
 
         if (hit.collider.tag == "ScrapDelete")
         {
             Debug.Log("Clicked the hole with scrap selected. Burn the scrap!");
-            Destroy(_currentSelectedScrap.gameObject);
-            _currentSelectedScrap = null;
+            GameObject _scrapToDestroy = _currentSelectedScrap.gameObject;
             UpdateInputState(InputState.Free);
+            Destroy(_scrapToDestroy);
+            return;
         }
+
+        UpdateInputState(InputState.Free);
     }
 
-    private void UpdateInputState(InputState newState)
+    private void UpdateInputState(InputState newState, Scrap newScrap = null)
     {
         ChangedInputState?.Invoke(newState);
         
+        if (newState == InputState.Free)
+        {
+            if (_currentSelectedScrap != null)
+            {
+                _currentSelectedScrap.SetScrapState(Scrap.ScrapState.Free);
+            }
+            
+            _currentSelectedScrap = null;
+        }
+
+        if (newState == InputState.ScrapSelected)
+        {
+            newScrap.SetScrapState(Scrap.ScrapState.Selected);
+            _currentSelectedScrap = newScrap;
+        }
+
         // TODO: This is rubbish, fix it
         _currentInputState = newState;
         s_currentInputState = newState;

@@ -288,7 +288,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e6e6b6fef60caac429ecb08271637eb6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -571,7 +571,7 @@ Transform:
   m_Children:
   - {fileID: 5445307990366421219}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7309814119368335659
 MonoBehaviour:
@@ -590,14 +590,14 @@ MonoBehaviour:
   _enableMovement: 0
   _hinge: {fileID: 0}
   _onAwakeState: 1
-  _onStartTransitionTo: 0
+  _onStartTransitionTo: 1
   _onEnableStartMechanism: 0
   _onDisableDeactivateGameObject: 0
   _enabledPosition: {x: 0, y: 0, z: 0}
   _enabledRotation: {x: 0, y: 0, z: 0, w: 0}
-  _disabledWorldPosition: {x: 3.02, y: 11, z: 0}
-  _disabledWorldRotation: {x: 0, y: 0, z: 0, w: 0}
-  _transitionDuration: 5
+  _disabledWorldPosition: {x: 9, y: 11, z: 0}
+  _disabledWorldRotation: {x: 0.036408074, y: -0.18730329, z: 0.1873033, w: -0.9635919}
+  _transitionDuration: 3
 --- !u!114 &7470727596117881297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,7 +611,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentRunningState: 2
-  _melodyClip: {fileID: 0}
+  _enableMechanism: {fileID: 0}
+  _melodyClip: {fileID: 8300000, guid: 8b1edc8e1450f1b4e9c2600cad44b1d9, type: 3}
   _mechanismRunStartClip: {fileID: 8300000, guid: 6e3edecedde869746a375efddf0d13cc, type: 3}
   _mechanismRunStopClip: {fileID: 8300000, guid: 77daf034130801c4f98236820483a619, type: 3}
   _melodySource: {fileID: 0}
@@ -620,4 +621,4 @@ MonoBehaviour:
   _runningColor: {r: 0.31852072, g: 0.46226418, b: 0.31181028, a: 0}
   _shutdownColor: {r: 0.32941177, g: 0.20392157, b: 0.12156863, a: 0}
   _animator: {fileID: 6877284467527950159}
-  _allowManualDisable: 0
+  _allowManualDisable: 1

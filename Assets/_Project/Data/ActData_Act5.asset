@@ -23,11 +23,11 @@ MonoBehaviour:
   MelodyShort1Enabled: 1
   MelodyShort2Enabled: 1
   HagEnabled: 1
-  HagStagePosition: {fileID: 0}
+  HagStagePosition: 2
   ToffEnabled: 1
-  ToffStagePosition: {fileID: 0}
+  ToffStagePosition: 4
   YorkyEnabled: 1
-  YorkyStagePosition: {fileID: 0}
+  YorkyStagePosition: 6
   GoonLightsLeftEnabled: 1
   GoonLightsLeftMidEnabled: 0
   GoonLightsMiddleEnabled: 0

@@ -17,8 +17,14 @@ public class Scrap : MonoBehaviour
     [SerializeField, ReadOnly]
     private WordData _wordData;
 
-    [SerializeField, ReadOnly]
+    [SerializeField]
     private TextMeshProUGUI _scrapText;
+    [SerializeField]
+    private MeshRenderer _meshRenderer;
+    [SerializeField]
+    private Rigidbody _rigidBody;
+    [SerializeField]
+    private Animator _animator;
 
     public static Action<Scrap> ScrapCaught, ScrapSelected, ScrapDestroyed;
 
@@ -29,19 +35,21 @@ public class Scrap : MonoBehaviour
         SetScrapAttachedState(ScrapAttachedState.None);
 
         // Look at camera, set random rotation
-        this.transform.Rotate(-90, 0, 0);
-        
-        int randomRotationX = UnityEngine.Random.Range(-2, 3);
-        int randomRotationZ = UnityEngine.Random.Range(-5, 5);
-        this.transform.Rotate(randomRotationX, 0, randomRotationZ);
+        this.transform.Rotate(270, 0, 0);
+
+        //int randomRotationX = UnityEngine.Random.Range(-2, 3);
+        //int randomRotationZ = UnityEngine.Random.Range(-5, 5);
+        //this.transform.Rotate(randomRotationX, 0, randomRotationZ);
+        this.transform.Rotate(new Vector3(0, 0, 1), -5);
+        this.transform.Rotate(new Vector3(0, 1, 0), 35);
 
         // Get TMP Component
-        _scrapText = GetComponentInChildren<TextMeshProUGUI>();
+        //_scrapText = GetComponentInChildren<TextMeshProUGUI>();
 
         // Apply random text rotation
-        int randomRotation = UnityEngine.Random.Range(-15, 18);
+        //int randomRotation = UnityEngine.Random.Range(-15, 18);
 
-        _scrapText.rectTransform.Rotate(0, 0, randomRotation);
+        //_scrapText.rectTransform.Rotate(0, 0, randomRotation);
     }
 
     public void SetFont(TMP_FontAsset font)
@@ -101,11 +109,10 @@ public class Scrap : MonoBehaviour
         switch (scrapState)
         {
             case ScrapState.Free:
-                GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+                _meshRenderer.material.DisableKeyword("_EMISSION");
                 break;
             case ScrapState.Selected:
-                GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
-
+                _meshRenderer.material.EnableKeyword("_EMISSION");
                 break;
         }
     }
@@ -117,13 +124,12 @@ public class Scrap : MonoBehaviour
         switch (scrapAttachedState)
         {
             case ScrapAttachedState.None:
-                GetComponent<Rigidbody>().isKinematic = false;
+                _rigidBody.isKinematic = false;
                 break;
             case ScrapAttachedState.Inventory:
-                GetComponent<Rigidbody>().isKinematic = true;
+                _rigidBody.isKinematic = true;
                 // Reset rotation
-                this.transform.rotation = Quaternion.identity;
-                this.transform.Rotate(-90, 0, 0);
+                //this.transform.Rotate(270, 0, 0);
                 break;
         }
     }
@@ -136,6 +142,12 @@ public class Scrap : MonoBehaviour
     public Goon.GoonType GetScrapGoonType()
     {
         return _wordData.Goon;
+    }
+
+
+    public void PlayProdAnimation()
+    {
+        _animator.Play("Prod");
     }
 
     private void OnDestroy()

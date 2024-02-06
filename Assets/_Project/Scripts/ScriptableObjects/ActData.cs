@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using Sirenix.OdinInspector;
-using TMPro;
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/ActData", order = 5)]
 public class ActData : ScriptableObject
@@ -24,15 +22,15 @@ public class ActData : ScriptableObject
     [Header("Goons")]
     public bool HagEnabled = true;
     [ShowIf("HagEnabled", true), Required]
-    public GameObject HagStagePosition;
+    public StagePositionController.StagePosition HagStagePosition;
 
     public bool ToffEnabled;
     [ShowIf("ToffEnabled", true), Required]
-    public GameObject ToffStagePosition;
+    public StagePositionController.StagePosition ToffStagePosition;
     
     public bool YorkyEnabled;
     [ShowIf("YorkyEnabled", true), Required]
-    public GameObject YorkyStagePosition;
+    public StagePositionController.StagePosition YorkyStagePosition;
 
     [Header("Goon Lights")]
     public bool GoonLightsLeftEnabled = true;

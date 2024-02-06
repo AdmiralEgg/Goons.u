@@ -49,6 +49,8 @@ public class Goon : MonoBehaviour
 
         // Load two words into the queue
         LoadRandomWords(2);
+
+        InputManager.InventoryScrapClicked += PlayFixedWord;
     }
 
     // Triggered by InputManager
@@ -73,6 +75,21 @@ public class Goon : MonoBehaviour
             int randomNumber = random.Next(_wordData.Length);
 
             _wordQueue.Add(_wordData[randomNumber]);
+        }
+    }
+
+    private void PlayFixedWord(WordData wordData)
+    {
+        if (_currentState == GoonState.Speaking) return;
+        if (wordData.Goon != _goonData.GoonType) return;
+
+        if (wordData.WordAudio != null)
+        {
+            StartCoroutine(Speak(wordData.WordAudio));
+        }
+        else
+        {
+            Debug.LogError($"Word audio for {wordData.Word} is not defined.");
         }
     }
 

@@ -20,6 +20,8 @@ public class StageManager : MonoBehaviour
 
     [SerializeField]
     private List<GameStateActData> _actData;
+    [SerializeField]
+    private StagePositionController _stagePositionController;
 
     [Header("Lights")]
     [SerializeField]
@@ -286,17 +288,21 @@ public class StageManager : MonoBehaviour
 
         if (actData.HagEnabled == true)
         {
-            _hag.GetComponent<GoonMove>().SetTargetPosition(actData.HagStagePosition.GetComponent<StagePositionPoint>());
+            StagePositionPoint stagePositionPoint = _stagePositionController.GetStagePositionPoint(actData.HagStagePosition);
+            Debug.Log($"StagePosPoint Hag: {stagePositionPoint}");
+            _hag.GetComponent<GoonMove>().SetTargetPosition(stagePositionPoint);
         }
 
         if (actData.ToffEnabled == true)
         {
-            _toff.GetComponent<GoonMove>().SetTargetPosition(actData.ToffStagePosition.GetComponent<StagePositionPoint>());
+            StagePositionPoint stagePositionPoint = _stagePositionController.GetStagePositionPoint(actData.ToffStagePosition);
+            _toff.GetComponent<GoonMove>().SetTargetPosition(stagePositionPoint);
         }
 
         if (actData.YorkyEnabled == true)
         {
-            _yorky.GetComponent<GoonMove>().SetTargetPosition(actData.YorkyStagePosition.GetComponent<StagePositionPoint>());
+            StagePositionPoint stagePositionPoint = _stagePositionController.GetStagePositionPoint(actData.YorkyStagePosition);
+            _yorky.GetComponent<GoonMove>().SetTargetPosition(stagePositionPoint);
         }
     }
 

@@ -4,20 +4,8 @@ using Sirenix.OdinInspector;
 
 public class StagePositionPoint : MonoBehaviour
 {
-    public enum StagePosition 
-    {
-        OffStageLeft,
-        Left,
-        LeftMid,
-        Middle,
-        RightMid,
-        Right,
-        OffStageRight1,
-        OffStageRight2
-    }
-
-    [SerializeField]
-    private StagePosition _stagePosition;
+    [SerializeField, ReadOnly, Tooltip("Set by StagePositionController on Awake")]
+    private StagePositionController.StagePosition _stagePosition = StagePositionController.StagePosition.None;
     [SerializeField, ReadOnly]
     private SphereCollider _sphereCollider;
 
@@ -31,9 +19,9 @@ public class StagePositionPoint : MonoBehaviour
         _sphereCollider.isTrigger = true;
     }
 
-    public StagePosition GetStagePosition()
+    public void SetStagePosition(StagePositionController.StagePosition stagePosition)
     {
-        return _stagePosition;
+        _stagePosition = stagePosition;
     }
 
     public Vector3 GetPositionValue()

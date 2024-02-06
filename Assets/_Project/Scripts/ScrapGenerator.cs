@@ -78,9 +78,5 @@ public class ScrapGenerator : MonoBehaviour
 
         // apply font and colour to scrap
         scrap.GetComponent<Scrap>().SetWordData(word);
-
-        // TODO: Set scrap font and colour depending on goon the scrap is coming from
-        //if (_goonData.WordFont != null) scrap.GetComponent<Scrap>().SetFont(_goonData.WordFont);
-        //if (_goonData.WordColour != null) scrap.GetComponent<Scrap>().SetFontColor(_goonData.WordColour);
     }
 }
