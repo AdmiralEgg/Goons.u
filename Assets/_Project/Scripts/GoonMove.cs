@@ -95,12 +95,16 @@ public class GoonMove : MonoBehaviour
 
     public void GoonIdle()
     {
+        if (_currentMoveState == GoonMoveState.Bowing) return;
+        
         _goonStickAnimator.Play("Idle");
         _currentMoveState = GoonMoveState.Idle;
     }
 
     public void GoonBow()
     {
+        Debug.Log("Bow activated");
+        _goonStickAnimator.StopPlayback();
         _goonStickAnimator.Play("Bow");
         _currentMoveState = GoonMoveState.Bowing;
     }

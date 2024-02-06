@@ -112,8 +112,6 @@ public class StageManager : MonoBehaviour
                 // Wait a second before goon lights come on...
                 StartCoroutine(PauseThenActivate(3.5f, _goonLightsLeft));
 
-                //_melodyButtonLong.EnableAfterAnimation();
-
                 // Wait a second before house lights come on...
                 StartCoroutine(PauseThenActivate(5, _houseLights));
 
@@ -127,11 +125,6 @@ public class StageManager : MonoBehaviour
 
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
-
-                foreach (MelodyButtonEnableMechanism button in _melodyButtonShort)
-                {
-                    button.EnableAfterAnimation();
-                };
 
                 CrowdController.CrowdEntertained = () => FinishAct(actData);
 
@@ -150,7 +143,6 @@ public class StageManager : MonoBehaviour
 
                 await StartAct(actData);
 
-                _scrap.EnableAfterAnimation();
                 _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
 

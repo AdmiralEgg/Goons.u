@@ -25,7 +25,7 @@ MonoBehaviour:
   HagEnabled: 1
   HagStagePosition: 3
   ToffEnabled: 1
-  ToffStagePosition: 6
+  ToffStagePosition: 5
   YorkyEnabled: 1
   YorkyStagePosition: 4
   GoonLightsLeftEnabled: 1

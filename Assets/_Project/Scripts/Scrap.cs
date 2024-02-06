@@ -127,9 +127,6 @@ public class Scrap : MonoBehaviour
             case ScrapAttachedState.Inventory:
                 _rigidBody.isKinematic = true;
                 _collider.size = _inventorySize;
-
-                // Reset rotation
-                //this.transform.Rotate(270, 0, 0);
                 break;
         }
     }
@@ -143,7 +140,6 @@ public class Scrap : MonoBehaviour
     {
         return _wordData.Goon;
     }
-
 
     public void PlayProdAnimation()
     {

@@ -49,6 +49,17 @@
                 },
                 {
                     "name": "",
+                    "id": "4f7b2c88-6770-4292-b490-c580a79ed4be",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "TouchScreen",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3112d2a9-56d2-4dcd-bc81-9b584d0c6759",
                     "path": "<Touchscreen>/primaryTouch/position",
                     "interactions": "",
