@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CinemachineBlends
   m_EditorClassIdentifier: 
   m_CustomBlends:
-  - m_From: ScreenCamera
+  - m_From: ProjectorCamera
     m_To: GameCamera
     m_Blend:
       m_Style: 3

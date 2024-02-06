@@ -17,7 +17,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
     [SerializeField, ReadOnly]
     private EnabledState _currentEnabledState = EnabledState.Enabled;
     [SerializeField, ReadOnly, Tooltip("Whether GameObject has a RunMechanism component")]
-    private bool _hasRunMechanism = false;
+    private BaseRunMechanism _runMechanism;
 
     [Header("Movement Setup")]
     [SerializeField]
@@ -78,10 +78,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
             }
         }
 
-        if (GetComponent<BaseRunMechanism>() != null)
-        {
-            _hasRunMechanism = true;
-        }
+        _runMechanism = GetComponent<BaseRunMechanism>();
     }
 
     private void Start()
@@ -114,9 +111,9 @@ public abstract class BaseEnableMechanism : MonoBehaviour
             // Finish transition
             _currentEnabledState = EnabledState.Enabled;
 
-            if (_onEnableStartMechanism == true && _hasRunMechanism == true)
+            if (_onEnableStartMechanism == true && _runMechanism != null)
             {
-                GetComponent<BaseRunMechanism>().StartMechanism();
+                _runMechanism.StartMechanism();
             }
         }
     }
@@ -194,9 +191,9 @@ public abstract class BaseEnableMechanism : MonoBehaviour
         // Finish transition
         _currentEnabledState = targetState;
 
-        if (targetState == EnabledState.Enabled && _onEnableStartMechanism == true && _hasRunMechanism == true)
+        if ((targetState == EnabledState.Enabled) && (_onEnableStartMechanism == true) && (_runMechanism != null))
         {
-            GetComponent<BaseRunMechanism>().StartMechanism();
+            _runMechanism.StartMechanism();
         }
 
         if (targetState == EnabledState.Disabled && _onDisableDeactivateGameObject == true)

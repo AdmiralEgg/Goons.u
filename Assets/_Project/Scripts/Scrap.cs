@@ -30,7 +30,7 @@ public class Scrap : MonoBehaviour
 
     [Header("Collider Sizes")]
     [SerializeField]
-    private Vector3 _defaultSize = new Vector3(10, 1, 4);
+    private Vector3 _defaultSize = new Vector3(14, 1, 4);
     [SerializeField]
     private Vector3 _inventorySize = new Vector3(8, 1, 3);
 

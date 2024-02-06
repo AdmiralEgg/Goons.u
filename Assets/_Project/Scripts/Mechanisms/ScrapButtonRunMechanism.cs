@@ -21,6 +21,16 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
     [SerializeField]
     private Color _disabledColour = new Color(0.3294118f, 0.2039216f, 0.1215686f);
 
+    [Header("Button Setup")]
+    [SerializeField]
+    private AudioClip _mechanismRunStartClip;
+    [SerializeField]
+    private AudioClip _mechanismRunStopClip;
+    [SerializeField]
+    private Animator _animator;
+    [SerializeField]
+    private AudioSource _startStopSource;
+
     public static Action<Type, bool> ScrapMechanismRunStateUpdate;
 
     void Awake()
@@ -38,6 +48,9 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
         _buttonLight.intensity = _enabledIntesity;
         _buttonLight.color = _enabledColour;
 
+        _animator.Play("PushIn");
+        _startStopSource.PlayOneShot(_mechanismRunStopClip);
+
         _scrapGenerator.StartGenerator();
         _trapDoor.OpenTrapDoor();
         ScrapMechanismRunStateUpdate?.Invoke(this.GetType(), true);
@@ -50,6 +63,9 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
         // lerp between light colours
         _buttonLight.intensity = _disabledIntesity;
         _buttonLight.color = _disabledColour;
+
+        _animator.Play("PopOut");
+        _startStopSource.PlayOneShot(_mechanismRunStopClip);
 
         _scrapGenerator.ShutdownGenerator();
         _trapDoor.CloseTrapDoor();

@@ -25,13 +25,20 @@ public class Cosmetic : MonoBehaviour
         if (_type == CosmeticType.Hat)
         {
             this.transform.Rotate(new Vector3(0, 1, 0), 30);
-            _animator.SetBool("HatOn", true);
+            StartCoroutine(EquipHat());
         }
 
         if (_type == CosmeticType.Item)
         {
             this.transform.position += new Vector3(0.5f, 0.7f, 0.2f);
         }
+    }
+
+    private IEnumerator EquipHat()
+    {       
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0f, 7f));
+        
+        _animator.SetBool("HatOn", true);
     }
 
     public void Throw()

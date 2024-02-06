@@ -71,6 +71,7 @@ public class CrowdController : MonoBehaviour
                     member.ThrowCosmetics();
                 }
 
+                _audioSourceCrowdChatter.Stop();
                 _audioSourceCrowdReact.PlayOneShot(_bigCheer[UnityEngine.Random.Range(0, (_bigCheer.Length - 1))]);
                 break;
             case (CrowdIntensity.High):
@@ -82,6 +83,7 @@ public class CrowdController : MonoBehaviour
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
 
                 // play medium cheer
+                _audioSourceCrowdChatter.Stop();
                 _audioSourceCrowdReact.PlayOneShot(_mediumCheer[UnityEngine.Random.Range(0, (_mediumCheer.Length - 1))]);
                 break;
             case (CrowdIntensity.MediumHigh):
@@ -96,6 +98,7 @@ public class CrowdController : MonoBehaviour
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
 
                 // play medium cheer
+                _audioSourceCrowdChatter.Stop();
                 _audioSourceCrowdReact.PlayOneShot(_mediumCheer[UnityEngine.Random.Range(0, (_mediumCheer.Length - 1))]);
                 break;
             case (CrowdIntensity.Medium):
@@ -105,6 +108,7 @@ public class CrowdController : MonoBehaviour
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
 
                 // play low cheer
+                _audioSourceCrowdChatter.Stop();
                 _audioSourceCrowdReact.PlayOneShot(_mediumCheer[UnityEngine.Random.Range(0, (_mediumCheer.Length - 1))]);
                 break;
             case (CrowdIntensity.LowMedium):
@@ -114,19 +118,23 @@ public class CrowdController : MonoBehaviour
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
 
                 // play low cheer
+                _audioSourceCrowdChatter.Stop();
                 _audioSourceCrowdReact.PlayOneShot(_smallCheer[UnityEngine.Random.Range(0, (_smallCheer.Length - 1))]);
                 break;
             case (CrowdIntensity.Low):
                 // Play low cheer
+                _audioSourceCrowdChatter.Stop();
                 _audioSourceCrowdReact.PlayOneShot(_smallCheer[UnityEngine.Random.Range(0, (_smallCheer.Length - 1))]);
                 break;
             case (CrowdIntensity.Hushed):
                 StartCoroutine(VolumeChange(_audioSourceCrowdChatter, 0.05f, 2f));
-                //_audioSourceCrowdReact.PlayOneShot(_crowdHush);
                 break;
             case (CrowdIntensity.Murmering):
-                _audioSourceCrowdChatter.volume = 0.2f;
+
+                _audioSourceCrowdChatter.volume = 0.05f;
+                _audioSourceCrowdChatter.Stop();
                 _audioSourceCrowdChatter.PlayOneShot(_crowdMurmer);
+                StartCoroutine(VolumeChange(_audioSourceCrowdChatter, 0.2f, 2f));
                 break;
         }
 

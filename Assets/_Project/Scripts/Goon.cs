@@ -28,6 +28,9 @@ public class Goon : MonoBehaviour
     [SerializeField]
     private ScrapInventory _assignedScrapInventory;
 
+    [SerializeField]
+    private float WaitBetweenSpeaking = 0.1f;
+
     private AudioSource _faceAudioSource;
 
     public static Action<WordData> GoonSpeak;
@@ -151,8 +154,8 @@ public class Goon : MonoBehaviour
         _currentState = GoonState.Speaking;
         _faceAudioSource.PlayOneShot(clip);
 
-        yield return new WaitForSeconds(0.75f);
-
+        yield return new WaitForSeconds(WaitBetweenSpeaking);
+        
         _currentState = GoonState.Idle;
     }
 }

@@ -100,6 +100,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3517296787084675255, guid: c03cbee97d407fa45a2357f01f56fcd1, type: 3}
+      propertyPath: WaitBetweenSpeaking
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3829746430844325336, guid: c03cbee97d407fa45a2357f01f56fcd1, type: 3}
       propertyPath: m_Enabled
       value: 1

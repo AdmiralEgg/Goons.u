@@ -81,7 +81,6 @@ public class GameModeManager : MonoBehaviour
         {
             case GameMode.Scrap:
                 _music.DisableAfterAnimation();
-                _scrap.EnableAfterAnimation();
 
                 // house lights up
                 _houseLights.SetActive(true);
@@ -89,7 +88,6 @@ public class GameModeManager : MonoBehaviour
 
                 break;
             case GameMode.Music:
-                _music.EnableAfterAnimation();
                 _scrap.DisableAfterAnimation();
 
                 // house lights down
