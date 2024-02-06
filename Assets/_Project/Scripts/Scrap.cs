@@ -25,6 +25,14 @@ public class Scrap : MonoBehaviour
     private Rigidbody _rigidBody;
     [SerializeField]
     private Animator _animator;
+    [SerializeField]
+    private BoxCollider _collider;
+
+    [Header("Collider Sizes")]
+    [SerializeField]
+    private Vector3 _defaultSize = new Vector3(10, 1, 4);
+    [SerializeField]
+    private Vector3 _inventorySize = new Vector3(8, 1, 3);
 
     public static Action<Scrap> ScrapCaught, ScrapSelected, ScrapDestroyed;
 
@@ -37,19 +45,8 @@ public class Scrap : MonoBehaviour
         // Look at camera, set random rotation
         this.transform.Rotate(270, 0, 0);
 
-        //int randomRotationX = UnityEngine.Random.Range(-2, 3);
-        //int randomRotationZ = UnityEngine.Random.Range(-5, 5);
-        //this.transform.Rotate(randomRotationX, 0, randomRotationZ);
         this.transform.Rotate(new Vector3(0, 0, 1), -5);
         this.transform.Rotate(new Vector3(0, 1, 0), 35);
-
-        // Get TMP Component
-        //_scrapText = GetComponentInChildren<TextMeshProUGUI>();
-
-        // Apply random text rotation
-        //int randomRotation = UnityEngine.Random.Range(-15, 18);
-
-        //_scrapText.rectTransform.Rotate(0, 0, randomRotation);
     }
 
     public void SetFont(TMP_FontAsset font)
@@ -125,9 +122,12 @@ public class Scrap : MonoBehaviour
         {
             case ScrapAttachedState.None:
                 _rigidBody.isKinematic = false;
+                _collider.size = _defaultSize;
                 break;
             case ScrapAttachedState.Inventory:
                 _rigidBody.isKinematic = true;
+                _collider.size = _inventorySize;
+
                 // Reset rotation
                 //this.transform.Rotate(270, 0, 0);
                 break;
@@ -147,7 +147,7 @@ public class Scrap : MonoBehaviour
 
     public void PlayProdAnimation()
     {
-        _animator.Play("Prod");
+        _animator.Play("ScrapProd");
     }
 
     private void OnDestroy()

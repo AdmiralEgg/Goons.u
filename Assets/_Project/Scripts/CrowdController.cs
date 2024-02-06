@@ -149,6 +149,7 @@ public class CrowdController : MonoBehaviour
         foreach (CrowdMember member in _allCrowd)
         {
             member.ResetMember();
+            member.ResetCosmetics();
         }
 
         PlayCrowdReaction(CrowdIntensity.Murmering);

@@ -13,14 +13,10 @@ public class CrowdMember : MonoBehaviour
     private Intensity _currentIntensity;
 
     [Header("Cosmetics")]
-    [SerializeField, Tooltip("Hats to be thrown up")]
-    private GameObject[] _hats;
-    [SerializeField, Tooltip("Items to be thrown on stage")]
-    private GameObject[] _items;
     [SerializeField, ReadOnly]
-    private GameObject _activeHat;
+    private Cosmetic _activeHat;
     [SerializeField, ReadOnly]
-    private GameObject _activeItem;
+    private Cosmetic _activeItem;
 
     [Header("Animations")]
     private MMPositionShaker _positionShaker;
@@ -94,54 +90,47 @@ public class CrowdMember : MonoBehaviour
         _currentIntensity = newIntensity;
     }
 
+    public void ResetCosmetics()
+    {
+        // Get a random hat or item from the pool (50% chance)
+        float rand = Random.Range(minInclusive: 0, maxInclusive: 1f);
+
+        if (rand > 0.5f)
+        {
+            Cosmetic cosmetic = CosmeticsPool.s_Instance.Pool.Get();
+
+            if (cosmetic.GetCosmeticType() == Cosmetic.CosmeticType.Hat)
+            {
+                _activeHat = cosmetic;
+                _activeHat.gameObject.transform.SetParent(this.transform);
+                _activeHat.EquipCosmetic(this);
+            }
+
+            if (cosmetic.GetCosmeticType() == Cosmetic.CosmeticType.Item)
+            {
+                _activeItem = cosmetic;
+                _activeItem.gameObject.transform.SetParent(this.transform);
+                _activeItem.EquipCosmetic(this);
+            }
+        }
+    }
+
     public void ResetMember()
     {
         SetMemberIntensity(Intensity.None);
-        
-        // Randomise a hat
-        float hatRand = Random.Range(0f, 1f);
-
-        if (hatRand > 0.85)
-        {
-            _activeHat = _hats[Random.Range(0, _hats.Length)];
-
-            _activeHat.transform.Rotate(new Vector3(0, Random.Range(-10, 10), 0));
-            _activeHat.SetActive(true);
-        }
-
-        // Randomise an item
-        float itemRand = Random.Range(0f, 1f);
-
-        if (itemRand > 0.85)
-        {
-            _activeItem = _items[Random.Range(0, _items.Length)];
-
-            _activeItem.transform.Rotate(new Vector3(0, Random.Range(-10, 10), 0));
-            _activeItem.SetActive(true);
-        }
     }
 
     // Throw hats, throw items
     public void ThrowCosmetics()
     {
-        SetMemberIntensity(Intensity.High);
-        
-        if (_activeHat != null)
+        if (_activeHat != null) 
         {
-            Rigidbody activeHatRigidbody = _activeHat.GetComponent<Rigidbody>();
-
-            activeHatRigidbody.isKinematic = false;
-            activeHatRigidbody.AddForce(new Vector3(UnityEngine.Random.Range(0, 1), UnityEngine.Random.Range(8, 12), UnityEngine.Random.Range(-0.5f, -2)), ForceMode.Impulse);
-            activeHatRigidbody.AddTorque(new Vector3(UnityEngine.Random.Range(-5, 5), UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.5f, 1)), ForceMode.Impulse);
+            _activeHat.Throw();
         }
 
         if (_activeItem != null)
         {
-            Rigidbody activeItemRigidbody = _activeItem.GetComponent<Rigidbody>();
-
-            activeItemRigidbody.isKinematic = false;
-            activeItemRigidbody.AddForce(new Vector3(UnityEngine.Random.Range(-2, 2), UnityEngine.Random.Range(8, 11), UnityEngine.Random.Range(3, 5)), ForceMode.Impulse);
-            activeItemRigidbody.AddTorque(new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), 0, UnityEngine.Random.Range(0.5f, 1)), ForceMode.Impulse);
+            _activeItem.Throw();
         }
     }
 

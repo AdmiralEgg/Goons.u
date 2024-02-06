@@ -1410,7 +1410,6 @@ GameObject:
   - component: {fileID: 813308758842959070}
   - component: {fileID: 3517296787084675255}
   - component: {fileID: 5649418320940154872}
-  - component: {fileID: 1354934508475610188}
   m_Layer: 6
   m_Name: Goon
   m_TagString: Untagged
@@ -1454,7 +1453,7 @@ MonoBehaviour:
   _crowdTouchAudio: {fileID: 0}
   _wordData: []
   _wordQueue: []
-  _allScrapSlots: []
+  _assignedScrapInventory: {fileID: 0}
 --- !u!114 &5649418320940154872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1475,25 +1474,6 @@ MonoBehaviour:
   _danceMove: DanceLeftRight
   _moveSpeed: 3
   velocity: {x: 0, y: 0, z: 0}
---- !u!114 &1354934508475610188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7733768938301103766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b320d811a6533c745a236c7a274c0213, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _goonScrapSlotsList: []
-  _hasFixedWords: 0
-  _nextSlotToPlayIndex: 0
-  _nextSlotToPlay: {fileID: 0}
-  _slotsActive: 0
-  _refreshSlots: 0
-  _currentButtonType: 0
 --- !u!1 &7786583435822880501
 GameObject:
   m_ObjectHideFlags: 0
