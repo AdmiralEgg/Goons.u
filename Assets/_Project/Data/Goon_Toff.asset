@@ -15,9 +15,9 @@ MonoBehaviour:
   GoonType: 1
   WordFont: {fileID: 11400000, guid: 50c8c10bfafdb5d46a48fcd0fe016ee4, type: 2}
   WordColor: {r: 0.12428801, g: 0.31071827, b: 0.5377358, a: 0}
-  NiceCatchAudio: {fileID: 0}
-  StickTouchAudio: {fileID: 0}
-  SpeakerTouchAudio: {fileID: 0}
+  NiceCatchAudio: {fileID: 8300000, guid: 1d74109a311827244a3355f6b6825a4e, type: 3}
+  StickTouchAudio: {fileID: 8300000, guid: 6be7bf0f77d9ffc438b79236f7b15bed, type: 3}
+  SpeakerTouchAudio: {fileID: 8300000, guid: 49f6c9847f413ff4f8e893a8cdfdc524, type: 3}
   CrowdTouchAudio: {fileID: 0}
   WordData:
   - {fileID: 11400000, guid: 8f3bec6703923ef4183108011ff2c7a3, type: 2}

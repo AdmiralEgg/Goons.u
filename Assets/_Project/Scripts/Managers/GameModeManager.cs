@@ -17,12 +17,6 @@ public class GameModeManager : MonoBehaviour
     [SerializeField]
     private ScrapButtonEnableMechanism _scrap;
 
-    [Header("Lights")]
-    [SerializeField]
-    private GameObject _houseLights;
-    [SerializeField]
-    private GameObject _goonLightsLeft;
-
     public static Action<GameMode> ChangedGameMode;
 
     private void OnEnable()
@@ -82,25 +76,14 @@ public class GameModeManager : MonoBehaviour
             case GameMode.Scrap:
                 _music.DisableAfterAnimation();
 
-                // house lights up
-                _houseLights.SetActive(true);
-                _goonLightsLeft.SetActive(false);
-
                 break;
             case GameMode.Music:
                 _scrap.DisableAfterAnimation();
-
-                // house lights down
-                _houseLights.SetActive(false);
-                _goonLightsLeft.SetActive(true);
 
                 break;
             case GameMode.None:
                 _music.EnableAfterAnimation();
                 _scrap.EnableAfterAnimation();
-
-                _houseLights.SetActive(true);
-                _goonLightsLeft.SetActive(false);
 
                 break;
         }

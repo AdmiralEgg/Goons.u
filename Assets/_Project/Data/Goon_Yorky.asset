@@ -16,12 +16,18 @@ MonoBehaviour:
   WordFont: {fileID: 11400000, guid: 6c9ea451f1924ef47b14d05b258addcd, type: 2}
   WordColor: {r: 0.5660378, g: 0.38725516, b: 0.16820933, a: 0}
   NiceCatchAudio: {fileID: 0}
-  StickTouchAudio: {fileID: 0}
+  StickTouchAudio: {fileID: 8300000, guid: d93ba4f990036ef429cff5d7521285b7, type: 3}
   SpeakerTouchAudio: {fileID: 0}
   CrowdTouchAudio: {fileID: 0}
   WordData:
   - {fileID: 11400000, guid: c4a389e97d1e09249867ebf8b1ccf261, type: 2}
+  - {fileID: 11400000, guid: e8732900b96d9964f82fbcdf0e23241f, type: 2}
   - {fileID: 11400000, guid: 62b1ad0f42353d24e8a13417c436bbb9, type: 2}
+  - {fileID: 11400000, guid: e40aebd53e24576499d29bdbac479f20, type: 2}
+  - {fileID: 11400000, guid: 6243ce0cf863ec44c9e40c5042399f66, type: 2}
+  - {fileID: 11400000, guid: 208326723c7407348891f6b0e287f87b, type: 2}
+  - {fileID: 11400000, guid: 53a5845a04b310646945c4e855f9e713, type: 2}
+  - {fileID: 11400000, guid: 34e73c978b0110a49a6c66951ca33883, type: 2}
   - {fileID: 11400000, guid: 5cb5e1234ee8cfc43ad851dc1b9c2141, type: 2}
   - {fileID: 11400000, guid: 0ba2d32f6bb45ff448861be78095cd7a, type: 2}
   - {fileID: 11400000, guid: 871c12fbcb6c6c44a98f760438bd5928, type: 2}

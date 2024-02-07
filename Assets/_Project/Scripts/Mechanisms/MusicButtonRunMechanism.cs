@@ -17,6 +17,10 @@ public class MusicButtonRunMechanism : BaseRunMechanism
 
     [SerializeField]
     private Light _startButtonLight, _stopButtonLight;
+    [SerializeField]
+    private GameObject _houseLights;
+    [SerializeField]
+    private GameObject _goonLightsLeft;
 
     public static Action<Type, bool> MusicMechanismRunStateUpdate;
 
@@ -62,6 +66,7 @@ public class MusicButtonRunMechanism : BaseRunMechanism
         }
     }
 
+    // Used by the speaker
     public void ToggleAllLights()
     {
         foreach (Light light in new Light[] { _startButtonLight, _stopButtonLight })
@@ -119,6 +124,12 @@ public class MusicButtonRunMechanism : BaseRunMechanism
         if (targetState == RunningState.Running)
         {
             _speaker.StartMusic(_songData);
+            _houseLights.gameObject.SetActive(false);
+        }
+
+        if (targetState == RunningState.Shutdown)
+        {
+            _houseLights.gameObject.SetActive(true);
         }
 
         _currentRunningState = targetState;

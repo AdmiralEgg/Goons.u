@@ -101,7 +101,7 @@ public class StageManager : MonoBehaviour
                 ProjectorRunMechanism.VideoPlaybackComplete = () =>
                 {
                     _projector.DisableAfterAnimation();
-                    FinishAct(actData, addDelay: false);
+                    FinishAct(actData, addDelay: false, resetCrowd: false);
                 };
 
                 break;
@@ -211,7 +211,7 @@ public class StageManager : MonoBehaviour
         Debug.Log($"Start of Act: {_currentGameState}");
     }
 
-    public async void FinishAct(ActData actData, bool addDelay = true)
+    public async void FinishAct(ActData actData, bool addDelay = true, bool resetCrowd = true)
     {
         // Wait for crowd react and goon bowing
         if (addDelay)
@@ -248,9 +248,12 @@ public class StageManager : MonoBehaviour
 
         _houseLights.SetActive(false);
 
-        // calm the crowd, reset points
-        ActFinished?.Invoke();
-
+        if (resetCrowd == true)
+        {
+            // calm the crowd, reset points
+            ActFinished?.Invoke();
+        }
+        
         // Set the next act
         SetState(actData.NextAct);
     }

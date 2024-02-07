@@ -13,16 +13,25 @@ public class WordData : ScriptableObject
     public AudioClip WordAudio;
     public AnimationClip FaceClip;
     public AnimationClip StickClip;
-    public TMP_FontAsset Font;
-    public Color FontColor = Color.white;
+    private TMP_FontAsset _font;
+    private Color _fontColor = Color.white;
 
     public void SetFont(TMP_FontAsset font)
     {
-        Font = font;
+        _font = font;
     }
 
     public void SetFontColor(Color fontColor)
     {
-        FontColor = fontColor;
+        _fontColor = fontColor;
+    }
+
+    public Color GetFontColour()
+    {
+        return _fontColor;
+    }
+    public TMP_FontAsset GetFont()
+    {
+        return _font;
     }
 }

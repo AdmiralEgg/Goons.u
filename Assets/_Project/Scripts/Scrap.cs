@@ -63,8 +63,8 @@ public class Scrap : MonoBehaviour
     {
         _wordData = wordData;
         _scrapText.text = wordData.Word;
-        _scrapText.color = wordData.FontColor;
-        _scrapText.font = wordData.Font;
+        _scrapText.color = wordData.GetFontColour();
+        _scrapText.font = wordData.GetFont();
         _scrapText.alpha = 255;
     }
 

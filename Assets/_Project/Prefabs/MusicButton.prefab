@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentEnabledState: 0
-  _hasRunMechanism: 0
+  _runMechanism: {fileID: 0}
   _enableMovement: 0
   _hinge: {fileID: 0}
   _onAwakeState: 1
@@ -73,6 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentRunningState: 2
+  _enableMechanism: {fileID: 0}
   _songData: {fileID: 11400000, guid: b39b0bc1cdbdd1a44bb30c2c2f16b955, type: 2}
   _speaker: {fileID: 0}
   _rotateTimeSeconds: 4
@@ -329,8 +330,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3955419725307988185}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.07, z: 0}
-  m_LocalScale: {x: 0.12000002, y: 0.73, z: 0.11462403}
+  m_LocalPosition: {x: 0.056, y: 2.962, z: -0.008}
+  m_LocalScale: {x: 0.12000002, y: 2.823713, z: 0.11462403}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7961397013261236973}

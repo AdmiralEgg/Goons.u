@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a1aa69c4bb7bd54b93cdffe03371495, type: 3}
+  m_Name: Yorky_Bog
+  m_EditorClassIdentifier: 
+  Goon: 2
+  Word: Bog
+  SizeOfWord: 0
+  WordAudio: {fileID: 8300000, guid: 9de08edf6d3d347428ed03bf17566fe4, type: 3}
+  FaceClip: {fileID: 0}
+  StickClip: {fileID: 0}
+  Font: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  FontColor: {r: 1, g: 1, b: 1, a: 1}

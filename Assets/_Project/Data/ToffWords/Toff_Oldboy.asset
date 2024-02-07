@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Toff_Oldboy
   m_EditorClassIdentifier: 
   Goon: 1
-  Word: Oldboy
-  wordSize: 0
+  Word: Old Boy
+  SizeOfWord: 0
   WordAudio: {fileID: 8300000, guid: df6f99598c8a97a4d87eafda658e3182, type: 3}
   FaceClip: {fileID: 0}
   StickClip: {fileID: 0}
+  Font: {fileID: 11400000, guid: 50c8c10bfafdb5d46a48fcd0fe016ee4, type: 2}
+  FontColor: {r: 0.12428801, g: 0.31071827, b: 0.5377358, a: 0}

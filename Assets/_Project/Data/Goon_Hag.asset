@@ -15,10 +15,10 @@ MonoBehaviour:
   GoonType: 0
   WordFont: {fileID: 11400000, guid: 8b4a42c44429bb94da1d4b57b8fad159, type: 2}
   WordColor: {r: 0.10034709, g: 0.5188679, b: 0.1311668, a: 0}
-  NiceCatchAudio: {fileID: 8300000, guid: 84526e0bcf0933c488282184d72555b4, type: 3}
-  StickTouchAudio: {fileID: 8300000, guid: 0a307e3af2fa3dc498e8d337aece0625, type: 3}
-  SpeakerTouchAudio: {fileID: 8300000, guid: 07006fab8c804f14e9da129a637bda11, type: 3}
-  CrowdTouchAudio: {fileID: 8300000, guid: 87046cd9750c8c4439ce30ca1fa88493, type: 3}
+  NiceCatchAudio: {fileID: 8300000, guid: 790961994e1b4d34990a871222ddab0f, type: 3}
+  StickTouchAudio: {fileID: 8300000, guid: 2dbece69d73b875488dc86fc309321ef, type: 3}
+  SpeakerTouchAudio: {fileID: 8300000, guid: c0e5d5672173be74582914388cc34d2a, type: 3}
+  CrowdTouchAudio: {fileID: 8300000, guid: 67b27aa1fbcc7f64682c647b7c1671c0, type: 3}
   WordData:
   - {fileID: 11400000, guid: e7692ea28bbe8c9418212435785a80df, type: 2}
   - {fileID: 11400000, guid: efd444d2a22d55649928469d05f40729, type: 2}
