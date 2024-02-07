@@ -16,10 +16,6 @@ public class CrowdController : MonoBehaviour
 
     [Header("Crowd Audio")]
     [SerializeField]
-    private AudioClip _crowdHush;
-    [SerializeField]
-    private AudioClip _crowdMurmer;
-    [SerializeField]
     private AudioClip[] _smallCheer;
     [SerializeField]
     private AudioClip[] _mediumCheer;
@@ -133,7 +129,7 @@ public class CrowdController : MonoBehaviour
 
                 _audioSourceCrowdChatter.volume = 0.05f;
                 _audioSourceCrowdChatter.Stop();
-                _audioSourceCrowdChatter.PlayOneShot(_crowdMurmer);
+                _audioSourceCrowdChatter.Play();
                 StartCoroutine(VolumeChange(_audioSourceCrowdChatter, 0.2f, 2f));
                 break;
         }

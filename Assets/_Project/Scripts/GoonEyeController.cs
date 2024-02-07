@@ -12,6 +12,8 @@ public class GoonEyeController : MonoBehaviour
 
     [SerializeField, ReadOnly]
     private EyeState _currentEyeState;
+    [SerializeField, ReadOnly]
+    private IdleAction _currentIdleAction;
 
     [SerializeField]
     private Goon _goon;
@@ -27,11 +29,11 @@ public class GoonEyeController : MonoBehaviour
     [SerializeField]
     private Transform _crowdLeft, _crowdRight;
 
-    [Title("Crowd Members")]
-    [SerializeField]
+    [Title("Randomly selected crowd member")]
+    [SerializeField, ReadOnly]
     private CrowdMember _crowdMember;
 
-    [Title("Crowd Members")]
+    [Title("All Crowd Members")]
     [SerializeField]
     private GameObject _allCrowd;
 
@@ -44,8 +46,10 @@ public class GoonEyeController : MonoBehaviour
     [SerializeField, ReadOnly]
     private float _currentFocusSpeed;
 
-    [SerializeField, ReadOnly]
-    private float _timeToNextIdleAction;
+    [SerializeField]
+    private float _timeToNextIdleActionMin = 3f;
+    private float _timeToNextIdleActionMax = 7f;
+    private float _timeToNextIdleAction = 3f;
 
     private Animator _animator;
 
@@ -55,15 +59,6 @@ public class GoonEyeController : MonoBehaviour
         _animator.enabled = false;
 
         _currentEyeState = EyeState.Idle;
-
-        _timeToNextIdleAction = 3;
-
-        //FocusCeiling();
-        //PlayIdleAction(IdleAction.FocusRight);
-        //PlayIdleAction(IdleAction.FocusCamera);
-        //PlayIdleAction(IdleAction.PickCrowd);
-        //PlayIdleAction(IdleAction.RollEyes);
-        //PlayIdleAction(IdleAction.ScanCrowd);
     }
 
     private void Update()
@@ -82,7 +77,7 @@ public class GoonEyeController : MonoBehaviour
             IdleAction randomAction = (IdleAction)actions.GetValue(idleAction);
             PlayIdleAction(randomAction);
             
-            _timeToNextIdleAction = UnityEngine.Random.Range(8, 16);
+            _timeToNextIdleAction = UnityEngine.Random.Range(_timeToNextIdleActionMin, _timeToNextIdleActionMax);
         }
     }
 
@@ -90,6 +85,7 @@ public class GoonEyeController : MonoBehaviour
     {
         _animator.enabled = false;
         _currentEyeState = EyeState.Focusing;
+        _currentIdleAction = action;
 
         switch (action)
         {
@@ -115,7 +111,7 @@ public class GoonEyeController : MonoBehaviour
                 PlayAnimation("CrossEyes");
                 break;
             case IdleAction.Think:
-                PlayAnimation("Think");
+                PlayAnimation("Thinking");
                 break;
             case IdleAction.Shifty:
                 PlayAnimation("Shifty");
@@ -132,8 +128,6 @@ public class GoonEyeController : MonoBehaviour
 
     private void SetFocusPoint(Transform focusPoint, float focusSpeed = 0f)
     {
-        //_animator.enabled = false;
-
         // Randomise speed
         if (focusSpeed == 0f)
         {
@@ -143,7 +137,6 @@ public class GoonEyeController : MonoBehaviour
             focusSpeed = speeds[index];
         }
 
-        //_currentEyeState = EyeState.Focusing;
         _currentFocusTransform = focusPoint;
         _currentFocusSpeed = focusSpeed;
     }
@@ -152,7 +145,6 @@ public class GoonEyeController : MonoBehaviour
     {        
         _animator.enabled = true;
 
-        //_currentEyeState = EyeState.Focusing;
         try
         {
             _animator.Play(animationName);
@@ -182,8 +174,6 @@ public class GoonEyeController : MonoBehaviour
 
     private IEnumerator ScanCrowd()
     {
-        //_currentEyeState = EyeState.Focusing;
-        
         // Look crowd right
         SetFocusPoint(_crowdRight.transform, _quickLookSpeed);
 
@@ -224,10 +214,4 @@ public class GoonEyeController : MonoBehaviour
             }
         }
     }
-
-    // SnapLook, SlowLook
-    // Blink
-    // Roll (animation)
-    // track point over time
-    // Idle scanning
 }

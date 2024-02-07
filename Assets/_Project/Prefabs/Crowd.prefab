@@ -77,7 +77,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.8
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -234,7 +234,7 @@ MonoBehaviour:
   PointsManager: {fileID: 0}
   _currentCrowdIntensity: 0
   _crowdHush: {fileID: 8300000, guid: e09901fedf916a848b8df03ec4ea68f9, type: 3}
-  _crowdMurmer: {fileID: 8300000, guid: 0a7eed3b0f02d2b46ab66a42d2ed8967, type: 3}
+  _crowdMurmer: {fileID: 8300000, guid: cc43e429eb55f3a49a86ae4fb330c9ba, type: 3}
   _smallCheer:
   - {fileID: 8300000, guid: 18376b02ef3db4a47917539ee04313df, type: 3}
   - {fileID: 8300000, guid: c39124cfba7178d4a9783c7495c2756c, type: 3}

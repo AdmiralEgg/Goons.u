@@ -75,9 +75,18 @@ public class Goon : MonoBehaviour
         for (int i =  0; i < wordsToLoad; i++)
         {
             System.Random random = new System.Random();
-            int randomNumber = random.Next(_wordData.Length);
 
-            _wordQueue.Add(_wordData[randomNumber]);
+            WordData randomisedWord;
+
+            // Keep randomising until we get a word that isn't in the queue.
+            do
+            {
+                int randomNumber = random.Next(_wordData.Length);
+                randomisedWord = _wordData[randomNumber];
+            }
+            while (_wordQueue.Contains(randomisedWord) == true);
+
+            _wordQueue.Add(randomisedWord);
         }
     }
 
