@@ -655,6 +655,18 @@ PrefabInstance:
       propertyPath: _stagePosition
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8349011443701109801, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: _goonLights.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8349011443701109801, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: _goonLights.Array.data[0]
+      value: 
+      objectReference: {fileID: 8353502429535058215}
+    - target: {fileID: 8349011443701109801, guid: 9240e193088c2df469666ff04a694953, type: 3}
+      propertyPath: _goonLights.Array.data[1]
+      value: 
+      objectReference: {fileID: 6809385752044062436}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -674,6 +686,16 @@ MonoBehaviour:
 --- !u!4 &2522571450967214777 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5558132740571235327, guid: 9240e193088c2df469666ff04a694953, type: 3}
+  m_PrefabInstance: {fileID: 7936342107261159750}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &6809385752044062436 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 3484732069139419042, guid: 9240e193088c2df469666ff04a694953, type: 3}
+  m_PrefabInstance: {fileID: 7936342107261159750}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &8353502429535058215 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2147679543497486433, guid: 9240e193088c2df469666ff04a694953, type: 3}
   m_PrefabInstance: {fileID: 7936342107261159750}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9130798210863182725

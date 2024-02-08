@@ -323,7 +323,7 @@ Transform:
   m_Children:
   - {fileID: 3413093747205668878}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 9.132, y: -17.464, z: -41.186}
 --- !u!114 &4768441036887838821
 MonoBehaviour:
@@ -672,7 +672,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8844674829654547799}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: -1.47, z: -0.02}
+  m_LocalPosition: {x: 0.01, y: -1.71, z: -0.02}
   m_LocalScale: {x: 1.6496551, y: 1.975663, z: 2.6490123}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -691,8 +691,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.32941177, g: 0.20392157, b: 0.12156863, a: 1}
-  m_Intensity: 0.5
-  m_Range: 1
+  m_Intensity: 0.8
+  m_Range: 0.6
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10

@@ -12,6 +12,7 @@ public class StagePositionPoint : MonoBehaviour
     [SerializeField]
     private float _boundsRadius = 0.15f;
 
+
     private void Awake()
     {
         _sphereCollider = GetComponent<SphereCollider>();
