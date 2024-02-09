@@ -26,8 +26,6 @@ public class StageManager : MonoBehaviour
     [Header("Lights")]
     [SerializeField]
     private GameObject _houseLights;
-    [SerializeField]
-    private GameObject _goonLightsLeft;
 
     [Header("Mechanism")]
     [SerializeField]
@@ -93,7 +91,6 @@ public class StageManager : MonoBehaviour
             case GameState.Title:
 
                 _houseLights.SetActive(false);
-                _goonLightsLeft.SetActive(false);
 
                 _projector.EnableAfterAnimation();
 
@@ -109,9 +106,6 @@ public class StageManager : MonoBehaviour
 
                 await StartAct(actData);
 
-                // Wait a second before goon lights come on...
-                StartCoroutine(PauseThenActivate(3.5f, _goonLightsLeft));
-
                 // Wait a second before house lights come on...
                 StartCoroutine(PauseThenActivate(5, _houseLights));
 
@@ -123,7 +117,6 @@ public class StageManager : MonoBehaviour
 
                 await StartAct(actData);
 
-                _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
 
                 CrowdController.CrowdEntertained = () => FinishAct(actData);
@@ -133,7 +126,6 @@ public class StageManager : MonoBehaviour
 
                 await StartAct(actData);
 
-                _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
                 
                 CrowdController.CrowdEntertained = () => FinishAct(actData);
@@ -143,7 +135,6 @@ public class StageManager : MonoBehaviour
 
                 await StartAct(actData);
 
-                _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
 
                 CrowdController.CrowdEntertained = () => FinishAct(actData);
@@ -153,7 +144,6 @@ public class StageManager : MonoBehaviour
 
                 await StartAct(actData);
 
-                _goonLightsLeft.SetActive(true);
                 _houseLights.SetActive(true);
 
                 CrowdController.CrowdEntertained = () => FinishAct(actData);
@@ -164,7 +154,6 @@ public class StageManager : MonoBehaviour
                 await StartAct(actData);
 
                 _houseLights.SetActive(true);
-                _goonLightsLeft.SetActive(true);
 
                 break;
         }
@@ -237,9 +226,6 @@ public class StageManager : MonoBehaviour
         await WaitForEnableMechanismState(_curtains[0], BaseEnableMechanism.EnabledState.Disabled);
 
         Debug.Log($"End of Act: {_currentGameState}");
-
-        // Turn off lights
-        _goonLightsLeft.SetActive(false);
 
         if (addDelay)
         {

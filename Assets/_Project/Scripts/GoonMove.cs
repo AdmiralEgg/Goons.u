@@ -3,6 +3,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using MoreMountains.Feedbacks;
 using UnityEngine.InputSystem.LowLevel;
+using System;
 
 public class GoonMove : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class GoonMove : MonoBehaviour
     [SerializeField, ReadOnly]
     Vector3 velocity;
 
+    public static Action<StagePositionPoint, bool> SpotlightSwitchOn;
+
     void Awake()
     {
         if (_offStagePosition != null)
@@ -53,6 +56,8 @@ public class GoonMove : MonoBehaviour
         // if targetposition is updated, stop the coroutine
         if ((_currentPosition != _targetPosition) && (_currentMoveState != GoonMoveState.Walking))
         {
+            SpotlightSwitchOn(_currentPosition, false);
+            
             // start the walk animation
             _goonStickAnimator.Play("Walk");
             _currentMoveState = GoonMoveState.Walking;
@@ -91,6 +96,7 @@ public class GoonMove : MonoBehaviour
         }
 
         GoonIdle();
+        SpotlightSwitchOn(_currentPosition, true);
     }
 
     public void GoonIdle()

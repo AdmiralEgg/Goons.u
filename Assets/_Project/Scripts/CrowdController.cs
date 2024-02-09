@@ -144,6 +144,7 @@ public class CrowdController : MonoBehaviour
         PlayCrowdReaction(CrowdIntensity.Maximum);
         StartCoroutine(PlayStreamers());
         CrowdEntertained?.Invoke();
+
     }
 
     private void ResetCrowd()

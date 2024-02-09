@@ -1,5 +1,6 @@
 using MoreMountains.Feedbacks;
 using Sirenix.OdinInspector;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,6 +25,9 @@ public class CrowdMember : MonoBehaviour
 
     [SerializeField, ReadOnly]
     private Timing _timing = Timing.OnBeat;
+
+    [SerializeField, ReadOnly]
+    Coroutine _bounceCoroutine;
 
     public UnityEvent BounceTrigger;
 
@@ -56,6 +60,19 @@ public class CrowdMember : MonoBehaviour
         }
     }
 
+    private IEnumerator StartBouncing(float totalTime)
+    {
+        float t = 0;
+
+        while (t < totalTime) 
+        {
+            Bounce();
+            
+            yield return new WaitForSeconds(UnityEngine.Random.Range(0.2f, 0.6f));
+            t += Time.deltaTime;
+        }
+    }
+
     public void Bounce()
     {
         _positionShaker.Play();
@@ -63,6 +80,12 @@ public class CrowdMember : MonoBehaviour
 
     public void SetMemberIntensity(Intensity newIntensity)
     {
+        if (_bounceCoroutine != null)
+        {
+            StopCoroutine(_bounceCoroutine);
+            _bounceCoroutine = null;
+        }
+        
         switch (newIntensity)
         {
             case Intensity.None:
@@ -84,6 +107,12 @@ public class CrowdMember : MonoBehaviour
                 _positionShaker.ShakeSpeed = 20;
                 _positionShaker.ShakeRange = 0.5f;
                 _positionShaker.ShakeMainDirection = new Vector3(0.1f, 1, 0);
+                
+                if (_bounceCoroutine == null)
+                {
+                    _bounceCoroutine = StartCoroutine(StartBouncing(3f));
+                }
+                
                 break;
         }
 
