@@ -102,6 +102,11 @@ public class PointsManager : MonoBehaviour
             AddPoints(pointsData.ScrapCaught);
         };
 
+        InputManager.InventoryScrapClicked += (wordData) =>
+        {
+            AddPoints(pointsData.GoonSpeakPoints);
+        };
+
         _targetPoints = pointsData.PointsTarget;
     }
 

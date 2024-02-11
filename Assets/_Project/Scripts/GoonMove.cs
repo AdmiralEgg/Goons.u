@@ -49,6 +49,7 @@ public class GoonMove : MonoBehaviour
 
         Speaker.MusicStopped += GoonIdle;
         PointsManager.PointsReached += GoonBow;
+        //InputManager.InventoryScrapClicked += GoonProd;
     }
 
     private void FixedUpdate()
@@ -121,6 +122,11 @@ public class GoonMove : MonoBehaviour
         _currentMoveState = GoonMoveState.Dancing;
     }
 
+    public void GoonProd()
+    {
+        _goonStickAnimator.Play("Prod", _goonStickAnimator.GetLayerIndex("ProdLayer"));
+    }
+
     public void GoonOffstage()
     {
         _targetPosition = _offStagePosition;
@@ -136,8 +142,10 @@ public class GoonMove : MonoBehaviour
         _currentPosition = newPosition;
     }
 
+    /*
     private void OnGoonSelected(GameObject gameObject)
     {
         _goonStickAnimator.Play("Prod", _goonStickAnimator.GetLayerIndex("ProdLayer"));
     }
+    */
 }

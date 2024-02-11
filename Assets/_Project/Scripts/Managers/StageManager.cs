@@ -107,7 +107,7 @@ public class StageManager : MonoBehaviour
                 await StartAct(actData);
 
                 // Wait a second before house lights come on...
-                StartCoroutine(PauseThenActivate(5, _houseLights));
+                StartCoroutine(PauseThenActivate(7, _houseLights));
 
                 // If the crowd are entertained, finish the act
                 CrowdController.CrowdEntertained = () => FinishAct(actData);
@@ -191,7 +191,7 @@ public class StageManager : MonoBehaviour
 
         ActStarted?.Invoke();
 
-        await Task.Delay(500);
+        await Task.Delay(200);
 
         GoonsOnStage(actData);
         EnableMechanismsForAct(actData);

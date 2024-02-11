@@ -35,6 +35,8 @@ public class Goon : MonoBehaviour
 
     public static Action<WordData> GoonSpeak;
 
+    private GoonMove _goonMove;
+
     private void OnEnable()
     {
         _assignedScrapInventory.AssignGoon(this);
@@ -49,6 +51,8 @@ public class Goon : MonoBehaviour
         _wordData = _goonData.WordData;
 
         _currentState = GoonState.Idle;
+
+        _goonMove = GetComponent<GoonMove>();
 
         // Load two words into the queue
         LoadRandomWords(2);
@@ -161,6 +165,10 @@ public class Goon : MonoBehaviour
     private IEnumerator Speak(AudioClip clip)
     {
         _currentState = GoonState.Speaking;
+
+        // play goon prod
+        _goonMove.GoonProd();
+
         _faceAudioSource.PlayOneShot(clip);
 
         yield return new WaitForSeconds(WaitBetweenSpeaking);
