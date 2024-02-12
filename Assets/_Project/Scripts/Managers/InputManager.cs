@@ -43,6 +43,7 @@ public class InputManager : MonoBehaviour
 
         // On click, figure out what has been hit. Nothing, or scrap.
         s_playerInput.actions["Select"].performed += OnPlayerSelect;
+        s_playerInput.actions["Exit"].performed += OnExit;
 
         // If scrap has been selected, update the state.
         Scrap.ScrapSelected += (scrap) =>
@@ -204,5 +205,10 @@ public class InputManager : MonoBehaviour
     public static InputState GetCurrentInputState() 
     {
         return s_currentInputState;
+    }
+
+    private void OnExit(InputAction.CallbackContext context)
+    {
+        Application.Quit();
     }
 }

@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentEnabledState: 0
-  _hasRunMechanism: 0
+  _runMechanism: {fileID: 0}
   _enableMovement: 0
   _hinge: {fileID: 0}
   _onAwakeState: 1
@@ -548,7 +548,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8909521546769292425}
   m_LocalRotation: {x: 0.49860215, y: -0, z: -0, w: 0.866831}
-  m_LocalPosition: {x: 0, y: 6.17, z: -4.74}
+  m_LocalPosition: {x: 0, y: 4.18, z: 0.52}
   m_LocalScale: {x: 1, y: 1.1449114, z: 1.3763301}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -564,16 +564,16 @@ Light:
   m_GameObject: {fileID: 8909521546769292425}
   m_Enabled: 1
   serializedVersion: 10
-  m_Type: 0
+  m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.751342, g: 0.8018868, b: 0.6997597, a: 1}
-  m_Intensity: 80
-  m_Range: 10
+  m_Intensity: 50
+  m_Range: 5.3
   m_SpotAngle: 152.11224
   m_InnerSpotAngle: 80.3926
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -606,7 +606,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
