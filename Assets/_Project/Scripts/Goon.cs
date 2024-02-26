@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Linq;
+using FMODUnity;
+using FMOD.Studio;
+using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
+using Lofelt.NiceVibrations;
+using System.Diagnostics.Contracts;
 
 public class Goon : MonoBehaviour
 {
@@ -17,47 +23,159 @@ public class Goon : MonoBehaviour
     private GoonState _currentState;
 
     [SerializeField, ReadOnly]
-    private AudioClip _niceCatchAudio, _stickTouchAudio, _speakerTouchAudio, _crowdTouchAudio;
-
-    [SerializeField, ReadOnly]
-    private WordData[] _wordData;
-
-    [SerializeField, ReadOnly]
-    private List<WordData> _wordQueue;
+    private List<WordData> _wordData;
 
     [SerializeField]
     private ScrapInventory _assignedScrapInventory;
+    private GoonMove _goonMove;
 
     [SerializeField]
-    private float WaitBetweenSpeaking = 0.1f;
-
-    private AudioSource _faceAudioSource;
+    private float DelayBetweenSpeaking = 1f;
 
     public static Action<WordData> GoonSpeak;
 
-    private GoonMove _goonMove;
+    // FMOD Sounds
+    [Header("Audio Data")]
+    [SerializeField]
+    private EventReference _randomWordEvent;
+    [SerializeField]
+    private EventReference _singleWordEvent;
+    [SerializeField]
+    private EventReference _stickTouchEvent;
+    [SerializeField, Tooltip("Name of the parameter in FMOD which should be set to control which single words are played.")]
+    private string _soundbankParameterName;
+
+    private FMOD.Studio.EventInstance _singleWordInstance;
+    private FMOD.Studio.EventInstance _stickTouchInstance;
+    private FMOD.Studio.EventInstance _randomWordInstance;
+
+    // Callback fields
+    private FMOD.Studio.EVENT_CALLBACK _randomWordCallback;
+    private RandomWordData _randomWordData = null;
+    private GCHandle _randomWordHandle;
+
+    [StructLayout(LayoutKind.Sequential)]
+    public class RandomWordData
+    {
+        public FMOD.StringWrapper RandomWord = new FMOD.StringWrapper();
+        public string WordFileName;
+    }
+
+    [SerializeField, ReadOnly]
+    private string _lastRandomWordSpoken;
 
     private void OnEnable()
     {
-        _assignedScrapInventory.AssignGoon(this);
-        
-        _faceAudioSource = GetComponentInChildren<AudioSource>();
+        SetupFMODInstances();
 
-        _niceCatchAudio = _goonData.NiceCatchAudio;
-        _stickTouchAudio = _goonData.StickTouchAudio;
-        _speakerTouchAudio = _goonData.SpeakerTouchAudio;
-        _crowdTouchAudio = _goonData.CrowdTouchAudio;
+        _wordData = new List<WordData>();
 
-        _wordData = _goonData.WordData;
+        foreach (WordData wordData in _goonData.WordData)
+        {
+            _wordData.Add(wordData);
+        }
 
         _currentState = GoonState.Idle;
 
         _goonMove = GetComponent<GoonMove>();
+        _assignedScrapInventory.AssignGoon(this);
 
-        // Load two words into the queue
-        LoadRandomWords(2);
+        InputManager.InventoryScrapClicked += PlaySingleWord;
+    }
 
-        InputManager.InventoryScrapClicked += PlayFixedWord;
+    private void SetupFMODInstances()
+    {
+        _singleWordInstance = FMODUnity.RuntimeManager.CreateInstance(_singleWordEvent);
+        _stickTouchInstance = FMODUnity.RuntimeManager.CreateInstance(_stickTouchEvent);
+        _randomWordInstance = FMODUnity.RuntimeManager.CreateInstance(_randomWordEvent);
+
+        _randomWordData = new RandomWordData();
+        _randomWordCallback = new FMOD.Studio.EVENT_CALLBACK(ProcessWordSpokenCallback);
+        _randomWordHandle = GCHandle.Alloc(_randomWordData, GCHandleType.Pinned);
+
+        _randomWordInstance.setUserData(GCHandle.ToIntPtr(_randomWordHandle));
+        _randomWordInstance.setCallback(_randomWordCallback, EVENT_CALLBACK_TYPE.SOUND_PLAYED);
+    }
+
+    [AOT.MonoPInvokeCallback(typeof(FMOD.Studio.EVENT_CALLBACK))]
+    static FMOD.RESULT ProcessWordSpokenCallback(FMOD.Studio.EVENT_CALLBACK_TYPE type, IntPtr instancePtr, IntPtr parameterPtr)
+    {
+        FMOD.Studio.EventInstance instance = new FMOD.Studio.EventInstance(instancePtr);
+
+        IntPtr randomWordDataPtr;
+        FMOD.RESULT result = instance.getUserData(out randomWordDataPtr);
+
+        if (result != FMOD.RESULT.OK)
+        {
+            Debug.Log($"Random Word Callback Error: { result }");
+            return FMOD.RESULT.ERR_UNSUPPORTED;
+        }
+
+        if (randomWordDataPtr == IntPtr.Zero)
+        {
+            Debug.Log($"Random Word Pointer is null: {randomWordDataPtr}");
+            return FMOD.RESULT.ERR_UNSUPPORTED;
+        }
+
+        GCHandle randomWordHandle = GCHandle.FromIntPtr(randomWordDataPtr);
+        RandomWordData randomWordData = (RandomWordData)randomWordHandle.Target;
+
+        switch (type)
+        {
+            case EVENT_CALLBACK_TYPE.SOUND_PLAYED:
+            {
+                FMOD.Sound sound = new FMOD.Sound(parameterPtr);
+                string soundName;
+                sound.getName(out soundName, 1024);
+                
+                randomWordData.WordFileName = soundName;
+                break;
+            }
+            case EVENT_CALLBACK_TYPE.ALL:
+                break;
+        }
+        
+        return FMOD.RESULT.OK;
+    }
+
+    private void Update()
+    {
+        CheckRandomWordData();
+    }
+
+    private void CheckRandomWordData()
+    {
+        if (_randomWordData.WordFileName == null) return;
+
+        if ((_lastRandomWordSpoken == "") || (_lastRandomWordSpoken != _randomWordData.WordFileName))
+        {
+            WordData wordData = GetWordDataByFMODWordData(_randomWordData.WordFileName);
+            wordData.SetFont(_goonData.WordFont);
+            wordData.SetFontColor(_goonData.WordColor);
+
+            GoonSpeak?.Invoke(wordData);
+            _lastRandomWordSpoken = _randomWordData.WordFileName;
+            return;
+        }
+    }
+
+    private void OnDisable()
+    {
+        CleanupFMOD();
+    }
+
+    private void OnDestroy()
+    {
+        CleanupFMOD();
+    }
+
+    private void CleanupFMOD()
+    {
+        _singleWordInstance.release();
+        _stickTouchInstance.release();
+        _randomWordInstance.release();
+        _randomWordInstance.setUserData(IntPtr.Zero);
+        _randomWordHandle.Free();
     }
 
     // Triggered by InputManager
@@ -67,75 +185,36 @@ public class Goon : MonoBehaviour
 
         if (gameObject.name == "GoonStick")
         {
-            PlayComment(_stickTouchAudio);
+            PlayStickTouch();
             return;
         }
 
         PlayRandomWord();
     }
 
-    private void LoadRandomWords(int wordsToLoad = 1)
-    {
-        for (int i =  0; i < wordsToLoad; i++)
-        {
-            System.Random random = new System.Random();
-
-            WordData randomisedWord;
-
-            // Keep randomising until we get a word that isn't in the queue.
-            do
-            {
-                int randomNumber = random.Next(_wordData.Length);
-                randomisedWord = _wordData[randomNumber];
-            }
-            while (_wordQueue.Contains(randomisedWord) == true);
-
-            _wordQueue.Add(randomisedWord);
-        }
-    }
-
-    private void PlayFixedWord(WordData wordData)
+    private void PlaySingleWord(WordData wordData)
     {
         if (_currentState == GoonState.Speaking) return;
+
         if (wordData.Goon != _goonData.GoonType) return;
 
-        if (wordData.WordAudio != null)
+        FMOD.RESULT paramSetResult = _singleWordInstance.setParameterByNameWithLabel(_soundbankParameterName, wordData.FMODWordDataName);
+
+        if (paramSetResult.HasFlag(FMOD.RESULT.OK) == false)
         {
-            StartCoroutine(Speak(wordData.WordAudio));
+            Debug.LogError($"Param set: {paramSetResult}");
         }
-        else
-        {
-            Debug.LogError($"Word audio for {wordData.Word} is not defined.");
-        }
+
+        _singleWordInstance.start();
+        StartCoroutine(DelayWhileSpeaking());
     }
 
     private void PlayRandomWord()
     {
         if (_currentState == GoonState.Speaking) return;
-        
-        if (_wordQueue.Count == 0)
-        {
-            Debug.LogError("No words found in the queue, cannot play.");
-            return;
-        }
 
-        WordData wordData = _wordQueue.First<WordData>();
-        wordData.SetFont(_goonData.WordFont);
-        wordData.SetFontColor(_goonData.WordColor);
-
-        _wordQueue.RemoveAt(0);
-        
-        if (wordData.WordAudio != null)
-        {
-            StartCoroutine(Speak(wordData.WordAudio));
-            GoonSpeak?.Invoke(wordData);
-        }
-        else
-        {
-            Debug.LogError($"Word audio for {wordData.Word} is not defined.");
-        }
-
-        LoadRandomWords();
+        _randomWordInstance.start();
+        StartCoroutine(DelayWhileSpeaking());
     }
 
     public GoonData GetGoonData()
@@ -148,31 +227,31 @@ public class Goon : MonoBehaviour
         return _currentState;
     }
 
-    private void PlayComment(AudioClip clip)
+    private void PlayStickTouch()
     {
         if (_currentState == GoonState.Speaking) return;
 
-        StartCoroutine(Speak(clip));
+        _stickTouchInstance.start();
     }
 
-    public void PlayGroupComment(AudioClip clip)
-    {
-        if (_currentState == GoonState.Speaking) return;
-
-        StartCoroutine(Speak(clip));
-    }
-
-    private IEnumerator Speak(AudioClip clip)
+    private IEnumerator DelayWhileSpeaking()
     {
         _currentState = GoonState.Speaking;
 
         // play goon prod
         _goonMove.GoonProd();
 
-        _faceAudioSource.PlayOneShot(clip);
-
-        yield return new WaitForSeconds(WaitBetweenSpeaking);
+        yield return new WaitForSeconds(DelayBetweenSpeaking);
         
         _currentState = GoonState.Idle;
+    }
+
+    private WordData GetWordDataByFMODWordData(string searchWord)
+    {
+        WordData data = _wordData.Find(x => x.FMODWordDataName == searchWord);
+
+        Debug.Log($"Returning word: {data.Word} and FMOD file name: {data.FMODWordDataName}");
+
+        return data;
     }
 }

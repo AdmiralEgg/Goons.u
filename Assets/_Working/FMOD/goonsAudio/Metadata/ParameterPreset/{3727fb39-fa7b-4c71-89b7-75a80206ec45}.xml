@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{3727fb39-fa7b-4c71-89b7-75a80206ec45}">
+		<property name="name">
+			<value>ToffSingleWord</value>
+		</property>
+		<relationship name="folder">
+			<destination>{c33239e6-e4bc-4c32-a6c5-a1ef18d850ce}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{bdc22d23-46ed-4f88-b0dc-c991805bc1fc}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{bdc22d23-46ed-4f88-b0dc-c991805bc1fc}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>15</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>toff_beastly</value>
+			<value>toff_brick</value>
+			<value>toff_cheerio</value>
+			<value>toff_common</value>
+			<value>toff_cuppa</value>
+			<value>toff_jolly</value>
+			<value>toff_harrods</value>
+			<value>toff_oldboy</value>
+			<value>toff_polo</value>
+			<value>toff_port</value>
+			<value>toff_rugger</value>
+			<value>toff_spiffing</value>
+			<value>toff_stickywicket</value>
+			<value>toff_waffle</value>
+			<value>toff_wine</value>
+		</property>
+		<property name="initialValue">
+			<value>2</value>
+		</property>
+	</object>
+</objects>

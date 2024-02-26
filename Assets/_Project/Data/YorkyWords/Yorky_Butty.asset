@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 2
   Word: Butty
+  FMODWordDataName: yorky_butty
   SizeOfWord: 0
-  WordAudio: {fileID: 8300000, guid: 8ac0d23f24f424d4ab63bd72120d017e, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}

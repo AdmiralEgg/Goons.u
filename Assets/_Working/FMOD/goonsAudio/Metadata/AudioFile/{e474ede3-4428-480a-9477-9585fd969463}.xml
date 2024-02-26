@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{e474ede3-4428-480a-9477-9585fd969463}">
+		<property name="assetPath">
+			<value>Mechanisms/PushIn.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.51612244897959181</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{dabaa7e8-056c-4a65-a4d9-1d579f85d36d}</destination>
+		</relationship>
+	</object>
+</objects>

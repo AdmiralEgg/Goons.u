@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 1
   Word: Wine
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: 94e63edf6324fc64bb4713b9fb4861a9, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: toff_wine
+  SizeOfWord: 0

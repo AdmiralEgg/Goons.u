@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Sweets
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: 410b4b9d2763f744883750fbcdfc3ca4, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: hag_sweets
+  SizeOfWord: 0

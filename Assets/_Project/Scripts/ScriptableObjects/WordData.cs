@@ -1,18 +1,19 @@
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
-
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/WordData", order = 1)]
 public class WordData : ScriptableObject
 {
     public enum WordSize { Little, Big }
-    
+
+    [Required]
     public Goon.GoonType Goon;
+    [Required]
     public string Word;
+    [Required, Tooltip("Name of the sound file returned from FMOD")]
+    public string FMODWordDataName;
     public WordSize SizeOfWord;
-    public AudioClip WordAudio;
-    public AnimationClip FaceClip;
-    public AnimationClip StickClip;
     private TMP_FontAsset _font;
     private Color _fontColor = Color.white;
 

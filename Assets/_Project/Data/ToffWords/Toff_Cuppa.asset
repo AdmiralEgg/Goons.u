@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 1
   Word: Cuppa
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: d16b62bd42dadd44b931c625fb38f897, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: toff_cuppa
+  SizeOfWord: 0

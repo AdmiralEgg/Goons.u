@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 1
   Word: Rugger
-  wordSize: 1
-  WordAudio: {fileID: 8300000, guid: 6506d01ee3fd0d649bc21e46ef96f017, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: toff_rugger
+  SizeOfWord: 0

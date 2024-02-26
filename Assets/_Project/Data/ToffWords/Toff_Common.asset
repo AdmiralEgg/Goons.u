@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 1
   Word: Common
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: 5c726a241a43f1546a8db938b258f36b, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: toff_common
+  SizeOfWord: 0

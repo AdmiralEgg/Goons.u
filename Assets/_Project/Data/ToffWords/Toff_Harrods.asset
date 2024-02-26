@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 1
   Word: Harrods
-  wordSize: 1
-  WordAudio: {fileID: 8300000, guid: 81913a84f16239b4b85392b3b5ae7a45, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: toff_harrods
+  SizeOfWord: 0

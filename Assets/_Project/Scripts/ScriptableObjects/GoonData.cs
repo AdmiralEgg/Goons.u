@@ -10,12 +10,6 @@ public class GoonData : ScriptableObject
     public TMP_FontAsset WordFont;
     public Color WordColor;
 
-    [Header("Audio Clips")]
-    public AudioClip NiceCatchAudio;
-    public AudioClip StickTouchAudio;
-    public AudioClip SpeakerTouchAudio;
-    public AudioClip CrowdTouchAudio;
-
     [Header("All Words")]
     public WordData[] WordData;
 }

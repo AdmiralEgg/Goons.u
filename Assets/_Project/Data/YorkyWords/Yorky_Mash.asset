@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 2
   Word: Mash
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: 26e1cf24dd1a11f4d997efdcd18b093e, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: yorky_mash
+  SizeOfWord: 0

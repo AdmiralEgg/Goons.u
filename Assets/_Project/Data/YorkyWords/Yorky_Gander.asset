@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 2
   Word: Gander
+  FMODWordDataName: yorky_gander
   SizeOfWord: 0
-  WordAudio: {fileID: 8300000, guid: 571a31eb4f4a5874e9c02e6041486959, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}

@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 1
   Word: Cheerio
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: 3afc1b864370ba941bb497dc1e99d42b, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: toff_cheerio
+  SizeOfWord: 0

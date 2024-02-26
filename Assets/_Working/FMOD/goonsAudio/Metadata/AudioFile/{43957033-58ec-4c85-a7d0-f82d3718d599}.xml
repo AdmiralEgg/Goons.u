@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{43957033-58ec-4c85-a7d0-f82d3718d599}">
+		<property name="assetPath">
+			<value>Barks/hag_scrapcaught.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>1.3061224489795917</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{dabaa7e8-056c-4a65-a4d9-1d579f85d36d}</destination>
+		</relationship>
+	</object>
+</objects>

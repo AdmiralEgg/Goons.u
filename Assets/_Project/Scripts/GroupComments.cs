@@ -44,21 +44,21 @@ public class GroupComments : MonoBehaviour
         switch (commentType)
         {
             case GroupCommentType.ScrapCaught:
-                clip = g.GetGoonData().NiceCatchAudio;
+                //clip = g.GetGoonData().NiceCatchAudio;
                 break;
             case GroupCommentType.CrowdTouch:
-                clip = g.GetGoonData().CrowdTouchAudio;
+                //clip = g.GetGoonData().CrowdTouchAudio;
                 break;
             case GroupCommentType.ScrapSelected:
                 break;
             case GroupCommentType.SpeakerTouch:
-                clip = g.GetGoonData().SpeakerTouchAudio;
+                //clip = g.GetGoonData().SpeakerTouchAudio;
                 break;
         }
 
         if (clip == null) return;
 
-        g.PlayGroupComment(clip);
+        //g.PlayGroupComment(clip);
 
         if (_allGoons.Count > 1)
         {

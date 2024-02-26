@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{f0dd48f6-621d-426f-8f01-82aeaf70f1b3}">
+		<property name="name">
+			<value>YorkySingleWord</value>
+		</property>
+		<relationship name="folder">
+			<destination>{c33239e6-e4bc-4c32-a6c5-a1ef18d850ce}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{cf194ea4-7d52-4faf-a693-71ec44d0a5c6}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{cf194ea4-7d52-4faf-a693-71ec44d0a5c6}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>12</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>yorky_bangers</value>
+			<value>yorky_bog</value>
+			<value>yorky_brew</value>
+			<value>yorky_butty</value>
+			<value>yorky_eyup</value>
+			<value>yorky_gander</value>
+			<value>yorky_gripe</value>
+			<value>yorky_hellfire</value>
+			<value>yorky_mash</value>
+			<value>yorky_peas</value>
+			<value>yorky_pies</value>
+			<value>yorky_pudding</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

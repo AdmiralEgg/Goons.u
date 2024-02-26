@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 2
   Word: Pies
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: e589fb2f59e04af4198a657343570d64, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: yorky_pies
+  SizeOfWord: 0

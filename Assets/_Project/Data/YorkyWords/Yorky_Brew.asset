@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 2
   Word: Brew
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: 41e20706e6c28f149a245b1b11551a62, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: yorky_brew
+  SizeOfWord: 0

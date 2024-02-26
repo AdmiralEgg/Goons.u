@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 2
   Word: Pudding
-  wordSize: 1
-  WordAudio: {fileID: 8300000, guid: 2064db740b8198f42b38fcbda0d7a9e5, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: yorky_pudding
+  SizeOfWord: 0

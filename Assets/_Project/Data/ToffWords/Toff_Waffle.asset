@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 1
   Word: Waffle
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: abcdef5f83963d54b8414f1cb1d68db1, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: toff_waffle
+  SizeOfWord: 0

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{9e7e366c-b621-40c4-9a7a-12e4c771b80f}">
+		<property name="assetPath">
+			<value>ToffVoice/toff_jolly.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.59999999999999998</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{dabaa7e8-056c-4a65-a4d9-1d579f85d36d}</destination>
+		</relationship>
+	</object>
+</objects>

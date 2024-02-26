@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 1
   Word: Polo
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: 1fdd4eeaaa30f794bbf15629decd0088, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: toff_polo
+  SizeOfWord: 0

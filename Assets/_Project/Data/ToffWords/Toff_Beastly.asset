@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 1
   Word: Beastly
-  wordSize: 1
-  WordAudio: {fileID: 8300000, guid: 97e1eaffdc34fef4fa4f0e4dab353d16, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: toff_beastly
+  SizeOfWord: 0

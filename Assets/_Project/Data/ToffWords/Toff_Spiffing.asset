@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 1
   Word: Spiffing
-  wordSize: 1
-  WordAudio: {fileID: 8300000, guid: 6af3b2ed356e90f40923fd1256d60d3a, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: toff_spiffing
+  SizeOfWord: 0

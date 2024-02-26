@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{7fc32e7f-36d4-48cd-b5b7-e7f7d4bc219e}">
+		<property name="name">
+			<value>Cake</value>
+		</property>
+		<relationship name="folder">
+			<destination>{c33239e6-e4bc-4c32-a6c5-a1ef18d850ce}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{407b2376-5763-45bb-a6f4-6f93a2f48394}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{407b2376-5763-45bb-a6f4-6f93a2f48394}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

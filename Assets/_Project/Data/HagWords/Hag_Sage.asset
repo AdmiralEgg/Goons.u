@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Sage
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: 2e49e6232af4a214086c32062e58b84f, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: hag_sage
+  SizeOfWord: 0

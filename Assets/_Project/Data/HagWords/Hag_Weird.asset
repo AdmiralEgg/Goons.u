@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Weird
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: 5e9daa83184757e4397777591e51158b, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: hag_weird
+  SizeOfWord: 0

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{c4999cd7-4575-4fb2-a19e-a62e4a06eb1e}">
+		<property name="name">
+			<value>ScrapGenerator</value>
+		</property>
+		<relationship name="folder">
+			<destination>{c33239e6-e4bc-4c32-a6c5-a1ef18d850ce}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{8fbe82c5-65b8-4680-9e0c-6b0d3d599bf4}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{8fbe82c5-65b8-4680-9e0c-6b0d3d599bf4}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>4</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Startup</value>
+			<value>Shutdown</value>
+			<value>Printing</value>
+			<value>Running</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

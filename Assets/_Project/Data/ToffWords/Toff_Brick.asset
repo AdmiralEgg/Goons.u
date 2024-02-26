@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 1
   Word: Brick
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: 339bc75521a2aac48ad7f205d6ff3ef3, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: toff_brick
+  SizeOfWord: 0

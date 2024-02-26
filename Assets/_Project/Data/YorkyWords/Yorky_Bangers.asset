@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 2
   Word: Bangers
-  wordSize: 1
-  WordAudio: {fileID: 8300000, guid: 77880552c3fad304c85296f87e9a6470, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: yorky_bangers
+  SizeOfWord: 0

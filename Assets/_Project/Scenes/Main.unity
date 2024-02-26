@@ -680,7 +680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentGameState: 0
-  _startingGameState: 0
+  _startingGameState: 6
   _actData:
   - GameState: 0
     ActData: {fileID: 11400000, guid: ff312832034c48a4abf89bfe77fa3bdf, type: 2}
@@ -1808,6 +1808,7 @@ Transform:
   - {fileID: 1610963258}
   - {fileID: 586715777}
   - {fileID: 645358141}
+  - {fileID: 1265494221}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2804,6 +2805,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64aa5f2c161924e4ba2c826ca6ef24b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1265494220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1265494221}
+  - component: {fileID: 1265494222}
+  - component: {fileID: 1265494223}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1265494221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265494220}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 870711446}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1265494222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265494220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 930570234}
+--- !u!114 &1265494223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265494220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9468c5f457ace64f8d4df6d642b107f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoadEvent: 0
+  UnloadEvent: 0
+  Banks:
+  - Hag
+  - Toff
+  - Yorky
+  - Mechanisms
+  - Music
+  - Crowd
+  - Environment
+  CollisionTag: 
+  PreloadSamples: 0
 --- !u!1 &1278072752
 GameObject:
   m_ObjectHideFlags: 0
@@ -4792,9 +4863,113 @@ PrefabInstance:
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: RandomWordEvent.Path
+      value: event:/YorkyVoiceRandom
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: SingleWordEvent.Path
+      value: event:/YorkyVoiceSingle
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _randomWordEvent.Path
+      value: event:/Goons/YorkyVoiceRandom
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _singleWordEvent.Path
+      value: event:/Goons/YorkyVoiceSingle
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _stickTouchEvent.Path
+      value: event:/Goons/YorkyStickTouch
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
       propertyPath: _assignedScrapInventory
       value: 
       objectReference: {fileID: 1408869640}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _soundbankParameterName
+      value: YorkySingleWord
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: RandomWordEvent.Guid.Data1
+      value: 448900850
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: RandomWordEvent.Guid.Data2
+      value: 1177775681
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: RandomWordEvent.Guid.Data3
+      value: -684591952
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: RandomWordEvent.Guid.Data4
+      value: 1830289371
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: SingleWordEvent.Guid.Data1
+      value: 1539951936
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: SingleWordEvent.Guid.Data2
+      value: 1114164282
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: SingleWordEvent.Guid.Data3
+      value: -2018178427
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: SingleWordEvent.Guid.Data4
+      value: 1224880975
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _randomWordEvent.Guid.Data1
+      value: 448900850
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _randomWordEvent.Guid.Data2
+      value: 1177775681
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _randomWordEvent.Guid.Data3
+      value: -684591952
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _randomWordEvent.Guid.Data4
+      value: 1830289371
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _singleWordEvent.Guid.Data1
+      value: 1539951936
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _singleWordEvent.Guid.Data2
+      value: 1114164282
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _singleWordEvent.Guid.Data3
+      value: -2018178427
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _singleWordEvent.Guid.Data4
+      value: 1224880975
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _stickTouchEvent.Guid.Data1
+      value: 1684121536
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _stickTouchEvent.Guid.Data2
+      value: 1225325229
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _stickTouchEvent.Guid.Data3
+      value: -149292919
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: _stickTouchEvent.Guid.Data4
+      value: 1316201704
+      objectReference: {fileID: 0}
     - target: {fileID: 3352883380532189750, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
       propertyPath: m_Pitch
       value: 0.97
@@ -5266,9 +5441,113 @@ PrefabInstance:
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: RandomWordEvent.Path
+      value: event:/HagVoiceRandom
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: SingleWordEvent.Path
+      value: event:/HagVoiceSingle
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _randomWordEvent.Path
+      value: event:/Goons/HagVoiceRandom
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _singleWordEvent.Path
+      value: event:/Goons/HagVoiceSingle
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _stickTouchEvent.Path
+      value: event:/Goons/HagStickTouch
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
       propertyPath: _assignedScrapInventory
       value: 
       objectReference: {fileID: 529312191}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _soundbankParameterName
+      value: HagSingleWord
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: RandomWordEvent.Guid.Data1
+      value: 1031237263
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: RandomWordEvent.Guid.Data2
+      value: 1180371391
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: RandomWordEvent.Guid.Data3
+      value: -70460772
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: RandomWordEvent.Guid.Data4
+      value: 1595718071
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: SingleWordEvent.Guid.Data1
+      value: 559681965
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: SingleWordEvent.Guid.Data2
+      value: 1277999083
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: SingleWordEvent.Guid.Data3
+      value: 1119988360
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: SingleWordEvent.Guid.Data4
+      value: 1430503217
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _randomWordEvent.Guid.Data1
+      value: 1031237263
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _randomWordEvent.Guid.Data2
+      value: 1180371391
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _randomWordEvent.Guid.Data3
+      value: -70460772
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _randomWordEvent.Guid.Data4
+      value: 1595718071
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _singleWordEvent.Guid.Data1
+      value: 559681965
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _singleWordEvent.Guid.Data2
+      value: 1277999083
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _singleWordEvent.Guid.Data3
+      value: 1119988360
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _singleWordEvent.Guid.Data4
+      value: 1430503217
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _stickTouchEvent.Guid.Data1
+      value: 1489957525
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _stickTouchEvent.Guid.Data2
+      value: 1105622858
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _stickTouchEvent.Guid.Data3
+      value: 1120179132
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: _stickTouchEvent.Guid.Data4
+      value: -886841786
+      objectReference: {fileID: 0}
     - target: {fileID: 910645145804879168, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -5763,6 +6042,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1158752763}
     m_Modifications:
+    - target: {fileID: -4608461158344034228, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
+      propertyPath: m_VideoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: b00479f67e82ec0438e389450138b218, type: 3}
+    - target: {fileID: -4608461158344034228, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4608461158344034228, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
+      propertyPath: m_TimeUpdateMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4608461158344034228, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
+      propertyPath: m_WaitForFirstFrame
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1483712916398571006, guid: af72cb34ee7113642a29cfd0e617d98f, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -6027,9 +6322,113 @@ PrefabInstance:
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: RandomWordEvent.Path
+      value: event:/ToffVoiceRandom
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: SingleWordEvent.Path
+      value: event:/ToffVoiceSingle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _randomWordEvent.Path
+      value: event:/Goons/ToffVoiceRandom
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _singleWordEvent.Path
+      value: event:/Goons/ToffVoiceSingle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _stickTouchEvent.Path
+      value: event:/Goons/ToffStickTouch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
       propertyPath: _assignedScrapInventory
       value: 
       objectReference: {fileID: 1549647713}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _soundbankParameterName
+      value: ToffSingleWord
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: RandomWordEvent.Guid.Data1
+      value: 1730534386
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: RandomWordEvent.Guid.Data2
+      value: 1225830705
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: RandomWordEvent.Guid.Data3
+      value: -1652136062
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: RandomWordEvent.Guid.Data4
+      value: 1447551978
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: SingleWordEvent.Guid.Data1
+      value: 149647957
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: SingleWordEvent.Guid.Data2
+      value: 1295652092
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: SingleWordEvent.Guid.Data3
+      value: 762705288
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: SingleWordEvent.Guid.Data4
+      value: 1327486954
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _randomWordEvent.Guid.Data1
+      value: 1730534386
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _randomWordEvent.Guid.Data2
+      value: 1225830705
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _randomWordEvent.Guid.Data3
+      value: -1652136062
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _randomWordEvent.Guid.Data4
+      value: 1447551978
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _singleWordEvent.Guid.Data1
+      value: 149647957
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _singleWordEvent.Guid.Data2
+      value: 1295652092
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _singleWordEvent.Guid.Data3
+      value: 762705288
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _singleWordEvent.Guid.Data4
+      value: 1327486954
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _stickTouchEvent.Guid.Data1
+      value: 1366693333
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _stickTouchEvent.Guid.Data2
+      value: 1213910914
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _stickTouchEvent.Guid.Data3
+      value: -228184642
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: _stickTouchEvent.Guid.Data4
+      value: -1812020625
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

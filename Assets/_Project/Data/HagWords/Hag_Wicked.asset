@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Wicked
-  wordSize: 1
-  WordAudio: {fileID: 8300000, guid: 130240f1ec9d9854bb0162ed90280a90, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: hag_wicked
+  SizeOfWord: 0

@@ -14,9 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Oats
+  FMODWordDataName: hag_oats
   SizeOfWord: 0
-  WordAudio: {fileID: 8300000, guid: 493dab8c160ac004c968906b11eddca8, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
-  Font: {fileID: 11400000, guid: 8b4a42c44429bb94da1d4b57b8fad159, type: 2}
-  FontColor: {r: 0.10034709, g: 0.5188679, b: 0.1311668, a: 0}

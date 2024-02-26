@@ -10,11 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a1aa69c4bb7bd54b93cdffe03371495, type: 3}
-  m_Name: Toff_Stickywicket
+  m_Name: Toff_StickyWicket
   m_EditorClassIdentifier: 
   Goon: 1
   Word: StickyWicket
-  wordSize: 1
-  WordAudio: {fileID: 8300000, guid: e792fff887e9b7d4bbc485269dd88c56, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: toff_stickywicket
+  SizeOfWord: 0

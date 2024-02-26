@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Loaf
-  wordSize: 0
-  WordAudio: {fileID: 8300000, guid: d34fe7c9835095742b705a0ad65167e2, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: hag_loaf
+  SizeOfWord: 0

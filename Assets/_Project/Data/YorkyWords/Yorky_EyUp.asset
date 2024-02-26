@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 2
   Word: Ey Up!
+  FMODWordDataName: yorky_eyup
   SizeOfWord: 0
-  WordAudio: {fileID: 8300000, guid: b0c0bc0808831ba418eae49386e4da72, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}

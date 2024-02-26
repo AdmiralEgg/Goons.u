@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 2
   Word: Gripe
+  FMODWordDataName: yorky_gripe
   SizeOfWord: 0
-  WordAudio: {fileID: 8300000, guid: 7840bdbcef9bbd6478d0e2ea15a5cc5b, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}

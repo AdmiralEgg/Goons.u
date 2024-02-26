@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goon: 0
   Word: Knickers
-  wordSize: 1
-  WordAudio: {fileID: 8300000, guid: 44ad42df08051d5409498ba7753dd063, type: 3}
-  FaceClip: {fileID: 0}
-  StickClip: {fileID: 0}
+  FMODWordDataName: hag_knickers
+  SizeOfWord: 0

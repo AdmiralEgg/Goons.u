@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{da82daa8-e022-44d0-bb07-4c1d45b75f46}">
+		<property name="name">
+			<value>HagSingleWord</value>
+		</property>
+		<relationship name="folder">
+			<destination>{c33239e6-e4bc-4c32-a6c5-a1ef18d850ce}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{35b67286-d1e3-4b99-9b02-8e4a946353e4}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{35b67286-d1e3-4b99-9b02-8e4a946353e4}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>11</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>hag_bats</value>
+			<value>hag_cake</value>
+			<value>hag_candle</value>
+			<value>hag_knickers</value>
+			<value>hag_loaf</value>
+			<value>hag_oats</value>
+			<value>hag_sage</value>
+			<value>hag_sweets</value>
+			<value>hag_tea</value>
+			<value>hag_weird</value>
+			<value>hag_wicked</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
