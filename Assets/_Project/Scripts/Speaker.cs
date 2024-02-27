@@ -63,10 +63,17 @@ public class Speaker : MonoBehaviour
             }
         }
 
+        SpeakerRunMechanism.s_BeatEvent += NewBeat;
+
         _shaker = GetComponent<MMScaleShaker>();
         
         _musicSource.playOnAwake = false;
         _musicSource.loop = true;
+    }
+
+    public void NewBeat()
+    {
+        _shaker.Play();
     }
 
     public void PlayMusicStartupSound()

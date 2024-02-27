@@ -3,13 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using System.Linq;
 using FMODUnity;
 using FMOD.Studio;
 using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using Lofelt.NiceVibrations;
-using System.Diagnostics.Contracts;
 
 public class Goon : MonoBehaviour
 {
@@ -66,7 +62,7 @@ public class Goon : MonoBehaviour
 
     private void OnEnable()
     {
-        SetupFMODInstances();
+        SetupFMOD();
 
         _wordData = new List<WordData>();
 
@@ -83,7 +79,7 @@ public class Goon : MonoBehaviour
         InputManager.InventoryScrapClicked += PlaySingleWord;
     }
 
-    private void SetupFMODInstances()
+    private void SetupFMOD()
     {
         _singleWordInstance = FMODUnity.RuntimeManager.CreateInstance(_singleWordEvent);
         _stickTouchInstance = FMODUnity.RuntimeManager.CreateInstance(_stickTouchEvent);

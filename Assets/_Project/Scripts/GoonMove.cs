@@ -7,7 +7,7 @@ using System;
 
 public class GoonMove : MonoBehaviour
 {
-    enum GoonMoveState { Idle, Walking, Dancing, Bowing };
+    public enum GoonMoveState { Idle, Walking, Dancing, Bowing };
 
     [Header("Animation Control")]
     [SerializeField]
@@ -24,16 +24,17 @@ public class GoonMove : MonoBehaviour
     private GoonMoveState _currentMoveState;
 
     [SerializeField]
-    string _danceMove = "DanceLeftRight";
+    private string _danceMove = "DanceLeftRight";
 
     [SerializeField]
-    float _moveSpeed = 3f;
+    private float _moveSpeed = 3f;
+    
     [SerializeField, ReadOnly]
-    Vector3 velocity;
+    private Vector3 velocity;
 
     public static Action<StagePositionPoint, bool> SpotlightSwitchOn;
 
-    void Awake()
+    private void Awake()
     {
         if (_offStagePosition != null)
         {
@@ -50,9 +51,12 @@ public class GoonMove : MonoBehaviour
         Speaker.MusicStopped += GoonIdle;
         PointsManager.PointsReached += GoonBow;
         //InputManager.InventoryScrapClicked += GoonProd;
+
+        SpeakerRunMechanism.s_BeatEvent += GoonDance;
+        SpeakerRunMechanism.s_MusicStopped += GoonIdle;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         // if targetposition is updated, stop the coroutine
         if ((_currentPosition != _targetPosition) && (_currentMoveState != GoonMoveState.Walking))
@@ -118,6 +122,8 @@ public class GoonMove : MonoBehaviour
 
     public void GoonDance()
     {
+        if ((_currentMoveState == GoonMoveState.Bowing) || (_currentMoveState == GoonMoveState.Walking)) return;
+        
         _goonStickAnimator.Play(_danceMove);
         _currentMoveState = GoonMoveState.Dancing;
     }

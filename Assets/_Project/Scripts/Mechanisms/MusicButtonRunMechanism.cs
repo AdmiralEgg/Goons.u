@@ -12,6 +12,9 @@ public class MusicButtonRunMechanism : BaseRunMechanism
     [SerializeField, Tooltip("The audio source to play the main music from")]
     private Speaker _speaker;
 
+    [SerializeField, Tooltip("The audio source to play the main music from")]
+    private SpeakerRunMechanism _speakerMechanism;
+
     [SerializeField, Tooltip("Time it takes for the toggle to between start and stop states")]
     private float _rotateTimeSeconds = 5f;
 
@@ -19,8 +22,6 @@ public class MusicButtonRunMechanism : BaseRunMechanism
     private Light _startButtonLight, _stopButtonLight;
     [SerializeField]
     private GameObject _houseLights;
-    [SerializeField]
-    private GameObject _goonLightsLeft;
 
     public static Action<Type, bool> MusicMechanismRunStateUpdate;
 

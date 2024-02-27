@@ -58,7 +58,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 7102e013d12b6744e9097b6c18dca459, type: 2}
@@ -217,7 +217,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 7102e013d12b6744e9097b6c18dca459, type: 2}
@@ -379,7 +379,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 3e74b025d293845458b593d7640a1f55, type: 2}
@@ -539,7 +539,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 9aa271f585fa60c4d92988c00f0cf713, type: 2}
@@ -622,7 +622,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ca73e34980c750c46bac24cbd6df6d79, type: 2}
@@ -740,7 +740,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 31622372855b2cb41a43305e542100cc, type: 2}
@@ -940,7 +940,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ca73e34980c750c46bac24cbd6df6d79, type: 2}
@@ -1058,7 +1058,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 9aa271f585fa60c4d92988c00f0cf713, type: 2}
@@ -1117,6 +1117,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4917464478618669127}
+  - {fileID: 415643429643241768}
   - {fileID: 2568597100018965339}
   m_Father: {fileID: 813308758842959070}
   m_RootOrder: -1
@@ -1146,7 +1147,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d5a9329bde41fd542ac86e539c767e0f, type: 2}
@@ -1298,7 +1299,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ca73e34980c750c46bac24cbd6df6d79, type: 2}
@@ -1431,7 +1432,7 @@ Transform:
   m_Children:
   - {fileID: 2241312976451290140}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3517296787084675255
 MonoBehaviour:
@@ -1447,14 +1448,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _goonData: {fileID: 11400000, guid: 539f0d7f4982e1740ab994ec739c6973, type: 2}
   _currentState: 0
-  _niceCatchAudio: {fileID: 0}
-  _stickTouchAudio: {fileID: 0}
-  _speakerTouchAudio: {fileID: 0}
-  _crowdTouchAudio: {fileID: 0}
   _wordData: []
-  _wordQueue: []
   _assignedScrapInventory: {fileID: 0}
-  WaitBetweenSpeaking: 0.1
+  DelayBetweenSpeaking: 1
+  _randomWordEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  _singleWordEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  _stickTouchEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  _soundbankParameterName: 
+  _lastRandomWordSpoken: 
 --- !u!114 &5649418320940154872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1500,12 +1519,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7786583435822880501}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.485, z: 0.441}
-  m_LocalScale: {x: 0.42, y: 0.42, z: 0.42}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: -0.19550233, y: 0.4347252, z: -6.379439}
+  m_LocalScale: {x: 2.0527847, y: 7.8115535, z: 0.09329822}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 2568597100018965339}
+  m_Father: {fileID: 2241312976451290140}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &9168498169922006168
@@ -1533,7 +1552,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ca73e34980c750c46bac24cbd6df6d79, type: 2}
@@ -1695,7 +1714,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 3e74b025d293845458b593d7640a1f55, type: 2}
@@ -1799,7 +1818,6 @@ Transform:
   - {fileID: 2898906532205851688}
   - {fileID: 1319441354654820163}
   - {fileID: 7572549490225575266}
-  - {fileID: 415643429643241768}
   m_Father: {fileID: 2241312976451290140}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -1914,7 +1932,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 8
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ca73e34980c750c46bac24cbd6df6d79, type: 2}
