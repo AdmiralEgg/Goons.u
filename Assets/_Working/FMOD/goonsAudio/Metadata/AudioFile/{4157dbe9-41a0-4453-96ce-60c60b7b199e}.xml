@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{384eb8c0-ee72-408d-a687-2997c9448358}">
+	<object class="AudioFile" id="{4157dbe9-41a0-4453-96ce-60c60b7b199e}">
 		<property name="assetPath">
-			<value>Environment/WoodHit/Wood02.mp3</value>
+			<value>Mechanisms/bigLight.mp3</value>
 		</property>
 		<property name="frequencyInKHz">
-			<value>44.0999985</value>
+			<value>48</value>
 		</property>
 		<property name="channelCount">
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>0.2089795918367347</value>
+			<value>7.5119999999999996</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{dabaa7e8-056c-4a65-a4d9-1d579f85d36d}</destination>

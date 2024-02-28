@@ -15,7 +15,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
 
     [Header("Current States")]
     [SerializeField, ReadOnly]
-    private EnabledState _currentEnabledState = EnabledState.Enabled;
+    public EnabledState CurrentEnabledState = EnabledState.Enabled;
     [SerializeField, ReadOnly, Tooltip("Whether GameObject has a RunMechanism component")]
     private BaseRunMechanism _runMechanism;
 
@@ -51,7 +51,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
     /// Awake a mechanism in the disabled position by default.
     /// Always awake a mechanism Shutdown.
     /// </summary>
-    protected virtual void Awake()
+    public virtual void Awake()
     {
         if (_enableMovement == EnableMovement.Position)
         {
@@ -62,7 +62,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
             {
                 this.transform.position = _disabledWorldPosition;
                 this.transform.rotation = _disabledWorldRotation;
-                _currentEnabledState = EnabledState.Disabled;
+                CurrentEnabledState = EnabledState.Disabled;
             }
         }
 
@@ -83,13 +83,13 @@ public abstract class BaseEnableMechanism : MonoBehaviour
 
     private void Start()
     {
-        if ((_onStartTransitionTo == EnabledState.Disabled) && (_currentEnabledState != EnabledState.Disabled))
+        if ((_onStartTransitionTo == EnabledState.Disabled) && (CurrentEnabledState != EnabledState.Disabled))
         {
             DisableAfterAnimation();
             return;
         }
 
-        if ((_onStartTransitionTo) == EnabledState.Enabled && (_currentEnabledState != EnabledState.Enabled))
+        if ((_onStartTransitionTo) == EnabledState.Enabled && (CurrentEnabledState != EnabledState.Enabled))
         {
             EnableAfterAnimation();
             return;
@@ -109,7 +109,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
             SetHingeMotorState(false);
 
             // Finish transition
-            _currentEnabledState = EnabledState.Enabled;
+            CurrentEnabledState = EnabledState.Enabled;
 
             if (_onEnableStartMechanism == true && _runMechanism != null)
             {
@@ -131,7 +131,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
             SetHingeMotorState(true);
             
             // Finish transition
-            _currentEnabledState = EnabledState.Disabled;
+            CurrentEnabledState = EnabledState.Disabled;
 
             if (_onDisableDeactivateGameObject == true)
             {
@@ -147,12 +147,12 @@ public abstract class BaseEnableMechanism : MonoBehaviour
 
     private IEnumerator StartEnabledTransition(EnabledState targetState)
     {
-        if (_currentEnabledState == EnabledState.InTransition)
+        if (CurrentEnabledState == EnabledState.InTransition)
         {
             yield break;
         }
 
-        if (_currentEnabledState == targetState)
+        if (CurrentEnabledState == targetState)
         {
             yield break;
         }
@@ -161,7 +161,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
         Quaternion targetRotation;
 
         // Set our destination positions and rotations. Enabled or Disabled.
-        if (_currentEnabledState == EnabledState.Disabled)
+        if (CurrentEnabledState == EnabledState.Disabled)
         {
             targetPosition = _enabledPosition;
             targetRotation = _enabledRotation;
@@ -173,7 +173,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
         }
 
         // Start transition lerping        
-        _currentEnabledState = EnabledState.InTransition;
+        CurrentEnabledState = EnabledState.InTransition;
 
         float t = 0;
         Vector3 startPosition = this.transform.position;
@@ -189,7 +189,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
         }   
 
         // Finish transition
-        _currentEnabledState = targetState;
+        CurrentEnabledState = targetState;
 
         if ((targetState == EnabledState.Enabled) && (_onEnableStartMechanism == true) && (_runMechanism != null))
         {
@@ -198,6 +198,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
 
         if (targetState == EnabledState.Disabled && _onDisableDeactivateGameObject == true)
         {
+            CurrentEnabledState = EnabledState.Disabled;
             this.gameObject.SetActive(false);
         }
 
@@ -206,6 +207,6 @@ public abstract class BaseEnableMechanism : MonoBehaviour
 
     public EnabledState GetState()
     {
-        return _currentEnabledState;
+        return CurrentEnabledState;
     }
 }

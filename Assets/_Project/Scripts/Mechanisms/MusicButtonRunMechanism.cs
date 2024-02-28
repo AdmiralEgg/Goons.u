@@ -11,11 +11,13 @@ public class MusicButtonRunMechanism : BaseRunMechanism
     private float _rotateTimeSeconds = 5f;
 
     [SerializeField]
-    private Light _startButtonLight, _stopButtonLight, _houseLights;
+    private Light _startButtonLight, _stopButtonLight;
 
     public static Action<Type, bool> MusicMechanismRunStateUpdate;
     public static Action s_MusicStopped;
     public static Action s_MusicStarted;
+
+    public static Action<bool> HouseLights;
 
     private void Awake()
     {
@@ -127,13 +129,13 @@ public class MusicButtonRunMechanism : BaseRunMechanism
             
             _speakerMechanism.SetBeatEventCheck(true);
 
-            _houseLights.enabled = false;
+            HouseLights?.Invoke(false);
             s_MusicStarted?.Invoke();
         }
 
         if (targetState == RunningState.Shutdown)
         {
-            _houseLights.enabled = true;
+            HouseLights?.Invoke(true);
         }
 
         _currentRunningState = targetState;

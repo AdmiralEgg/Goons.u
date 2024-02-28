@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{d2ac0c26-3a5d-4afc-92f6-db2d39c47f19}">
+	<object class="AudioFile" id="{e75e49f8-32e2-4b04-b379-5d7b36420309}">
 		<property name="assetPath">
-			<value>Environment/WoodHit/Wood03.mp3</value>
+			<value>Mechanisms/315753__vurca__running-gear.flac</value>
 		</property>
 		<property name="frequencyInKHz">
-			<value>44.0999985</value>
+			<value>48</value>
 		</property>
 		<property name="channelCount">
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>0.23510204081632652</value>
+			<value>9.5561249999999998</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{dabaa7e8-056c-4a65-a4d9-1d579f85d36d}</destination>

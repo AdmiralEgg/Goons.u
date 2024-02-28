@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{ae67c0ee-fa16-45ec-8809-e4459840b7b7}">
+	<object class="AudioFile" id="{6bcfe9e0-db1d-496d-b074-53090825bb0a}">
 		<property name="assetPath">
-			<value>Environment/WoodHit/Wood04.mp3</value>
+			<value>Environment/WoodHit/wood04.mp3</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using MoreMountains.Feedbacks;
+using System.Collections;
 
 public class SpeakerRunMechanism : BaseRunMechanism
 {
@@ -23,6 +24,10 @@ public class SpeakerRunMechanism : BaseRunMechanism
     private GCHandle _musicHandle;
 
     public static event Action s_BeatEvent;
+    public static event Action s_MidBar;
+    public static event Action s_EndBar;
+    public static event Action s_triggerRushed;
+    public static event Action s_triggerDragged;
 
     [SerializeField]
     private MMScaleShaker _speakerWiggle;
@@ -60,8 +65,38 @@ public class SpeakerRunMechanism : BaseRunMechanism
         {
             s_lastBeat = _musicData.CurrentBeat;
             s_BeatEvent?.Invoke();
+
+            if (_musicData.CurrentBeat == 2) 
+            {
+                s_MidBar?.Invoke();
+                Debug.Log("MidBar");
+            }
+
+            if (_musicData.CurrentBeat == 4)
+            {
+                s_EndBar?.Invoke();
+                Debug.Log("EndBar");
+            }
+
+            if (_musicData.CurrentBeat == 3)
+            {
+                StartCoroutine(InvokeActionAfterSeconds(0.6f, s_triggerRushed));
+            }
+
+            if (_musicData.CurrentBeat == 4)
+            {
+                StartCoroutine(InvokeActionAfterSeconds(0.3f, s_triggerDragged));
+            }
+
             _speakerWiggle.Play();
         }
+    }
+
+    private IEnumerator InvokeActionAfterSeconds(float seconds, Action actionName)
+    {
+        yield return new WaitForSeconds(seconds);
+        Debug.Log($"Offbeat action: {actionName}");
+        actionName?.Invoke();
     }
 
     private void SetupFMOD()

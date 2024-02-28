@@ -1,3 +1,4 @@
+using FMOD.Studio;
 using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,8 +8,8 @@ public class PlayEnvironmentAudio : MonoBehaviour
 {
     [Header("Audio Data")]
     [SerializeField]
-    private EventReference _poleTouch, _stageTouch, _trapDoorTouch, _speakerTouch, _curtainTouch;
-    private FMOD.Studio.EventInstance _poleInstance, _stageInstance, _trapDoorInstance, _speakerInstance, _curtainInstance;
+    private EventReference _poleTouch, _stageTouch, _curtainTouch;
+    private FMOD.Studio.EventInstance _poleInstance, _stageInstance, _curtainInstance;
 
     void Awake()
     {
@@ -21,8 +22,6 @@ public class PlayEnvironmentAudio : MonoBehaviour
     {
         _poleInstance = FMODUnity.RuntimeManager.CreateInstance(_poleTouch);
         _stageInstance = FMODUnity.RuntimeManager.CreateInstance(_stageTouch);
-        _trapDoorInstance = FMODUnity.RuntimeManager.CreateInstance(_trapDoorTouch);
-        _speakerInstance = FMODUnity.RuntimeManager.CreateInstance(_speakerTouch);
         _curtainInstance = FMODUnity.RuntimeManager.CreateInstance(_curtainTouch);
     }
 
@@ -35,12 +34,6 @@ public class PlayEnvironmentAudio : MonoBehaviour
                 break;
             case "Stage":
                 _stageInstance.start();
-                break;
-            case "TrapDoor":
-                _trapDoorInstance.start();
-                break;
-            case "Speaker":
-                _speakerInstance.start();
                 break;
             case "Curtain":
                 _curtainInstance.start();
@@ -64,8 +57,6 @@ public class PlayEnvironmentAudio : MonoBehaviour
     {
         _poleInstance.release();
         _stageInstance.release();
-        _trapDoorInstance.release();
-        _speakerInstance.release();
         _curtainInstance.release();
     }
 }

@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FMOD.Studio;
+using FMODUnity;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 using static StageManager;
 
@@ -22,10 +25,6 @@ public class StageManager : MonoBehaviour
     private List<GameStateActData> _actData;
     [SerializeField]
     private StagePositionController _stagePositionController;
-
-    [Header("Lights")]
-    [SerializeField]
-    private GameObject _houseLights;
 
     [Header("Mechanism")]
     [SerializeField]
@@ -63,9 +62,12 @@ public class StageManager : MonoBehaviour
 
     public static Action ActFinished;
     public static Action ActStarted;
+    public static Action<bool> HouseLights;
+    public static Action<bool, float> HouseLightsAfterPause;
 
     void Awake()
     {
+        
         _actTitleTextController.gameObject.SetActive(false);
     }
 
@@ -87,10 +89,8 @@ public class StageManager : MonoBehaviour
         ActData actData = GetActData(state);
 
         switch (state) 
-        { 
+        {
             case GameState.Title:
-
-                _houseLights.SetActive(false);
 
                 _projector.EnableAfterAnimation();
 
@@ -107,8 +107,8 @@ public class StageManager : MonoBehaviour
                 await StartAct(actData);
 
                 // Wait a second before house lights come on...
-                StartCoroutine(PauseThenActivate(7, _houseLights));
-
+                HouseLightsAfterPause?.Invoke(true, 7f);
+                
                 // If the crowd are entertained, finish the act
                 CrowdController.CrowdEntertained = () => FinishAct(actData);
 
@@ -116,8 +116,7 @@ public class StageManager : MonoBehaviour
             case GameState.Act2:
 
                 await StartAct(actData);
-
-                _houseLights.SetActive(true);
+                HouseLights?.Invoke(true);
 
                 CrowdController.CrowdEntertained = () => FinishAct(actData);
 
@@ -125,17 +124,15 @@ public class StageManager : MonoBehaviour
             case GameState.Act3:
 
                 await StartAct(actData);
+                HouseLights?.Invoke(true);
 
-                _houseLights.SetActive(true);
-                
                 CrowdController.CrowdEntertained = () => FinishAct(actData);
 
                 break;
             case GameState.Act4:
 
                 await StartAct(actData);
-
-                _houseLights.SetActive(true);
+                HouseLights?.Invoke(true);
 
                 CrowdController.CrowdEntertained = () => FinishAct(actData);
 
@@ -143,8 +140,7 @@ public class StageManager : MonoBehaviour
             case GameState.Act5:
 
                 await StartAct(actData);
-
-                _houseLights.SetActive(true);
+                HouseLights?.Invoke(true);
 
                 CrowdController.CrowdEntertained = () => FinishAct(actData);
 
@@ -152,17 +148,10 @@ public class StageManager : MonoBehaviour
             case GameState.Sandbox:
 
                 await StartAct(actData);
-
-                _houseLights.SetActive(true);
+                HouseLights?.Invoke(true);
 
                 break;
         }
-    }
-
-    public IEnumerator PauseThenActivate(float seconds, GameObject objectToActivate)
-    {
-        yield return new WaitForSeconds(seconds);
-        objectToActivate.SetActive(true);
     }
 
     async Task StartAct(ActData actData)
@@ -232,7 +221,7 @@ public class StageManager : MonoBehaviour
             await Task.Delay(200);
         }
 
-        _houseLights.SetActive(false);
+        HouseLights?.Invoke(false);
 
         if (resetCrowd == true)
         {

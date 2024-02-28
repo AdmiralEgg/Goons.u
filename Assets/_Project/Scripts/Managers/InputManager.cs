@@ -2,6 +2,7 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class InputManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class InputManager : MonoBehaviour
     private Scrap _currentSelectedScrap;
     [SerializeField]
     private GameModeManager _gameModeManager;
+
+    [SerializeField, AssetsOnly]
+    private GameObject _puffOfDust;
 
     private static InputState s_currentInputState;
     public static InputManager s_instance { get; private set; }
@@ -140,7 +144,20 @@ public class InputManager : MonoBehaviour
 
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"))
         {
+            if (hit.collider.tag != "Pole")
+            {
+                hit.collider.SendMessageUpwards("OnClickedTrigger", hit.collider.gameObject, SendMessageOptions.DontRequireReceiver);
+            }
+            
             EnvironmentTouch?.Invoke(hit.collider.tag);
+            
+            if (hit.collider.tag == "Stage")
+            {
+                //_puffOfDust.transform.position = hit.transform.position;
+                var puff = Instantiate(_puffOfDust);
+                puff.transform.position = hit.point;
+                puff.transform.Rotate(hit.normal);
+            }
         }
     }
 

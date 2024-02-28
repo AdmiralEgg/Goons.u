@@ -1,31 +1,31 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using UnityEngine;
 
 public class Hole : MonoBehaviour
 {
+    [SerializeField]
+    private EventReference _fireIgniteScrapEvent, _fireIndicateEvent;
+    private EventInstance _fireIgniteScrapInstance, _fireIndicateInstance;
+    
     private ParticleSystem _fire;
-
-    [SerializeField]
-    private AudioClip _igniteScrap;
-    [SerializeField]
-    private AudioClip _flame;
-
-    private AudioSource _source;
 
     private void Awake()
     {
-        _source = GetComponent<AudioSource>();
+        _fireIgniteScrapInstance = FMODUnity.RuntimeManager.CreateInstance(_fireIgniteScrapEvent);
+        _fireIndicateInstance = FMODUnity.RuntimeManager.CreateInstance(_fireIndicateEvent);
         
         Scrap.ScrapSelected += (scrap) =>
         {
             Debug.Log("Hole got a changed input state.");
 
-            StartCoroutine(PlayFire(0.5f, _flame));
+            StartCoroutine(PlayFire(0.5f, _fireIndicateInstance));
         };
 
         Scrap.ScrapDestroyed += (Scrap) =>
         {
-            StartCoroutine(PlayFire(0.5f, _igniteScrap));
+            StartCoroutine(PlayFire(0.5f, _fireIgniteScrapInstance));
         };
 
         _fire = GetComponentInChildren<ParticleSystem>();
@@ -34,6 +34,8 @@ public class Hole : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("hit hole trigger");
+        
         // if it's a scrap, delete it.
         if (other.gameObject.CompareTag("Scrap"))
         {
@@ -41,13 +43,25 @@ public class Hole : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayFire(float duration, AudioClip clip)
+    private IEnumerator PlayFire(float duration, EventInstance eventInstance)
     {
         _fire.Play();
 
-        _source.PlayOneShot(clip);
+        eventInstance.start();
         yield return new WaitForSeconds(duration);
 
         _fire.Stop();
+    }
+
+    private void OnDestroy()
+    {
+        _fireIgniteScrapInstance.release();
+        _fireIndicateInstance.release();
+    }
+
+    private void OnDisable()
+    {
+        _fireIgniteScrapInstance.release();
+        _fireIndicateInstance.release();
     }
 }

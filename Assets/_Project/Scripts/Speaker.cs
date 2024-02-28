@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using MoreMountains.Feedbacks;
 using Sirenix.OdinInspector;
 using System;
@@ -5,24 +7,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.VFX;
 
 public class Speaker : MonoBehaviour
 {
-    [Header("Audio Sources")]
     [SerializeField]
-    private AudioSource _musicSource;
+    private EventReference _speakerProdEvent;
+    private EventInstance _speakerProdInstance;
 
-    [Header("Trigger actions on beat intervals")]
     [SerializeField]
-    private List<Intervals> _intervals;
+    private VisualEffect[] _sparks;
+
+    [SerializeField, ReadOnly]
+    private bool _sparksPlaying;
 
     [SerializeField]
     private CrowdController _crowd;
     [SerializeField, ReadOnly]
     private CrowdMember[] _allCrowd;
 
+    private MMWiggle _speakerRotateWiggle;
+
     void Awake()
-    {        
+    {
+        _speakerRotateWiggle = GetComponent<MMWiggle>();
+        _speakerProdInstance = FMODUnity.RuntimeManager.CreateInstance(_speakerProdEvent);
+        
         // Get all the crowd and add them to random intervals
         _allCrowd = _crowd.GetComponentsInChildren<CrowdMember>();
 
@@ -33,77 +43,61 @@ public class Speaker : MonoBehaviour
             switch (timing)
             {
                 case CrowdMember.Timing.Dragging:
-                    _intervals.Add(new Intervals(0.9f, member.BounceTrigger));
+                    // read from sound callback
                     break;
                 case CrowdMember.Timing.OnBeat:
-                    _intervals.Add(new Intervals(1f, member.BounceTrigger));
+                    // read from sound callback
                     break;
                 case CrowdMember.Timing.Rushing:
-                    _intervals.Add(new Intervals(1.1f, member.BounceTrigger));
+                    // read from sound callback
                     break;
                 case CrowdMember.Timing.Random:
                     float randomTiming = UnityEngine.Random.Range(0.2f, 0.8f);
-                    _intervals.Add(new Intervals(randomTiming, member.BounceTrigger));
+                    // just play whenever!
                     break;
             }
         }
-                
-        _musicSource.playOnAwake = false;
-        _musicSource.loop = true;
+
+        _sparksPlaying = false;
     }
 
-    private IEnumerator StartMusicClip(SongData songData)
+    private void OnClickedTrigger()
     {
-        Debug.Log("Starting music clip...");
+        if (_sparksPlaying == true) return;
         
-        _musicSource.clip = songData.AudioClip;
-        _musicSource.Play();
+        // unify with the sound
 
-        while (true) 
-        { 
-            foreach (Intervals interval in _intervals)
-            {
-                float sampledTime = (_musicSource.timeSamples / (_musicSource.clip.frequency * interval.GetBeatLength(songData.BPM)));
-                interval.CheckForNewBeat(sampledTime);
-            }
-
-            yield return null;
-        }
-    }
-}
-
-[Serializable]
-public class Intervals
-{
-    [SerializeField]
-    private float _steps;
-    [SerializeField]
-    private UnityEvent _trigger;
-
-    private int _lastInterval;
-
-    public Intervals(float steps, UnityEvent trigger)
-    {
-        _steps = steps;
-        _trigger = trigger;
+        StartCoroutine(PlaySparks());
+        _speakerRotateWiggle.WiggleRotation(1.5f);
+        _speakerProdInstance.start();
     }
 
-    public float GetBeatLength(float bpm)
+    private IEnumerator PlaySparks()
     {
-       return 60f / (bpm * _steps);
-    }
-
-    public void CheckForNewBeat(float interval)
-    {
-        if (Mathf.FloorToInt(interval) != _lastInterval)
+        if (_sparks.Length == 0) yield return null;
+        
+        _sparksPlaying = true;
+        
+        int sparksToPlay = 3;
+        
+        // play 3 times, randomly, hold onto playing value
+        for (int i = 0; i < sparksToPlay; i++)
         {
-            _lastInterval = Mathf.FloorToInt(interval);
-            _trigger.Invoke();
+            _sparks[UnityEngine.Random.Range(0, _sparks.Length)].Play();
+            yield return new WaitForSeconds(UnityEngine.Random.Range(0.5f, 2f));
         }
+
+        _sparksPlaying = false;
+        yield return null;
     }
 
-    public float GetStepsValue()
+    private void OnDisable()
     {
-        return _steps;
+        _speakerProdInstance.release();
+    }
+
+    private void OnDestroy()
+    {
+        _speakerProdInstance.release();
     }
 }
