@@ -11,16 +11,6 @@ public class Speaker : MonoBehaviour
     [Header("Audio Sources")]
     [SerializeField]
     private AudioSource _musicSource;
-    [SerializeField]
-    private AudioSource _melodySourceLong;
-    [SerializeField]
-    private AudioSource _melodySourceShort;
-
-    [Header("Music Start/Stop Clips")]
-    [SerializeField]
-    private AudioClip _startClip;
-    [SerializeField]
-    private AudioClip _stopClip;
 
     [Header("Trigger actions on beat intervals")]
     [SerializeField]
@@ -30,11 +20,6 @@ public class Speaker : MonoBehaviour
     private CrowdController _crowd;
     [SerializeField, ReadOnly]
     private CrowdMember[] _allCrowd;
-
-    public static Action MusicStopped;
-    public static Action MusicStarted;
-
-    private MMScaleShaker _shaker;
 
     void Awake()
     {        
@@ -62,51 +47,15 @@ public class Speaker : MonoBehaviour
                     break;
             }
         }
-
-        SpeakerRunMechanism.s_BeatEvent += NewBeat;
-
-        _shaker = GetComponent<MMScaleShaker>();
-        
+                
         _musicSource.playOnAwake = false;
         _musicSource.loop = true;
-    }
-
-    public void NewBeat()
-    {
-        _shaker.Play();
-    }
-
-    public void PlayMusicStartupSound()
-    {
-        _musicSource.PlayOneShot(_startClip);
-    }
-
-    public void StartMusic(SongData songData)
-    {
-        StartCoroutine(StartMusicClip(songData));
-    }
-
-    public void PlayMusicStopSound()
-    {
-        _musicSource.PlayOneShot(_stopClip);
-    }
-
-    public void StopMusic()
-    {
-        if (_musicSource.isPlaying == false) return;
-        
-        Debug.Log($"Stopping clip: {_musicSource.clip.name}");
-        _musicSource.Stop();
-        StopAllCoroutines();
-        MusicStopped?.Invoke();
     }
 
     private IEnumerator StartMusicClip(SongData songData)
     {
         Debug.Log("Starting music clip...");
         
-        MusicStarted?.Invoke();
-
         _musicSource.clip = songData.AudioClip;
         _musicSource.Play();
 

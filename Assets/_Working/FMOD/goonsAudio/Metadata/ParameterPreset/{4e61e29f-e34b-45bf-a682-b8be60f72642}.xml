@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{4e61e29f-e34b-45bf-a682-b8be60f72642}">
+		<property name="name">
+			<value>CrowdMurmerValues</value>
+		</property>
+		<relationship name="folder">
+			<destination>{c33239e6-e4bc-4c32-a6c5-a1ef18d850ce}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{47a2b30a-261e-4878-a19a-556ec069177f}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{47a2b30a-261e-4878-a19a-556ec069177f}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>3</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Inaudible</value>
+			<value>Hushed</value>
+			<value>Normal</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="seekSpeed">
+			<value>0.085000000894069672</value>
+		</property>
+		<property name="seekSpeedDescending">
+			<value>75</value>
+		</property>
+	</object>
+</objects>

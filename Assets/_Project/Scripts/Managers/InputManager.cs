@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -26,6 +24,7 @@ public class InputManager : MonoBehaviour
     public static Action<GameObject> ReportHit;
     public static Action<InputState> ChangedInputState;
     public static Action<WordData> InventoryScrapClicked;
+    public static Action<string> EnvironmentTouch;
 
     void Awake()
     {
@@ -53,6 +52,7 @@ public class InputManager : MonoBehaviour
 
         GameModeManager.ChangedGameMode += CheckGameMode;
         _currentGameMode = GameModeManager.GameMode.None;
+
     }
 
     private void Update()
@@ -93,7 +93,7 @@ public class InputManager : MonoBehaviour
 
     private void OnFreeAction(InputAction.CallbackContext context, Ray clickPositionRay)
     {
-        LayerMask mask = LayerMask.GetMask(new string[] { "Goon", "UI", "Crowd" } );
+        LayerMask mask = LayerMask.GetMask(new string[] { "Goon", "UI", "Crowd", "Environment" } );
         Physics.Raycast(clickPositionRay, out RaycastHit hit, float.PositiveInfinity, mask);
 
         if (hit.collider == null) return;
@@ -135,6 +135,12 @@ public class InputManager : MonoBehaviour
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Crowd"))
         {
             hit.collider.SendMessageUpwards("OnClickedTrigger", hit.collider.gameObject);
+            EnvironmentTouch?.Invoke("Crowd");
+        }
+
+        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"))
+        {
+            EnvironmentTouch?.Invoke(hit.collider.tag);
         }
     }
 

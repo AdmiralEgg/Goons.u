@@ -124,6 +124,10 @@ PrefabInstance:
       propertyPath: WaitBetweenSpeaking
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3517296787084675255, guid: c03cbee97d407fa45a2357f01f56fcd1, type: 3}
+      propertyPath: DelayBetweenSpeaking
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3583879657208877879, guid: c03cbee97d407fa45a2357f01f56fcd1, type: 3}
       propertyPath: m_RenderingLayerMask
       value: 8

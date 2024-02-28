@@ -10,9 +10,6 @@ using static StageManager;
 
 public class PointsManager : MonoBehaviour
 {
-    [SerializeField]
-    private Speaker _speakerData;
-
     [Header("Point Data")]
     [SerializeField]
     private List<GameStatePointsData> _gameStatePointsData;
@@ -53,18 +50,13 @@ public class PointsManager : MonoBehaviour
 
         _collectingPoints = false;
 
-        Speaker.MusicStarted += CollectPoints;
-        Speaker.MusicStopped += StopCollectingPoints;
+        MusicButtonRunMechanism.s_MusicStarted += () => CollectPoints(true);
+        MusicButtonRunMechanism.s_MusicStopped += () => CollectPoints(false);
     }
 
-    private void CollectPoints()
+    private void CollectPoints(bool collectPoints)
     {
-        _collectingPoints = true;
-    }
-
-    private void StopCollectingPoints()
-    {
-        _collectingPoints = false;
+        _collectingPoints = collectPoints;
     }
 
     public void SetupPointsData(GameState gameState)
@@ -74,11 +66,7 @@ public class PointsManager : MonoBehaviour
         // Get points data linked to game state, then set up
         PointsData pointsData = _gameStatePointsData.FirstOrDefault(p => p.GameState == gameState).PointsData;
 
-        Speaker.MusicStarted += () =>
-        {
-            // Add beat based points
-            AddPoints(pointsData.MusicPointsPerBeat);
-        };
+        SpeakerRunMechanism.s_BeatEvent += () => AddPoints(pointsData.MusicPointsPerBeat);
 
         MelodyButtonRunMechanism.MelodyPlayed = () =>
         {

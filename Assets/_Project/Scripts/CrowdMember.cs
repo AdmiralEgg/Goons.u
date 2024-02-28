@@ -22,6 +22,7 @@ public class CrowdMember : MonoBehaviour
     [Header("Animations")]
     private MMPositionShaker _positionShaker;
     private MMRotationShaker _rotationShaker;
+    private MMScaleShaker _scaleShaker;
 
     [SerializeField, ReadOnly]
     private Timing _timing = Timing.OnBeat;
@@ -37,6 +38,8 @@ public class CrowdMember : MonoBehaviour
         _positionShaker.enabled = false;
         _rotationShaker = GetComponent<MMRotationShaker>();
         _rotationShaker.enabled = false;
+        _scaleShaker = GetComponent<MMScaleShaker>();
+        _scaleShaker.enabled = false;
 
         BounceTrigger.AddListener(Bounce);
 
@@ -166,5 +169,12 @@ public class CrowdMember : MonoBehaviour
     public Timing GetTiming()
     {
         return _timing;
+    }
+
+    private void OnClickedTrigger()
+    {
+        _scaleShaker.Play();
+        _rotationShaker.Play();
+        gameObject.SendMessageUpwards("CrowdPoked", this);
     }
 }

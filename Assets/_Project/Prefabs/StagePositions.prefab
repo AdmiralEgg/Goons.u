@@ -167,6 +167,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stagePosition: 0
   _sphereCollider: {fileID: 0}
+  _spotlightOnEvent:
+    Guid:
+      Data1: -1720931489
+      Data2: 1268796845
+      Data3: -519632767
+      Data4: -67916948
+    Path: event:/Mechanisms/SpotlightOn
   _boundsRadius: 0.15
   _goonLights:
   - {fileID: 8353502429535058215}
@@ -435,6 +442,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stagePosition: 0
   _sphereCollider: {fileID: 0}
+  _spotlightOnEvent:
+    Guid:
+      Data1: -1720931489
+      Data2: 1268796845
+      Data3: -519632767
+      Data4: -67916948
+    Path: event:/Mechanisms/SpotlightOn
   _boundsRadius: 0.15
   _goonLights: []
 --- !u!114 &3391133305868051952
@@ -669,6 +683,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stagePosition: 0
   _sphereCollider: {fileID: 0}
+  _spotlightOnEvent:
+    Guid:
+      Data1: -1720931489
+      Data2: 1268796845
+      Data3: -519632767
+      Data4: -67916948
+    Path: event:/Mechanisms/SpotlightOn
   _boundsRadius: 0.15
   _goonLights:
   - {fileID: 5897787664873029216}
@@ -904,6 +925,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stagePosition: 0
   _sphereCollider: {fileID: 0}
+  _spotlightOnEvent:
+    Guid:
+      Data1: -1720931489
+      Data2: 1268796845
+      Data3: -519632767
+      Data4: -67916948
+    Path: event:/Mechanisms/SpotlightOn
   _boundsRadius: 0.15
   _goonLights: []
 --- !u!114 &27319695996078529
@@ -1204,6 +1232,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stagePosition: 0
   _sphereCollider: {fileID: 0}
+  _spotlightOnEvent:
+    Guid:
+      Data1: -1720931489
+      Data2: 1268796845
+      Data3: -519632767
+      Data4: -67916948
+    Path: event:/Mechanisms/SpotlightOn
   _boundsRadius: 0.15
   _goonLights:
   - {fileID: 3772016343408504811}
@@ -1660,6 +1695,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stagePosition: 0
   _sphereCollider: {fileID: 0}
+  _spotlightOnEvent:
+    Guid:
+      Data1: -1720931489
+      Data2: 1268796845
+      Data3: -519632767
+      Data4: -67916948
+    Path: event:/Mechanisms/SpotlightOn
   _boundsRadius: 0.15
   _goonLights:
   - {fileID: 2400044448967324514}
@@ -1896,6 +1938,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stagePosition: 0
   _sphereCollider: {fileID: 0}
+  _spotlightOnEvent:
+    Guid:
+      Data1: -1720931489
+      Data2: 1268796845
+      Data3: -519632767
+      Data4: -67916948
+    Path: event:/Mechanisms/SpotlightOn
   _boundsRadius: 0.15
   _goonLights:
   - {fileID: 1680172383257016276}
@@ -2164,6 +2213,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stagePosition: 0
   _sphereCollider: {fileID: 0}
+  _spotlightOnEvent:
+    Guid:
+      Data1: -1720931489
+      Data2: 1268796845
+      Data3: -519632767
+      Data4: -67916948
+    Path: event:/Mechanisms/SpotlightOn
   _boundsRadius: 0.15
   _goonLights: []
 --- !u!114 &5268940272497714402

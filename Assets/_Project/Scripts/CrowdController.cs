@@ -1,5 +1,8 @@
 using System;
 using System.Collections;
+using FMOD;
+using FMOD.Studio;
+using FMODUnity;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -16,15 +19,21 @@ public class CrowdController : MonoBehaviour
 
     [Header("Crowd Audio")]
     [SerializeField]
-    private AudioClip[] _smallCheer;
+    private EventReference _crowdPokeEvent;
     [SerializeField]
-    private AudioClip[] _mediumCheer;
+    private EventReference _murmerEvent;
     [SerializeField]
-    private AudioClip[] _bigCheer;
+    private EventReference _smallCheerEvent;
     [SerializeField]
-    private AudioSource _audioSourceCrowdChatter;
+    private EventReference _mediumCheerEvent;
     [SerializeField]
-    private AudioSource _audioSourceCrowdReact;
+    private EventReference _bigCheerEvent;
+
+    private EventInstance _crowdPokeInstance;
+    private EventInstance _murmerInstance;
+    private EventInstance _smallCheerInstance;
+    private EventInstance _mediumCheerInstance;
+    private EventInstance _bigCheerInstance;
 
     [SerializeField]
     private VisualEffect[] _streamers;
@@ -34,12 +43,14 @@ public class CrowdController : MonoBehaviour
 
     private void Awake()
     {
+        SetupFMOD();
+        
         _allCrowd = GetComponentsInChildren<CrowdMember>();
 
         PointsManager.PointsReached += PlayFinalCrowdCheer;
         PointsManager.UpdatedCrowdIntensity += PlayCrowdReaction;
         StageManager.ActFinished += ResetCrowd;
-        StageManager.ActStarted += HushCrowd;
+        StageManager.ActStarted += () => PlayCrowdReaction(CrowdIntensity.Hushed);
 
         foreach (VisualEffect streamer in _streamers)
         {
@@ -48,27 +59,40 @@ public class CrowdController : MonoBehaviour
         }
     }
 
+    public void SetupFMOD()
+    {
+        _crowdPokeInstance = FMODUnity.RuntimeManager.CreateInstance(_crowdPokeEvent);
+        _murmerInstance = FMODUnity.RuntimeManager.CreateInstance(_murmerEvent);
+        _smallCheerInstance = FMODUnity.RuntimeManager.CreateInstance(_smallCheerEvent);
+        _mediumCheerInstance = FMODUnity.RuntimeManager.CreateInstance(_mediumCheerEvent);
+        _bigCheerInstance = FMODUnity.RuntimeManager.CreateInstance(_bigCheerEvent);
+    }
+
     private void Start()
     {
         ResetCrowd();
+        _murmerInstance.start();
     }
 
     public void PlayCrowdReaction(CrowdIntensity intensity = CrowdIntensity.None)
     {
         if (intensity <= _currentCrowdIntensity) return;
 
+        if ((intensity != CrowdIntensity.Murmering) || (intensity != CrowdIntensity.Hushed))
+        {
+            _murmerInstance.setParameterByName("CrowdMurmerValues", 0.05f);
+        }
+
         switch (intensity)
         {
             case (CrowdIntensity.Maximum):
-
                 foreach (CrowdMember member in _allCrowd)
                 {
                     member.SetMemberIntensity(CrowdMember.Intensity.High);
                     member.ThrowCosmetics();
                 }
 
-                _audioSourceCrowdChatter.Stop();
-                _audioSourceCrowdReact.PlayOneShot(_bigCheer[UnityEngine.Random.Range(0, (_bigCheer.Length - 1))]);
+                _bigCheerInstance.start();
                 break;
             case (CrowdIntensity.High):
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
@@ -78,9 +102,7 @@ public class CrowdController : MonoBehaviour
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
 
-                // play medium cheer
-                _audioSourceCrowdChatter.Stop();
-                _audioSourceCrowdReact.PlayOneShot(_mediumCheer[UnityEngine.Random.Range(0, (_mediumCheer.Length - 1))]);
+                _mediumCheerInstance.start();
                 break;
             case (CrowdIntensity.MediumHigh):
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
@@ -93,44 +115,30 @@ public class CrowdController : MonoBehaviour
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.High);
 
-                // play medium cheer
-                _audioSourceCrowdChatter.Stop();
-                _audioSourceCrowdReact.PlayOneShot(_mediumCheer[UnityEngine.Random.Range(0, (_mediumCheer.Length - 1))]);
+                _mediumCheerInstance.start();
                 break;
             case (CrowdIntensity.Medium):
-                // get 3 crowd members, switch to Medium intensite
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
 
-                // play low cheer
-                _audioSourceCrowdChatter.Stop();
-                _audioSourceCrowdReact.PlayOneShot(_mediumCheer[UnityEngine.Random.Range(0, (_mediumCheer.Length - 1))]);
+                _mediumCheerInstance.start();
                 break;
             case (CrowdIntensity.LowMedium):
-                // get 3 crowd members, switch to Medium intensite
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
                 _allCrowd[UnityEngine.Random.Range(0, _allCrowd.Length)].SetMemberIntensity(CrowdMember.Intensity.Medium);
 
-                // play low cheer
-                _audioSourceCrowdChatter.Stop();
-                _audioSourceCrowdReact.PlayOneShot(_smallCheer[UnityEngine.Random.Range(0, (_smallCheer.Length - 1))]);
+                _smallCheerInstance.start();
                 break;
             case (CrowdIntensity.Low):
-                // Play low cheer
-                _audioSourceCrowdChatter.Stop();
-                _audioSourceCrowdReact.PlayOneShot(_smallCheer[UnityEngine.Random.Range(0, (_smallCheer.Length - 1))]);
+                _smallCheerInstance.start();
                 break;
             case (CrowdIntensity.Hushed):
-                StartCoroutine(VolumeChange(_audioSourceCrowdChatter, 0.05f, 2f));
+                _murmerInstance.setParameterByName("CrowdMurmerValues", 0.03f);
                 break;
             case (CrowdIntensity.Murmering):
-
-                _audioSourceCrowdChatter.volume = 0.05f;
-                _audioSourceCrowdChatter.Stop();
-                _audioSourceCrowdChatter.Play();
-                StartCoroutine(VolumeChange(_audioSourceCrowdChatter, 0.2f, 2f));
+                _murmerInstance.setParameterByName("CrowdMurmerValues", 1f);
                 break;
         }
 
@@ -144,7 +152,6 @@ public class CrowdController : MonoBehaviour
         PlayCrowdReaction(CrowdIntensity.Maximum);
         StartCoroutine(PlayStreamers());
         CrowdEntertained?.Invoke();
-
     }
 
     private void ResetCrowd()
@@ -160,30 +167,11 @@ public class CrowdController : MonoBehaviour
         PlayCrowdReaction(CrowdIntensity.Murmering);
     }
 
-    private void HushCrowd()
-    {
-        PlayCrowdReaction(CrowdIntensity.Hushed);
-    }
-
-    private IEnumerator VolumeChange(AudioSource source, float targetVolume, float lerpTime)
-    {
-        float elapsedTime = 0;
-        float initialVolume = source.volume;
-
-        while (elapsedTime < lerpTime)
-        {
-            source.volume = Mathf.Lerp(initialVolume, targetVolume, (elapsedTime / lerpTime));
-            elapsedTime += Time.deltaTime;
-
-            yield return null;
-        }
-    }
-
     private IEnumerator PlayStreamers()
     {
         foreach (VisualEffect streamer in _streamers) 
         {
-            Debug.Log("Streamer start");
+            UnityEngine.Debug.Log("Streamer start");
             streamer.Play();
         }
         
@@ -191,8 +179,30 @@ public class CrowdController : MonoBehaviour
 
         foreach (VisualEffect streamer in _streamers)
         {
-            Debug.Log("Streamer stop");
+            UnityEngine.Debug.Log("Streamer stop");
             streamer.Stop();
         }
+    }
+
+    private void CrowdPoked(CrowdMember crowd)
+    {
+        _crowdPokeInstance.start();
+    }
+
+    private void OnDestroy()
+    {
+        ReleaseFMOD();
+    }
+
+    private void OnDisable()
+    {
+        ReleaseFMOD();    
+    }
+
+    private void ReleaseFMOD()
+    {
+        _smallCheerInstance.release();
+        _mediumCheerInstance.release();
+        _bigCheerInstance.release();
     }
 }

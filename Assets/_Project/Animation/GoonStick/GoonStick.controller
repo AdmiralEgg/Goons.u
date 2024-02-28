@@ -302,13 +302,13 @@ AnimatorStateMachine:
     m_Position: {x: 350, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4635590656311418356}
-    m_Position: {x: 350, y: 20, z: 0}
+    m_Position: {x: 350, y: -20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4755387320036557504}
     m_Position: {x: 590, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6325765118719470725}
-    m_Position: {x: 350, y: -60, z: 0}
+    m_Position: {x: 350, y: -80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6282975228610067747}
     m_Position: {x: 350, y: -140, z: 0}
@@ -348,3 +348,26 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!206 &9119896208025472878
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Blend Tree
+  m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: 0}
+    m_Threshold: 0
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: DanceSpeed
+    m_Mirror: 0
+  m_BlendParameter: DanceSpeed
+  m_BlendParameterY: DanceSpeed
+  m_MinThreshold: 0
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 1
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0

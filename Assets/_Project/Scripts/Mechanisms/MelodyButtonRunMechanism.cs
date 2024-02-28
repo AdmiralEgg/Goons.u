@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -6,15 +8,15 @@ public class MelodyButtonRunMechanism : BaseRunMechanism
 {
     [Header("Audio Setup")]
     [SerializeField]
-    private AudioClip _melodyClip;
+    private EventReference _melodyEvent;
     [SerializeField]
-    private AudioClip _mechanismRunStartClip;
+    private EventReference _mechanismRunStartEvent;
     [SerializeField]
-    private AudioClip _mechanismRunStopClip;
-    [SerializeField]
-    private AudioSource _melodySource;
-    [SerializeField]
-    private AudioSource _startStopSource;
+    private EventReference _mechanismRunStopEvent;
+
+    private FMOD.Studio.EventInstance _melodyInstance;
+    private FMOD.Studio.EventInstance _mechanismRunStartInstance;
+    private FMOD.Studio.EventInstance _mechanismRunStopInstance;
 
     [Header("Light Setup")]
     [SerializeField]
@@ -27,6 +29,10 @@ public class MelodyButtonRunMechanism : BaseRunMechanism
     [Header("Animation Setup")]
     [SerializeField]
     private Animator _animator;
+    [SerializeField]
+    private float _clickSpamBlockDuration;
+    [SerializeField]
+    private bool _isSpamBlocking;
 
     [Header("Other")]
     [SerializeField]
@@ -36,8 +42,22 @@ public class MelodyButtonRunMechanism : BaseRunMechanism
 
     private void Awake()
     {
+        if (_melodyEvent.IsNull == false)
+        {
+            SetupFMOD();
+        }
+
+        _clickSpamBlockDuration = 0.3f;
+        _isSpamBlocking = false;
         _currentRunningState = RunningState.Shutdown;
         _light.color = _shutdownColor;
+    }
+
+    private void SetupFMOD()
+    {
+        _melodyInstance = FMODUnity.RuntimeManager.CreateInstance(_melodyEvent);
+        _mechanismRunStartInstance = FMODUnity.RuntimeManager.CreateInstance(_mechanismRunStartEvent);
+        _mechanismRunStopInstance = FMODUnity.RuntimeManager.CreateInstance(_mechanismRunStopEvent);
     }
 
     public override void StartMechanism()
@@ -45,13 +65,11 @@ public class MelodyButtonRunMechanism : BaseRunMechanism
         if (_currentRunningState == RunningState.Running) return;
 
         base.StartMechanism();
-        _melodySource.PlayOneShot(_melodyClip);
         _light.color = _runningColor;
-        _currentRunningState = RunningState.Running;
         _animator.Play("PushIn");
-        _startStopSource.PlayOneShot(_mechanismRunStopClip);
 
-        MelodyPlayed?.Invoke();
+        _mechanismRunStartInstance.start();
+        _melodyInstance.start();
 
         // wait until complete then stop
         StartCoroutine(WaitForFinish());
@@ -66,30 +84,43 @@ public class MelodyButtonRunMechanism : BaseRunMechanism
         // If a user selects stop, stop waiting for the track to finish
         StopCoroutine(WaitForFinish());
 
-        _melodySource.Stop();
         _light.color = _shutdownColor;
-        _currentRunningState = RunningState.Shutdown;
         _animator.Play("PopOut");
-        _startStopSource.PlayOneShot(_mechanismRunStopClip);
+
+        _mechanismRunStopInstance.start();
+        _melodyInstance.stop(STOP_MODE.ALLOWFADEOUT);
     }
 
     private IEnumerator WaitForFinish()
     {
-        while (_melodySource.isPlaying)
+        // Give time for melody to start
+        yield return new WaitForSeconds(_clickSpamBlockDuration);
+
+        PLAYBACK_STATE playbackState;
+        _melodyInstance.getPlaybackState(out playbackState);
+        
+        while (playbackState == PLAYBACK_STATE.PLAYING)
         {
             yield return new WaitForSeconds(0.5f);
+            _melodyInstance.getPlaybackState(out playbackState);
         }
 
+        Debug.Log("Melody finished, stopping");
+        
+        MelodyPlayed?.Invoke();
         StopMechanism();
     }
 
     public override void OnClickedTrigger()
     {
+        if (_isSpamBlocking) return;
+        
         base.OnClickedTrigger();
 
         if (_currentRunningState == RunningState.Shutdown)
         {
             StartMechanism();
+            StartCoroutine(BlockClickSpam());
             return;
         }
 
@@ -98,5 +129,12 @@ public class MelodyButtonRunMechanism : BaseRunMechanism
             StopMechanism();
             return;
         }
+    }
+
+    private IEnumerator BlockClickSpam()
+    {
+        _isSpamBlocking = true;
+        yield return new WaitForSeconds(_clickSpamBlockDuration);
+        _isSpamBlocking = false;
     }
 }

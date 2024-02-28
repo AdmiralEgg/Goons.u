@@ -48,12 +48,10 @@ public class GoonMove : MonoBehaviour
 
         _currentMoveState = GoonMoveState.Idle;
 
-        Speaker.MusicStopped += GoonIdle;
-        PointsManager.PointsReached += GoonBow;
         //InputManager.InventoryScrapClicked += GoonProd;
-
+        PointsManager.PointsReached += GoonBow;
         SpeakerRunMechanism.s_BeatEvent += GoonDance;
-        SpeakerRunMechanism.s_MusicStopped += GoonIdle;
+        MusicButtonRunMechanism.s_MusicStopped += GoonIdle;
     }
 
     private void Update()

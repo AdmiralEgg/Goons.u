@@ -1,17 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class MusicButtonRunMechanism : BaseRunMechanism
 {
-    [SerializeField, Tooltip("Song to play")]
-    private SongData _songData;
-
-    [SerializeField, Tooltip("The audio source to play the main music from")]
-    private Speaker _speaker;
-
     [SerializeField, Tooltip("The audio source to play the main music from")]
     private SpeakerRunMechanism _speakerMechanism;
 
@@ -19,17 +11,18 @@ public class MusicButtonRunMechanism : BaseRunMechanism
     private float _rotateTimeSeconds = 5f;
 
     [SerializeField]
-    private Light _startButtonLight, _stopButtonLight;
-    [SerializeField]
-    private GameObject _houseLights;
+    private Light _startButtonLight, _stopButtonLight, _houseLights;
 
     public static Action<Type, bool> MusicMechanismRunStateUpdate;
+    public static Action s_MusicStopped;
+    public static Action s_MusicStarted;
 
     private void Awake()
     {
         _enableMechanism = this.GetComponent<MusicButtonEnableMechanism>();
         _currentRunningState = RunningState.Shutdown;
         PointsManager.PointsReached += StopMechanism;
+        SpeakerRunMechanism.s_BeatEvent += () => ToggleAllButtonLights();
     }
 
     public override void StartMechanism()
@@ -68,7 +61,7 @@ public class MusicButtonRunMechanism : BaseRunMechanism
     }
 
     // Used by the speaker
-    public void ToggleAllLights()
+    public void ToggleAllButtonLights()
     {
         foreach (Light light in new Light[] { _startButtonLight, _stopButtonLight })
         {
@@ -76,7 +69,7 @@ public class MusicButtonRunMechanism : BaseRunMechanism
         }
     }
 
-    public void SwitchAllLights(bool switchOn)
+    public void SwitchAllButtonLights(bool switchOn)
     {
         foreach (Light light in new Light[] { _startButtonLight, _stopButtonLight })
         {
@@ -92,17 +85,22 @@ public class MusicButtonRunMechanism : BaseRunMechanism
         if (targetState == RunningState.Running)
         {
             _currentRunningState = RunningState.TransitionToRunning;
-            SwitchAllLights(false);
-            _speaker.PlayMusicStartupSound();
+            SwitchAllButtonLights(false);
+            _speakerMechanism.StartMechanism();
             MusicMechanismRunStateUpdate?.Invoke(this.GetType(), true);
         }
 
         if (targetState == RunningState.Shutdown)
         {
             _currentRunningState = RunningState.TransitionToShutdown;
-            SwitchAllLights(false);
-            _speaker.StopMusic();
-            _speaker.PlayMusicStopSound();
+            SwitchAllButtonLights(false);
+
+            s_MusicStopped?.Invoke();
+            _speakerMechanism.SetBeatEventCheck(false);
+
+            // Skip to shutdown region marker.
+            _speakerMechanism.SkipToDestinationMarker(SpeakerRunMechanism.MusicMarkerName.MusicEnd);
+
             MusicMechanismRunStateUpdate?.Invoke(this.GetType(), false);
         }
 
@@ -120,17 +118,22 @@ public class MusicButtonRunMechanism : BaseRunMechanism
             yield return null;
         }
 
-        SwitchAllLights(true);
+        SwitchAllButtonLights(true);
 
         if (targetState == RunningState.Running)
         {
-            _speaker.StartMusic(_songData);
-            _houseLights.gameObject.SetActive(false);
+            // Skip to StartMusic region
+            _speakerMechanism.SkipToDestinationMarker(SpeakerRunMechanism.MusicMarkerName.MusicStart);
+            
+            _speakerMechanism.SetBeatEventCheck(true);
+
+            _houseLights.enabled = false;
+            s_MusicStarted?.Invoke();
         }
 
         if (targetState == RunningState.Shutdown)
         {
-            _houseLights.gameObject.SetActive(true);
+            _houseLights.enabled = true;
         }
 
         _currentRunningState = targetState;

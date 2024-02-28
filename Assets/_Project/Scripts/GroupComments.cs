@@ -5,18 +5,15 @@ using UnityEngine;
 
 public class GroupComments : MonoBehaviour
 {
-    private enum GroupCommentType
-    {
-        ScrapCaught,
-        CrowdTouch,
-        ScrapSelected,
-        SpeakerTouch
-    }
+    private enum GroupCommentType { ScrapCaught, CrowdTouch, ScrapSelected, SpeakerTouch }
     
     [SerializeField, ReadOnly]
     private List<Goon> _allGoons;
 
     private Goon _lastCommentedGoon = null;
+
+    [SerializeField, ReadOnly]
+    private Hashtable _recordedTouches;
 
     void Awake()
     {        
@@ -30,7 +27,23 @@ public class GroupComments : MonoBehaviour
             PlayComment(GroupCommentType.ScrapSelected);
         };
 
+        _recordedTouches = new Hashtable();
+        InputManager.EnvironmentTouch += RecordTouch;
+
         RefreshAllGoons();
+    }
+
+    private void RecordTouch(string touchTag)
+    {        
+        if (_recordedTouches.ContainsKey(touchTag))
+        {
+            _recordedTouches[touchTag] = (int)_recordedTouches[touchTag] + 1;
+            Debug.Log($"Added new touch: {touchTag}. Recorded value is now: {_recordedTouches[touchTag]}");
+        }
+        else
+        {
+            _recordedTouches.Add(touchTag, 1);
+        }
     }
 
     private void PlayComment(GroupCommentType commentType)

@@ -497,7 +497,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30808
+  m_Name: pb_Mesh30806
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -846,7 +846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentGameState: 0
-  _startingGameState: 6
+  _startingGameState: 3
   _actData:
   - GameState: 0
     ActData: {fileID: 11400000, guid: ff312832034c48a4abf89bfe77fa3bdf, type: 2}
@@ -1192,8 +1192,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 586715777}
-  - component: {fileID: 586715778}
   - component: {fileID: 586715779}
+  - component: {fileID: 586715778}
+  - component: {fileID: 586715780}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -1274,6 +1275,53 @@ MonoBehaviour:
   _currentGameMode: 0
   _currentSelectedScrap: {fileID: 0}
   _gameModeManager: {fileID: 1610963259}
+--- !u!114 &586715780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586715776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f53bd14e9a6eb3c4b9f09cb6651b338a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _poleTouch:
+    Guid:
+      Data1: 1407698823
+      Data2: 1264613273
+      Data3: -495519098
+      Data4: -1435074802
+    Path: event:/Environment/MetalTouch
+  _stageTouch:
+    Guid:
+      Data1: 1310804441
+      Data2: 1269550368
+      Data3: 105359504
+      Data4: 1050620915
+    Path: event:/Environment/WoodTouch
+  _trapDoorTouch:
+    Guid:
+      Data1: -735270470
+      Data2: 1079120790
+      Data3: -2028321373
+      Data4: 1522769327
+    Path: event:/Environment/TrapdoorTouch
+  _speakerTouch:
+    Guid:
+      Data1: -112396137
+      Data2: 1257909764
+      Data3: 1884570017
+      Data4: 1920557448
+    Path: event:/Environment/SpeakerTouch
+  _curtainTouch:
+    Guid:
+      Data1: -2133902729
+      Data2: 1330410350
+      Data3: 1464434319
+      Data4: -688830807
+    Path: event:/Environment/ClothTouch
 --- !u!1 &589362280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1612,7 +1660,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70ec788f5e93384ea20bd09bb18b1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speakerData: {fileID: 1805573389}
   _gameStatePointsData:
   - GameState: 0
     PointsData: {fileID: 0}
@@ -3017,7 +3064,7 @@ PrefabInstance:
     - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
       propertyPath: _source
       value: 
-      objectReference: {fileID: 9074197343667372}
+      objectReference: {fileID: 0}
     - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
       propertyPath: _melodyClip
       value: 
@@ -3025,7 +3072,67 @@ PrefabInstance:
     - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
       propertyPath: _melodySource
       value: 
-      objectReference: {fileID: 9074197343667372}
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Path
+      value: event:/Music/MelodyShort3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Guid.Data1
+      value: 274034658
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Guid.Data2
+      value: 1207202458
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Guid.Data3
+      value: -794909517
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Guid.Data4
+      value: 747362805
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Path
+      value: event:/Mechanisms/ButtonPoppedOut
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Path
+      value: event:/Mechanisms/ButtonPushedIn
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data1
+      value: -335626355
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data2
+      value: 1142922458
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data3
+      value: 1394678435
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data4
+      value: 948113745
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data1
+      value: -517031757
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data2
+      value: 1128826697
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data3
+      value: -437541697
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data4
+      value: 1130623598
+      objectReference: {fileID: 0}
     - target: {fileID: 8237208147753762380, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -3346,7 +3453,7 @@ PrefabInstance:
     - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
       propertyPath: _source
       value: 
-      objectReference: {fileID: 9074197343667372}
+      objectReference: {fileID: 0}
     - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
       propertyPath: _melodyClip
       value: 
@@ -3354,7 +3461,67 @@ PrefabInstance:
     - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
       propertyPath: _melodySource
       value: 
-      objectReference: {fileID: 9074197343667372}
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Path
+      value: event:/Music/MelodyShort1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Guid.Data1
+      value: -215200980
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Guid.Data2
+      value: 1237171290
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Guid.Data3
+      value: 1783345550
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Guid.Data4
+      value: 1098055683
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Path
+      value: event:/Mechanisms/ButtonPoppedOut
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Path
+      value: event:/Mechanisms/ButtonPushedIn
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data1
+      value: -335626355
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data2
+      value: 1142922458
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data3
+      value: 1394678435
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data4
+      value: 948113745
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data1
+      value: -517031757
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data2
+      value: 1128826697
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data3
+      value: -437541697
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data4
+      value: 1130623598
+      objectReference: {fileID: 0}
     - target: {fileID: 8237208147753762380, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -3467,11 +3634,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363959339}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!82 &1364185820 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5560383818270054998, guid: 98d27482f5c78ee4da98068868419f02, type: 3}
-  m_PrefabInstance: {fileID: 9074197343667370}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1399971995 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5823889262309175952, guid: 885c6ab4fb04c684e95331acc0101067, type: 3}
@@ -4397,9 +4559,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1708443576}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trapdoor
-  m_TagString: Untagged
+  m_TagString: TrapDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4553,6 +4715,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec385f42807ad7d41a11e8138653f1e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1805573391 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3835880880310258618, guid: 98d27482f5c78ee4da98068868419f02, type: 3}
+  m_PrefabInstance: {fileID: 9074197343667370}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb29398a27cf104bb97fac0554c9457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1835652889 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7309814119368335659, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
@@ -4627,7 +4800,7 @@ GameObject:
   - component: {fileID: 1845871969}
   m_Layer: 7
   m_Name: Back
-  m_TagString: Untagged
+  m_TagString: Stage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -5197,8 +5370,16 @@ PrefabInstance:
       value: SpeakerSystem
       objectReference: {fileID: 0}
     - target: {fileID: 441834978653851170, guid: 98d27482f5c78ee4da98068868419f02, type: 3}
+      propertyPath: m_TagString
+      value: Speaker
+      objectReference: {fileID: 0}
+    - target: {fileID: 441834978653851170, guid: 98d27482f5c78ee4da98068868419f02, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1616121535329464839, guid: 98d27482f5c78ee4da98068868419f02, type: 3}
+      propertyPath: m_TagString
+      value: Speaker
       objectReference: {fileID: 0}
     - target: {fileID: 1616121535329464839, guid: 98d27482f5c78ee4da98068868419f02, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5267,6 +5448,14 @@ PrefabInstance:
     - target: {fileID: 4034106330410137888, guid: 98d27482f5c78ee4da98068868419f02, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4393989434026204683, guid: 98d27482f5c78ee4da98068868419f02, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4393989434026204683, guid: 98d27482f5c78ee4da98068868419f02, type: 3}
+      propertyPath: m_TagString
+      value: Speaker
       objectReference: {fileID: 0}
     - target: {fileID: 4393989434026204683, guid: 98d27482f5c78ee4da98068868419f02, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5433,11 +5622,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4034106330410137888, guid: 98d27482f5c78ee4da98068868419f02, type: 3}
   m_PrefabInstance: {fileID: 9074197343667370}
   m_PrefabAsset: {fileID: 0}
---- !u!82 &9074197343667372 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 8043975758015015224, guid: 98d27482f5c78ee4da98068868419f02, type: 3}
-  m_PrefabInstance: {fileID: 9074197343667370}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &9074197343667373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5459,6 +5643,8 @@ MonoBehaviour:
       Data3: 769737878
       Data4: -1202387400
     Path: event:/Music/MainBeat1
+  _speakerWiggle: {fileID: 1805573391}
+  _checkBeatEvents: 0
 --- !u!1 &154410257529821297
 GameObject:
   m_ObjectHideFlags: 0
@@ -5469,9 +5655,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8301947562423657131}
   - component: {fileID: 2039232816697425832}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Curtains
-  m_TagString: Untagged
+  m_TagString: Curtain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5533,9 +5719,9 @@ GameObject:
   - component: {fileID: 9041871446238119356}
   - component: {fileID: 9041871446238119357}
   - component: {fileID: 1711898001833026804}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CurtainRight
-  m_TagString: Untagged
+  m_TagString: Curtain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5550,6 +5736,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
       propertyPath: WaitBetweenSpeaking
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
+      propertyPath: DelayBetweenSpeaking
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 238640802445186460, guid: b97f700ec0d40774c9716fcc97f31c6a, type: 3}
@@ -5776,7 +5966,7 @@ GameObject:
   - component: {fileID: 600054229714314502}
   m_Layer: 7
   m_Name: Front
-  m_TagString: Untagged
+  m_TagString: Stage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -5836,9 +6026,10 @@ GameObject:
   - component: {fileID: 7906670036850222709}
   - component: {fileID: 8717518739181851427}
   - component: {fileID: 8717518739181851428}
+  - component: {fileID: 8717518739181851429}
   m_Layer: 7
   m_Name: Curtain
-  m_TagString: Untagged
+  m_TagString: Curtain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -6003,6 +6194,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 645358142}
     - target: {fileID: 5532251501155150012, guid: 885c6ab4fb04c684e95331acc0101067, type: 3}
+      propertyPath: _crowdPokeEvent.Path
+      value: event:/Environment/CrowdTouch
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532251501155150012, guid: 885c6ab4fb04c684e95331acc0101067, type: 3}
       propertyPath: _streamers.Array.data[0]
       value: 
       objectReference: {fileID: 1176122446}
@@ -6010,6 +6205,22 @@ PrefabInstance:
       propertyPath: _streamers.Array.data[1]
       value: 
       objectReference: {fileID: 1052979559}
+    - target: {fileID: 5532251501155150012, guid: 885c6ab4fb04c684e95331acc0101067, type: 3}
+      propertyPath: _crowdPokeEvent.Guid.Data1
+      value: 1016430247
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532251501155150012, guid: 885c6ab4fb04c684e95331acc0101067, type: 3}
+      propertyPath: _crowdPokeEvent.Guid.Data2
+      value: 1081144823
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532251501155150012, guid: 885c6ab4fb04c684e95331acc0101067, type: 3}
+      propertyPath: _crowdPokeEvent.Guid.Data3
+      value: -1076064365
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532251501155150012, guid: 885c6ab4fb04c684e95331acc0101067, type: 3}
+      propertyPath: _crowdPokeEvent.Guid.Data4
+      value: 1462580639
+      objectReference: {fileID: 0}
     - target: {fileID: 5823889262309175952, guid: 885c6ab4fb04c684e95331acc0101067, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.09
@@ -6128,6 +6339,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
       propertyPath: WaitBetweenSpeaking
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
+      propertyPath: DelayBetweenSpeaking
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 669152001357508655, guid: 8ba6179a8b2c73e4eab2178f8550b98e, type: 3}
@@ -6412,6 +6627,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trapdoor
       objectReference: {fileID: 0}
+    - target: {fileID: 8353466568039825002, guid: 93da4013821f420438bf637b9c90072d, type: 3}
+      propertyPath: m_TagString
+      value: TrapDoor
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6566,7 +6785,71 @@ PrefabInstance:
     - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
       propertyPath: _melodySource
       value: 
-      objectReference: {fileID: 1364185820}
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Path
+      value: event:/Music/MelodyLong1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Guid.Data1
+      value: -1640091644
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Guid.Data2
+      value: 1081274906
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Guid.Data3
+      value: -1957192283
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _melodyEvent.Guid.Data4
+      value: -1445031596
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Path
+      value: event:/Mechanisms/ButtonPoppedOut
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Path
+      value: event:/Mechanisms/ButtonPushedIn
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data1
+      value: -335626355
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data2
+      value: 1142922458
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data3
+      value: 1394678435
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data4
+      value: 948113745
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data1
+      value: -517031757
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data2
+      value: 1128826697
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data3
+      value: -437541697
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470727596117881297, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data4
+      value: 1130623598
+      objectReference: {fileID: 0}
+    - target: {fileID: 8237208147753762380, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8237208147753762380, guid: d7d02713e37be5b4b871baa7491f1413, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -6691,6 +6974,26 @@ PrefabInstance:
     - target: {fileID: 6722799479238346137, guid: b3de8d714c3c17d40a00fba03f4c4d21, type: 3}
       propertyPath: m_Name
       value: StagePositionController
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737714895912899484, guid: b3de8d714c3c17d40a00fba03f4c4d21, type: 3}
+      propertyPath: _spotlightOnEvent.Path
+      value: event:/Mechanisms/SpotlightOn
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737714895912899484, guid: b3de8d714c3c17d40a00fba03f4c4d21, type: 3}
+      propertyPath: _spotlightOnEvent.Guid.Data1
+      value: -1720931489
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737714895912899484, guid: b3de8d714c3c17d40a00fba03f4c4d21, type: 3}
+      propertyPath: _spotlightOnEvent.Guid.Data2
+      value: 1268796845
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737714895912899484, guid: b3de8d714c3c17d40a00fba03f4c4d21, type: 3}
+      propertyPath: _spotlightOnEvent.Guid.Data3
+      value: -519632767
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737714895912899484, guid: b3de8d714c3c17d40a00fba03f4c4d21, type: 3}
+      propertyPath: _spotlightOnEvent.Guid.Data4
+      value: -67916948
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7040,6 +7343,10 @@ PrefabInstance:
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
+      propertyPath: DelayBetweenSpeaking
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7115176594813748124, guid: 976700258fe964547b4b5cc7562d8f48, type: 3}
       propertyPath: RandomWordEvent.Path
       value: event:/ToffVoiceRandom
       objectReference: {fileID: 0}
@@ -7323,10 +7630,18 @@ PrefabInstance:
     - target: {fileID: 4370675548417548892, guid: 810f116b347df974f874d0121a5f6d11, type: 3}
       propertyPath: _houseLights
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1483549254}
     - target: {fileID: 4370675548417548892, guid: 810f116b347df974f874d0121a5f6d11, type: 3}
       propertyPath: _goonLightsLeft
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370675548417548892, guid: 810f116b347df974f874d0121a5f6d11, type: 3}
+      propertyPath: _speakerMechanism
+      value: 
+      objectReference: {fileID: 9074197343667373}
+    - target: {fileID: 4370675548417548892, guid: 810f116b347df974f874d0121a5f6d11, type: 3}
+      propertyPath: _rotateTimeSeconds
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4489882754389540804, guid: 810f116b347df974f874d0121a5f6d11, type: 3}
       propertyPath: m_ReceiveGI
@@ -7561,9 +7876,9 @@ GameObject:
   - component: {fileID: 4882269757499004895}
   - component: {fileID: 1550505172606167983}
   - component: {fileID: 7660148269756795404}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CurtainLeft
-  m_TagString: Untagged
+  m_TagString: Curtain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7846,6 +8161,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScrapButton
       objectReference: {fileID: 0}
+    - target: {fileID: 4678656114687742565, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4678656114687742565, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
+      propertyPath: m_TagString
+      value: Pole
+      objectReference: {fileID: 0}
     - target: {fileID: 5524362084165966010, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -7866,6 +8189,46 @@ PrefabInstance:
       propertyPath: _enableMechanism
       value: 
       objectReference: {fileID: 3531582927532157410}
+    - target: {fileID: 7443354197298793422, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
+      propertyPath: _mechanismRunStopEvent.Path
+      value: event:/Mechanisms/ButtonPoppedOut
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443354197298793422, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
+      propertyPath: _mechanismRunStartEvent.Path
+      value: event:/Mechanisms/ButtonPushedIn
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443354197298793422, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data1
+      value: -335626355
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443354197298793422, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data2
+      value: 1142922458
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443354197298793422, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data3
+      value: 1394678435
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443354197298793422, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
+      propertyPath: _mechanismRunStopEvent.Guid.Data4
+      value: 948113745
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443354197298793422, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data1
+      value: -517031757
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443354197298793422, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data2
+      value: 1128826697
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443354197298793422, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data3
+      value: -437541697
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443354197298793422, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
+      propertyPath: _mechanismRunStartEvent.Guid.Data4
+      value: 1130623598
+      objectReference: {fileID: 0}
     - target: {fileID: 7646411304930987826, guid: c1e7b542d8305094caf859afac2fb946, type: 3}
       propertyPath: m_ReceiveGI
       value: 2
@@ -7941,6 +8304,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8717518739181851429
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716798256122625896}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &9041871446238119356
 MeshFilter:
   m_ObjectHideFlags: 0

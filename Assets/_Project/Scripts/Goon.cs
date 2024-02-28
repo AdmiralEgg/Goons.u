@@ -171,7 +171,11 @@ public class Goon : MonoBehaviour
         _stickTouchInstance.release();
         _randomWordInstance.release();
         _randomWordInstance.setUserData(IntPtr.Zero);
-        _randomWordHandle.Free();
+        
+        if (_randomWordHandle.IsAllocated)
+        {
+            _randomWordHandle.Free();
+        }
     }
 
     // Triggered by InputManager

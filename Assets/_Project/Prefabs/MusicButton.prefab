@@ -74,13 +74,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentRunningState: 2
   _enableMechanism: {fileID: 0}
-  _songData: {fileID: 11400000, guid: b39b0bc1cdbdd1a44bb30c2c2f16b955, type: 2}
-  _speaker: {fileID: 0}
+  _speakerMechanism: {fileID: 0}
   _rotateTimeSeconds: 4
   _startButtonLight: {fileID: 5256965294499779103}
   _stopButtonLight: {fileID: 6141654189083412129}
   _houseLights: {fileID: 0}
-  _goonLightsLeft: {fileID: 0}
 --- !u!1 &3767846460954248105
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,7 +210,7 @@ GameObject:
   - component: {fileID: 9101763417232720252}
   - component: {fileID: 3667335857744334246}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ButtonCasing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -317,9 +315,10 @@ GameObject:
   - component: {fileID: 8168704872964212454}
   - component: {fileID: 171316530186411461}
   - component: {fileID: 4489882754389540804}
-  m_Layer: 5
-  m_Name: Stick
-  m_TagString: Untagged
+  - component: {fileID: 7960706476329106726}
+  m_Layer: 7
+  m_Name: Pole
+  m_TagString: Pole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -389,6 +388,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &7960706476329106726
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3955419725307988185}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5000007
+  m_Height: 2.0000002
+  m_Direction: 1
+  m_Center: {x: 0.000003874302, y: 0, z: -0.0000039041042}
 --- !u!1 &4026218734830659690
 GameObject:
   m_ObjectHideFlags: 0

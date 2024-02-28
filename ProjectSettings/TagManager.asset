@@ -7,6 +7,11 @@ TagManager:
   - Scrap
   - Stick
   - ScrapDelete
+  - Stage
+  - Curtain
+  - Speaker
+  - Pole
+  - TrapDoor
   layers:
   - Default
   - TransparentFX

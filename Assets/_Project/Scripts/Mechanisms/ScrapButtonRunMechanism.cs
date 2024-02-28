@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using UnityEngine;
 
@@ -21,23 +22,34 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
     [SerializeField]
     private Color _disabledColour = new Color(0.3294118f, 0.2039216f, 0.1215686f);
 
-    [Header("Button Setup")]
+    [Header("Audio Setup")]
     [SerializeField]
-    private AudioClip _mechanismRunStartClip;
+    private EventReference _mechanismRunStartEvent;
     [SerializeField]
-    private AudioClip _mechanismRunStopClip;
+    private EventReference _mechanismRunStopEvent;
+
+    private FMOD.Studio.EventInstance _mechanismRunStartInstance;
+    private FMOD.Studio.EventInstance _mechanismRunStopInstance;
+
+    [Header("Animation Setup")]
     [SerializeField]
     private Animator _animator;
-    [SerializeField]
-    private AudioSource _startStopSource;
 
     public static Action<Type, bool> ScrapMechanismRunStateUpdate;
 
     void Awake()
     {
+        SetupFMOD();
+        
         _enableMechanism = this.GetComponent<ScrapButtonEnableMechanism>();
         _buttonLight.intensity = _disabledIntesity;
         _buttonLight.color = _disabledColour;
+    }
+
+    private void SetupFMOD()
+    {
+        _mechanismRunStartInstance = FMODUnity.RuntimeManager.CreateInstance(_mechanismRunStartEvent);
+        _mechanismRunStopInstance = FMODUnity.RuntimeManager.CreateInstance(_mechanismRunStopEvent);
     }
 
     public override void StartMechanism()
@@ -49,7 +61,7 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
         _buttonLight.color = _enabledColour;
 
         _animator.Play("PushIn");
-        _startStopSource.PlayOneShot(_mechanismRunStopClip);
+        _mechanismRunStartInstance.start();
 
         _scrapGenerator.StartGenerator();
         _trapDoor.OpenTrapDoor();
@@ -65,7 +77,7 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
         _buttonLight.color = _disabledColour;
 
         _animator.Play("PopOut");
-        _startStopSource.PlayOneShot(_mechanismRunStopClip);
+        _mechanismRunStopInstance.start();
 
         _scrapGenerator.ShutdownGenerator();
         _trapDoor.CloseTrapDoor();

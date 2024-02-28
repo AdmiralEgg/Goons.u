@@ -3,9 +3,13 @@ using FMODUnity;
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using Sirenix.OdinInspector;
+using MoreMountains.Feedbacks;
 
 public class SpeakerRunMechanism : BaseRunMechanism
 {
+    public enum MusicMarkerName { MusicStart, MusicEnd };
+    
     // FMOD Sounds
     [Header("Audio Data")]
     [SerializeField]
@@ -18,10 +22,14 @@ public class SpeakerRunMechanism : BaseRunMechanism
     private MusicData _musicData = null;
     private GCHandle _musicHandle;
 
-    //public delegate void BeatEventDelegate();
     public static event Action s_BeatEvent;
-    public static event Action s_MusicStopped;
 
+    [SerializeField]
+    private MMScaleShaker _speakerWiggle;
+
+    [SerializeField, ReadOnly]
+    private bool _checkBeatEvents;
+    [SerializeField, ReadOnly]
     private static int s_lastBeat = 0;
 
     [StructLayout(LayoutKind.Sequential)]
@@ -37,14 +45,22 @@ public class SpeakerRunMechanism : BaseRunMechanism
         {
             SetupFMOD();
         }
+
+        _checkBeatEvents = false;
+    }
+
+    public void SetBeatEventCheck(bool checkEvents)
+    {
+        _checkBeatEvents = checkEvents;
     }
 
     private void Update()
     {
-        if (_musicData.CurrentBeat != s_lastBeat)
+        if ((_checkBeatEvents == true) && (_musicData.CurrentBeat != s_lastBeat))
         {
             s_lastBeat = _musicData.CurrentBeat;
             s_BeatEvent?.Invoke();
+            _speakerWiggle.Play();
         }
     }
 
@@ -97,19 +113,22 @@ public class SpeakerRunMechanism : BaseRunMechanism
         return FMOD.RESULT.OK;
     }
 
-    private void Start()
+    public void SkipToDestinationMarker(MusicMarkerName markerName)
     {
-        _musicInstance.start();
+        _musicInstance.setParameterByNameWithLabel("MusicStateParameter", markerName.ToString());
     }
 
     public override void StartMechanism()
     {
         base.StartMechanism();
+        _musicInstance.setParameterByNameWithLabel("MusicStateParameter", "MusicIntro");
+        _musicInstance.start();
     }
 
     public override void StopMechanism()
     {
         base.StopMechanism();
+        _musicInstance.stop(STOP_MODE.IMMEDIATE);
     }
 
     private void OnDisable()
@@ -124,8 +143,12 @@ public class SpeakerRunMechanism : BaseRunMechanism
 
     private void CleanupFMOD()
     {
-        _musicInstance.release();
         _musicInstance.setUserData(IntPtr.Zero);
-        _musicHandle.Free();
+        _musicInstance.release();
+        
+        if (_musicHandle.IsAllocated)
+        {
+            _musicHandle.Free();
+        }
     }
 }
