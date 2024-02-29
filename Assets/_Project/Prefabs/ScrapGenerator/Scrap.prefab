@@ -321,6 +321,59 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 127
+--- !u!1 &8932405650617505445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6696290948460757053}
+  - component: {fileID: 7103978094939825115}
+  m_Layer: 5
+  m_Name: OnClickColliderFree
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6696290948460757053
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8932405650617505445}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8536199738901055877}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7103978094939825115
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8932405650617505445}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10.75415, y: 1, z: 5.100893}
+  m_Center: {x: -0.027914524, y: -0.0000010133007, z: -0.038634777}
 --- !u!1 &9106558085193568997
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,6 +406,7 @@ Transform:
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6696290948460757053}
   - {fileID: 61499151367223008}
   - {fileID: 2875512568719634753}
   m_Father: {fileID: 0}
@@ -378,8 +432,6 @@ MonoBehaviour:
   _rigidBody: {fileID: 2492429246607696667}
   _animator: {fileID: 6464860212356331581}
   _collider: {fileID: 5672928901313368977}
-  _defaultSize: {x: 10, y: 1, z: 7}
-  _inventorySize: {x: 8, y: 1, z: 3}
 --- !u!65 &5672928901313368977
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -399,8 +451,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.120178, y: 1, z: 3}
-  m_Center: {x: 0.9399088, y: 0.0000000059958962, z: 0}
+  m_Size: {x: 7.571126, y: 0.5669607, z: 3}
+  m_Center: {x: 0.018407462, y: 0.041954633, z: 0}
 --- !u!54 &2492429246607696667
 Rigidbody:
   m_ObjectHideFlags: 0

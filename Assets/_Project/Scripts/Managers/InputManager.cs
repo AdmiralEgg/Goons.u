@@ -56,7 +56,6 @@ public class InputManager : MonoBehaviour
 
         GameModeManager.ChangedGameMode += CheckGameMode;
         _currentGameMode = GameModeManager.GameMode.None;
-
     }
 
     private void Update()
@@ -133,7 +132,7 @@ public class InputManager : MonoBehaviour
 
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("UI"))
         {
-            hit.collider.SendMessageUpwards("OnClickedTrigger", hit.collider.gameObject);
+            hit.collider.SendMessageUpwards("OnClickedTrigger", hit.collider.gameObject, SendMessageOptions.DontRequireReceiver);
         }
 
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Crowd"))
@@ -153,7 +152,6 @@ public class InputManager : MonoBehaviour
             
             if (hit.collider.tag == "Stage")
             {
-                //_puffOfDust.transform.position = hit.transform.position;
                 var puff = Instantiate(_puffOfDust);
                 puff.transform.position = hit.point;
                 puff.transform.Rotate(hit.normal);
@@ -165,7 +163,7 @@ public class InputManager : MonoBehaviour
     {
         // If a UI element is selected, check it's a Goon UI element and attack scrap
         // If another scrap is selected, switch to that and stay in selected mode
-        LayerMask mask = LayerMask.GetMask(new string[] { "UI" });
+        LayerMask mask = LayerMask.GetMask(new string[] { "UI", "ScrapDeleteTrigger" });
         Physics.Raycast(clickPositionRay, out RaycastHit hit, float.PositiveInfinity, mask);
 
         if (hit.collider == null)
@@ -179,9 +177,6 @@ public class InputManager : MonoBehaviour
 
         if (hit.collider.gameObject.GetComponent<Scrap>())
         {
-            // Select a scrap
-            Debug.Log("Clicked a scrap, switch selected to that one");
-
             UpdateInputState(InputState.Free);
             Scrap newScrap = hit.collider.gameObject.GetComponent<Scrap>();
             UpdateInputState(InputState.ScrapSelected, newScrap);
@@ -190,10 +185,9 @@ public class InputManager : MonoBehaviour
 
         if (hit.collider.tag == "ScrapDelete")
         {
-            Debug.Log("Clicked the hole with scrap selected. Burn the scrap!");
-            GameObject _scrapToDestroy = _currentSelectedScrap.gameObject;
+            _currentSelectedScrap.SetScrapAttachedState(Scrap.ScrapAttachedState.None);
+            _currentSelectedScrap.transform.position = hit.point;
             UpdateInputState(InputState.Free);
-            Destroy(_scrapToDestroy);
             return;
         }
 

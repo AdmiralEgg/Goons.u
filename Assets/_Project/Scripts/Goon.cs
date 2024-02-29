@@ -85,6 +85,10 @@ public class Goon : MonoBehaviour
         _stickTouchInstance = FMODUnity.RuntimeManager.CreateInstance(_stickTouchEvent);
         _randomWordInstance = FMODUnity.RuntimeManager.CreateInstance(_randomWordEvent);
 
+        FMODUnity.RuntimeManager.AttachInstanceToGameObject(_singleWordInstance, this.transform);
+        FMODUnity.RuntimeManager.AttachInstanceToGameObject(_stickTouchInstance, this.transform);
+        FMODUnity.RuntimeManager.AttachInstanceToGameObject(_randomWordInstance, this.transform);
+
         _randomWordData = new RandomWordData();
         _randomWordCallback = new FMOD.Studio.EVENT_CALLBACK(ProcessWordSpokenCallback);
         _randomWordHandle = GCHandle.Alloc(_randomWordData, GCHandleType.Pinned);

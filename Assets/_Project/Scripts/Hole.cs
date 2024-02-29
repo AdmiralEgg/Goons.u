@@ -8,7 +8,8 @@ public class Hole : MonoBehaviour
     [SerializeField]
     private EventReference _fireIgniteScrapEvent, _fireIndicateEvent;
     private EventInstance _fireIgniteScrapInstance, _fireIndicateInstance;
-    
+
+    [SerializeField]
     private ParticleSystem _fire;
 
     private void Awake()
@@ -27,9 +28,6 @@ public class Hole : MonoBehaviour
         {
             StartCoroutine(PlayFire(0.5f, _fireIgniteScrapInstance));
         };
-
-        _fire = GetComponentInChildren<ParticleSystem>();
-        _fire.Stop();
     }
 
     private void OnTriggerEnter(Collider other)

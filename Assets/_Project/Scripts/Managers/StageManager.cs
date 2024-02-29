@@ -92,6 +92,8 @@ public class StageManager : MonoBehaviour
         {
             case GameState.Title:
 
+                HouseLights?.Invoke(false);
+
                 _projector.EnableAfterAnimation();
 
                 // When the video finishes, end the act

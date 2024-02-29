@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2532944009596410790
+--- !u!1 &1196066520563127741
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,61 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5535537315029371720}
-  - component: {fileID: 5820142493091205522}
-  - component: {fileID: 5689003791075449099}
+  - component: {fileID: 8782197840509378340}
+  - component: {fileID: 5359356887405700673}
+  - component: {fileID: 5392626697548528849}
   m_Layer: 7
-  m_Name: Hole
+  m_Name: ScrapDeleteHoleTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 126
+  m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5535537315029371720
+--- !u!4 &8782197840509378340
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2532944009596410790}
+  m_GameObject: {fileID: 1196066520563127741}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.011, z: 0}
-  m_LocalScale: {x: 0.22129832, y: 0.018736003, z: 0.20463002}
-  m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 3106939457427739104}
-  - {fileID: 7724707957054722585}
-  m_Father: {fileID: 0}
+  m_LocalPosition: {x: 0.54, y: -56.5, z: 1.32}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5535537315029371720}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5820142493091205522
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2532944009596410790}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 9.999999, y: 2.2204459e-16, z: 10}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5689003791075449099
+--- !u!114 &5359356887405700673
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2532944009596410790}
+  m_GameObject: {fileID: 1196066520563127741}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5985240b21bc30408ce49c1a8bd3614, type: 3}
@@ -82,6 +59,62 @@ MonoBehaviour:
       Data3: 1951603333
       Data4: -729543794
     Path: event:/Mechanisms/FireIndicate
+  _fire: {fileID: 0}
+--- !u!65 &5392626697548528849
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196066520563127741}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 9.999999, y: 2.2204459e-16, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2532944009596410790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5535537315029371720}
+  m_Layer: 7
+  m_Name: Hole
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 126
+  m_IsActive: 1
+--- !u!4 &5535537315029371720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532944009596410790}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.011, z: 0}
+  m_LocalScale: {x: 0.22129832, y: 0.018736003, z: 0.20463002}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 8782197840509378340}
+  - {fileID: 3106939457427739104}
+  - {fileID: 7724707957054722585}
+  m_Father: {fileID: 0}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7701998011778446961
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,8 +125,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3106939457427739104}
   - component: {fileID: 4430115499540262903}
-  m_Layer: 5
-  m_Name: ScrapDeleteTrigger
+  m_Layer: 10
+  m_Name: ScrapDeleteUITrigger
   m_TagString: ScrapDelete
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,8 +166,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10.933357, y: 78.016815, z: 11.308823}
-  m_Center: {x: 0.12494391, y: 34.012196, z: -0.6445853}
+  m_Size: {x: 9.165364, y: 78.016815, z: 5.9449325}
+  m_Center: {x: 0.1485092, y: 34.012196, z: -0.9953899}
 --- !u!1001 &1741890743038392449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -233,7 +266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8295591563862043288, guid: e01f2e62cf41a3449be2dade3b2c2d79, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.5
+      value: -77.2
       objectReference: {fileID: 0}
     - target: {fileID: 8295591563862043288, guid: e01f2e62cf41a3449be2dade3b2c2d79, type: 3}
       propertyPath: m_LocalPosition.z

@@ -2,6 +2,7 @@ using FMOD.Studio;
 using FMODUnity;
 using Sirenix.OdinInspector;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class ActivateTrapDoor : MonoBehaviour
@@ -17,11 +18,14 @@ public class ActivateTrapDoor : MonoBehaviour
     private bool _banging;
 
     [SerializeField, ReadOnly]
-    private TrapDoorState _trapDoorState;   
+    private TrapDoorState _trapDoorState;
+
+    private HingeJoint _hingeJoint;
 
     private void Awake()
     {
         _trapDoorState = TrapDoorState.Closed;
+        _hingeJoint = this.GetComponentInParent<HingeJoint>();
         _banging = false;
         SetupFMOD();
     }
@@ -33,13 +37,13 @@ public class ActivateTrapDoor : MonoBehaviour
 
     public void OpenTrapDoor()
     {
-        this.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(0, 500, 0));
+        _hingeJoint.useMotor = true;
         _trapDoorState = TrapDoorState.Open;
     }
 
     public void CloseTrapDoor()
     {
-        this.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(0, 0, 1000));
+        _hingeJoint.useMotor = false;
         _trapDoorState = TrapDoorState.Closed;
     }
 
@@ -49,8 +53,6 @@ public class ActivateTrapDoor : MonoBehaviour
         if (_trapDoorState == TrapDoorState.Open) return;
 
         _banging = true;
-        
-        Debug.Log("clicked trapdoor");
         _trapDoorInstance.start();
 
         StartCoroutine(BangOnTrapDoor());
@@ -59,9 +61,8 @@ public class ActivateTrapDoor : MonoBehaviour
 
     private IEnumerator BangOnTrapDoor()
     {
-        for (int i = 0; i < 3; i++) 
+        for (int i = 0; i < 3; i++)
         {
-            Debug.Log("BANG.");
             this.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(0, 0, -1500));
             yield return new WaitForSeconds(0.2f);
         }

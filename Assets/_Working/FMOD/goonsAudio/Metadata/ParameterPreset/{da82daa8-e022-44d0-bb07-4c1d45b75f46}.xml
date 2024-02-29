@@ -16,7 +16,7 @@
 			<value>2</value>
 		</property>
 		<property name="maximum">
-			<value>11</value>
+			<value>10</value>
 		</property>
 		<property name="enumerationLabels">
 			<value>hag_bats</value>
@@ -28,7 +28,6 @@
 			<value>hag_sage</value>
 			<value>hag_sweets</value>
 			<value>hag_tea</value>
-			<value>hag_weird</value>
 			<value>hag_wicked</value>
 		</property>
 		<property name="initialValue">

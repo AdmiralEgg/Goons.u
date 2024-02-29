@@ -25,14 +25,6 @@ public class Scrap : MonoBehaviour
     private Rigidbody _rigidBody;
     [SerializeField]
     private Animator _animator;
-    [SerializeField]
-    private BoxCollider _collider;
-
-    [Header("Collider Sizes")]
-    [SerializeField]
-    private Vector3 _defaultSize = new Vector3(14, 1, 4);
-    [SerializeField]
-    private Vector3 _inventorySize = new Vector3(8, 1, 3);
 
     public static Action<Scrap> ScrapCaught, ScrapSelected, ScrapDestroyed;
 
@@ -122,11 +114,9 @@ public class Scrap : MonoBehaviour
         {
             case ScrapAttachedState.None:
                 _rigidBody.isKinematic = false;
-                _collider.size = _defaultSize;
                 break;
             case ScrapAttachedState.Inventory:
                 _rigidBody.isKinematic = true;
-                _collider.size = _inventorySize;
                 break;
         }
     }

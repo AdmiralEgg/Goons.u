@@ -41,6 +41,9 @@
 		</relationship>
 	</object>
 	<object class="MasterTrack" id="{8fc4d650-5d66-483a-a024-b8429cc777f5}">
+		<relationship name="automationTracks">
+			<destination>{c40c17be-57b7-4dd8-a6ad-b39249bc538e}</destination>
+		</relationship>
 		<relationship name="modules">
 			<destination>{97bf440b-6b5b-4159-9c47-3681775e0891}</destination>
 		</relationship>
@@ -82,6 +85,11 @@
 			<destination>{47f8df94-68bf-4b87-9f82-b9c09a7d0e53}</destination>
 		</relationship>
 	</object>
+	<object class="AutomationTrack" id="{c40c17be-57b7-4dd8-a6ad-b39249bc538e}">
+		<relationship name="automator">
+			<destination>{503a8af0-cf12-4170-b95a-fd10a10525bd}</destination>
+		</relationship>
+	</object>
 	<object class="MultiSound" id="{97bf440b-6b5b-4159-9c47-3681775e0891}">
 		<relationship name="sounds">
 			<destination>{ec7322c7-8a0c-4139-955a-cefc4b2bb12a}</destination>
@@ -100,6 +108,15 @@
 	</object>
 	<object class="MixerBusPanner" id="{fc522a81-dd65-490b-907b-40e8f0c79349}" />
 	<object class="MultiSound" id="{ec7322c7-8a0c-4139-955a-cefc4b2bb12a}">
+		<property name="volume">
+			<value>-13.5</value>
+		</property>
+		<relationship name="automators">
+			<destination>{503a8af0-cf12-4170-b95a-fd10a10525bd}</destination>
+		</relationship>
+		<relationship name="modulators">
+			<destination>{fa845a02-0238-4886-a53b-4483889eb779}</destination>
+		</relationship>
 		<relationship name="sounds">
 			<destination>{b5dfd6c7-cc31-44a1-9aba-fb30418caf61}</destination>
 			<destination>{a9b7c457-7e9a-4a95-973c-454f21b3751d}</destination>
@@ -108,6 +125,19 @@
 	</object>
 	<object class="MixerBusFader" id="{1f1dd500-0eaf-4d83-a4b4-0022cf09b073}" />
 	<object class="MixerBusFader" id="{faf42ebf-1637-4f72-88ca-d4af15b13724}" />
+	<object class="Automator" id="{503a8af0-cf12-4170-b95a-fd10a10525bd}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>pitch</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{fa845a02-0238-4886-a53b-4483889eb779}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>2.5</value>
+		</property>
+	</object>
 	<object class="SingleSound" id="{b5dfd6c7-cc31-44a1-9aba-fb30418caf61}">
 		<relationship name="audioFile">
 			<destination>{08ebf530-ac8f-4784-94eb-8e713c4d8b7c}</destination>

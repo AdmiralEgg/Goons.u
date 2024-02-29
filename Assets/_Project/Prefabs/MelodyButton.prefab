@@ -477,7 +477,6 @@ GameObject:
   - component: {fileID: 3686931105726473537}
   - component: {fileID: 7309814119368335659}
   - component: {fileID: 7470727596117881297}
-  - component: {fileID: 6681336405481768799}
   m_Layer: 5
   m_Name: MelodyButton
   m_TagString: Untagged
@@ -499,7 +498,7 @@ Transform:
   m_Children:
   - {fileID: 5445307990366421219}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7309814119368335659
 MonoBehaviour:
@@ -568,16 +567,3 @@ MonoBehaviour:
   _clickSpamBlockDuration: 0
   _isSpamBlocking: 0
   _allowManualDisable: 1
---- !u!114 &6681336405481768799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8399550429058974771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f78ad3e10c5b084f8509d2f72b61ae2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _light: {fileID: 324487874352681469}

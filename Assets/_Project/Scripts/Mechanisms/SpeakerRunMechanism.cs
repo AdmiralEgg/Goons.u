@@ -89,7 +89,6 @@ public class SpeakerRunMechanism : BaseRunMechanism
             s_lastMarker = _musicData.LastMarker;
 
             string stringMarker = (string)s_lastMarker;
-            Debug.Log($"hitMarker: {stringMarker}");
 
             if (stringMarker.Contains("Rushed"))
             {
