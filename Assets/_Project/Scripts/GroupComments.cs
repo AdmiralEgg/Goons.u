@@ -1,5 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Xml;
+using FMOD;
+using FMOD.Studio;
+using FMODUnity;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -15,8 +20,20 @@ public class GroupComments : MonoBehaviour
     [SerializeField, ReadOnly]
     private Hashtable _recordedTouches;
 
+    private int _scrapCaughtThreshold, _crowdTouchThreshold, _speakerTouchThreshold;
+
+    [SerializeField]
+    private EventReference _scrapGroupEvent, _crowdGroupEvent, _speakerGroupEvent;
+    private EventInstance _scrapGroupInstance, _crowdGroupInstance, _speakerGroupInstance;
+
     void Awake()
-    {        
+    {
+        _scrapCaughtThreshold = UnityEngine.Random.Range(3, 7);
+        _crowdTouchThreshold = UnityEngine.Random.Range(7, 14);
+        _speakerTouchThreshold = UnityEngine.Random.Range(3, 5);
+
+        SetupFMOD();
+        
         Scrap.ScrapCaught += (scrap) =>
         {
             PlayComment(GroupCommentType.ScrapCaught);
@@ -33,49 +50,64 @@ public class GroupComments : MonoBehaviour
         RefreshAllGoons();
     }
 
+    private void SetupFMOD()
+    {
+        _scrapGroupInstance = FMODUnity.RuntimeManager.CreateInstance(_scrapGroupEvent);
+        _crowdGroupInstance = FMODUnity.RuntimeManager.CreateInstance(_crowdGroupEvent);
+        _speakerGroupInstance = FMODUnity.RuntimeManager.CreateInstance(_speakerGroupEvent);
+    }
+
     private void RecordTouch(string touchTag)
     {        
         if (_recordedTouches.ContainsKey(touchTag))
         {
             _recordedTouches[touchTag] = (int)_recordedTouches[touchTag] + 1;
-            Debug.Log($"Added new touch: {touchTag}. Recorded value is now: {_recordedTouches[touchTag]}");
+            UnityEngine.Debug.Log($"Added new touch: {touchTag}. Recorded value is now: {_recordedTouches[touchTag]}");
         }
         else
         {
             _recordedTouches.Add(touchTag, 1);
         }
+
+        switch (touchTag)
+        {
+            case "Scarp":
+                if ((int)_recordedTouches[touchTag] > _scrapCaughtThreshold)
+                {
+                    PlayComment(GroupCommentType.ScrapCaught);
+                    _recordedTouches[touchTag] = 0;
+                }
+                break;
+            case "Speaker":
+                if ((int)_recordedTouches[touchTag] > _speakerTouchThreshold)
+                {
+                    PlayComment(GroupCommentType.SpeakerTouch);
+                    _recordedTouches[touchTag] = 0;
+                }
+                break;
+            case "Crowd":
+                if ((int)_recordedTouches[touchTag] > _crowdTouchThreshold)
+                {
+                    PlayComment(GroupCommentType.CrowdTouch);
+                    _recordedTouches[touchTag] = 0;
+                }
+                break;
+        }
     }
 
     private void PlayComment(GroupCommentType commentType)
     {
-        Goon g = SelectRandomGoon();
-
-        if (g == null) return;
-
-        AudioClip clip = null; 
-
         switch (commentType)
         {
             case GroupCommentType.ScrapCaught:
-                //clip = g.GetGoonData().NiceCatchAudio;
+                _scrapGroupInstance.start();
                 break;
             case GroupCommentType.CrowdTouch:
-                //clip = g.GetGoonData().CrowdTouchAudio;
-                break;
-            case GroupCommentType.ScrapSelected:
+                _crowdGroupInstance.start();
                 break;
             case GroupCommentType.SpeakerTouch:
-                //clip = g.GetGoonData().SpeakerTouchAudio;
+                _speakerGroupInstance.start();
                 break;
-        }
-
-        if (clip == null) return;
-
-        //g.PlayGroupComment(clip);
-
-        if (_allGoons.Count > 1)
-        {
-            _lastCommentedGoon = g;
         }
     }
 
@@ -114,5 +146,22 @@ public class GroupComments : MonoBehaviour
         {
             _allGoons.Add(goon);
         }
+    }
+
+    private void OnDisable()
+    {
+        ReleaseFMOD();
+    }
+
+    private void OnDestroy()
+    {
+        ReleaseFMOD();
+    }
+
+    private void ReleaseFMOD()
+    {
+        _scrapGroupInstance.release();
+        _speakerGroupInstance.release();
+        _crowdGroupInstance.release();
     }
 }

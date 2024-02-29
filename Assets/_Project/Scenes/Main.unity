@@ -688,7 +688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentGameState: 0
-  _startingGameState: 1
+  _startingGameState: 0
   _actData:
   - GameState: 0
     ActData: {fileID: 11400000, guid: ff312832034c48a4abf89bfe77fa3bdf, type: 2}
@@ -6114,6 +6114,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _allGoons: []
+  _scrapGroupEvent:
+    Guid:
+      Data1: -1845597209
+      Data2: 1281539253
+      Data3: 395063170
+      Data4: 585534579
+    Path: event:/GoonGroupComments/ScrapCaught
+  _crowdGroupEvent:
+    Guid:
+      Data1: -1471577643
+      Data2: 1137630460
+      Data3: -130814330
+      Data4: -1140810716
+    Path: event:/GoonGroupComments/CrowdTouchComment
+  _speakerGroupEvent:
+    Guid:
+      Data1: 315990642
+      Data2: 1268221279
+      Data3: 339524234
+      Data4: -2118306117
+    Path: event:/GoonGroupComments/SpeakerTouch
 --- !u!1 &1853786517
 GameObject:
   m_ObjectHideFlags: 0

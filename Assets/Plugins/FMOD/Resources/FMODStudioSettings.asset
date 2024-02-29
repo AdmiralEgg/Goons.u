@@ -409,6 +409,8 @@ MonoBehaviour:
   - Crowd.assets
   - Environment
   - Environment.assets
+  - GoonGroupComments
+  - GoonGroupComments.assets
   - Hag
   - Hag.assets
   - Master.assets
