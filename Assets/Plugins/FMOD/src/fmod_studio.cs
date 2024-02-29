@@ -59,6 +59,11 @@ namespace FMOD.Studio
         public float tempo;
         public int timesignatureupper;
         public int timesignaturelower;
+
+        public static explicit operator TIMELINE_BEAT_PROPERTIES(TIMELINE_MARKER_PROPERTIES v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]

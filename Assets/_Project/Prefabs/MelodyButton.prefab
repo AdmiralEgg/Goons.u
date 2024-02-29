@@ -402,7 +402,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
+  m_ReceiveGI: 2
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -477,6 +477,7 @@ GameObject:
   - component: {fileID: 3686931105726473537}
   - component: {fileID: 7309814119368335659}
   - component: {fileID: 7470727596117881297}
+  - component: {fileID: 6681336405481768799}
   m_Layer: 5
   m_Name: MelodyButton
   m_TagString: Untagged
@@ -498,7 +499,7 @@ Transform:
   m_Children:
   - {fileID: 5445307990366421219}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7309814119368335659
 MonoBehaviour:
@@ -541,25 +542,25 @@ MonoBehaviour:
   _enableMechanism: {fileID: 0}
   _melodyEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1640091644
+      Data2: 1081274906
+      Data3: -1957192283
+      Data4: -1445031596
+    Path: event:/Music/MelodyLong1
   _mechanismRunStartEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -517031757
+      Data2: 1128826697
+      Data3: -437541697
+      Data4: 1130623598
+    Path: event:/Mechanisms/ButtonPushedIn
   _mechanismRunStopEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -335626355
+      Data2: 1142922458
+      Data3: 1394678435
+      Data4: 948113745
+    Path: event:/Mechanisms/ButtonPoppedOut
   _light: {fileID: 324487874352681469}
   _runningColor: {r: 0.31852072, g: 0.46226418, b: 0.31181028, a: 0}
   _shutdownColor: {r: 0.32941177, g: 0.20392157, b: 0.12156863, a: 0}
@@ -567,3 +568,16 @@ MonoBehaviour:
   _clickSpamBlockDuration: 0
   _isSpamBlocking: 0
   _allowManualDisable: 1
+--- !u!114 &6681336405481768799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399550429058974771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f78ad3e10c5b084f8509d2f72b61ae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _light: {fileID: 324487874352681469}

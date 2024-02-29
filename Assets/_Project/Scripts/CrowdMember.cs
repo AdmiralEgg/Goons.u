@@ -50,20 +50,24 @@ public class CrowdMember : MonoBehaviour
         {
             case float x when (x <= 0.15):
                 _timing = Timing.Dragging;
+                SpeakerRunMechanism.s_TriggerDragged += Bounce;
                 break;
             case float x when (x >= 0.95):
                 _timing = Timing.Random;
+                SpeakerRunMechanism.s_BeatEvent += Bounce;
                 break;
             case float x when (x >= 0.85):
                 _timing = Timing.Rushing;
+                SpeakerRunMechanism.s_TriggerRushed += Bounce;
                 break;
             default:
                 _timing = Timing.OnBeat;
+                SpeakerRunMechanism.s_BeatEvent += Bounce;
                 break;
         }
     }
 
-    private IEnumerator StartBouncing(float totalTime)
+    private IEnumerator GoWild(float totalTime)
     {
         float t = 0;
 
@@ -78,6 +82,19 @@ public class CrowdMember : MonoBehaviour
 
     public void Bounce()
     {
+        if (_timing == Timing.Random)
+        {
+            StartCoroutine(RandomBounce());
+            return;
+        }
+        
+        _positionShaker.Play();
+    }
+
+    private IEnumerator RandomBounce()
+    {
+        float randomWait = UnityEngine.Random.Range(0.1f, 0.4f);
+        yield return new WaitForSeconds(randomWait);
         _positionShaker.Play();
     }
 
@@ -113,7 +130,7 @@ public class CrowdMember : MonoBehaviour
                 
                 if (_bounceCoroutine == null)
                 {
-                    _bounceCoroutine = StartCoroutine(StartBouncing(3f));
+                    _bounceCoroutine = StartCoroutine(GoWild(3f));
                 }
                 
                 break;

@@ -26,8 +26,10 @@ public class SpeakerRunMechanism : BaseRunMechanism
     public static event Action s_BeatEvent;
     public static event Action s_MidBar;
     public static event Action s_EndBar;
-    public static event Action s_triggerRushed;
-    public static event Action s_triggerDragged;
+    public static event Action s_TriggerRushed;
+    public static event Action s_TriggerDragged;
+    public static event Action s_PreEndOfBar;
+    public static event Action s_MusicStopped;
 
     [SerializeField]
     private MMScaleShaker _speakerWiggle;
@@ -36,6 +38,8 @@ public class SpeakerRunMechanism : BaseRunMechanism
     private bool _checkBeatEvents;
     [SerializeField, ReadOnly]
     private static int s_lastBeat = 0;
+    [SerializeField, ReadOnly]
+    private static FMOD.StringWrapper s_lastMarker = new FMOD.StringWrapper();
 
     [StructLayout(LayoutKind.Sequential)]
     public class MusicData
@@ -65,37 +69,43 @@ public class SpeakerRunMechanism : BaseRunMechanism
         {
             s_lastBeat = _musicData.CurrentBeat;
             s_BeatEvent?.Invoke();
+            StartCoroutine(InvokeActionAfterSeconds(0.3f, s_TriggerDragged));
+
+            _speakerWiggle.Play();
 
             if (_musicData.CurrentBeat == 2) 
             {
                 s_MidBar?.Invoke();
-                Debug.Log("MidBar");
             }
 
             if (_musicData.CurrentBeat == 4)
             {
                 s_EndBar?.Invoke();
-                Debug.Log("EndBar");
             }
+        }
 
-            if (_musicData.CurrentBeat == 3)
+        if ((_checkBeatEvents == true) && (_musicData.LastMarker != s_lastMarker))
+        {
+            s_lastMarker = _musicData.LastMarker;
+
+            string stringMarker = (string)s_lastMarker;
+            Debug.Log($"hitMarker: {stringMarker}");
+
+            if (stringMarker.Contains("Rushed"))
             {
-                StartCoroutine(InvokeActionAfterSeconds(0.6f, s_triggerRushed));
+                s_TriggerRushed?.Invoke();
             }
 
-            if (_musicData.CurrentBeat == 4)
+            if (stringMarker.Contains("PreEOB"))
             {
-                StartCoroutine(InvokeActionAfterSeconds(0.3f, s_triggerDragged));
+                s_PreEndOfBar?.Invoke();
             }
-
-            _speakerWiggle.Play();
         }
     }
 
     private IEnumerator InvokeActionAfterSeconds(float seconds, Action actionName)
     {
         yield return new WaitForSeconds(seconds);
-        Debug.Log($"Offbeat action: {actionName}");
         actionName?.Invoke();
     }
 
@@ -108,7 +118,7 @@ public class SpeakerRunMechanism : BaseRunMechanism
         _musicHandle = GCHandle.Alloc(_musicData, GCHandleType.Pinned);
 
         _musicInstance.setUserData(GCHandle.ToIntPtr(_musicHandle));
-        _musicInstance.setCallback(_musicCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT);
+        _musicInstance.setCallback(_musicCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
     }
 
     static FMOD.RESULT ProcessBeatCallback(FMOD.Studio.EVENT_CALLBACK_TYPE type, IntPtr instancePtr, IntPtr parameterPtr)
@@ -135,6 +145,12 @@ public class SpeakerRunMechanism : BaseRunMechanism
 
         switch (type)
         {
+            case EVENT_CALLBACK_TYPE.TIMELINE_MARKER:
+                {
+                    var markerParameter = (TIMELINE_MARKER_PROPERTIES)Marshal.PtrToStructure<TIMELINE_MARKER_PROPERTIES>(parameterPtr);
+                    musicData.LastMarker = markerParameter.name;
+                    break;
+                }
             case EVENT_CALLBACK_TYPE.TIMELINE_BEAT:
                 {
                     var parameter = (TIMELINE_BEAT_PROPERTIES)Marshal.PtrToStructure<TIMELINE_BEAT_PROPERTIES>(parameterPtr);
@@ -144,7 +160,7 @@ public class SpeakerRunMechanism : BaseRunMechanism
             case EVENT_CALLBACK_TYPE.ALL:
                 break;
         }
-
+        
         return FMOD.RESULT.OK;
     }
 
@@ -164,6 +180,7 @@ public class SpeakerRunMechanism : BaseRunMechanism
     {
         base.StopMechanism();
         _musicInstance.stop(STOP_MODE.IMMEDIATE);
+        s_MusicStopped?.Invoke();
     }
 
     private void OnDisable()
