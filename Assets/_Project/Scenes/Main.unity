@@ -710,7 +710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentGameState: 0
-  _startingGameState: 4
+  _startingGameState: 0
   _actData:
   - GameState: 0
     ActData: {fileID: 11400000, guid: ff312832034c48a4abf89bfe77fa3bdf, type: 2}
