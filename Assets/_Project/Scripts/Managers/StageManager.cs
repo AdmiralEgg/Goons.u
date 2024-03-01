@@ -35,6 +35,8 @@ public class StageManager : MonoBehaviour
     private MelodyButtonEnableMechanism _melodyButtonLong;
     [SerializeField]
     private MelodyButtonEnableMechanism[] _melodyButtonShort;
+    [SerializeField]
+    private CrowdKeyboard _crowdKeyboard;
 
     [Header("TitleUI")]
     [SerializeField]
@@ -63,7 +65,6 @@ public class StageManager : MonoBehaviour
 
     void Awake()
     {
-        
         _actTitleTextController.gameObject.SetActive(false);
     }
 
@@ -106,7 +107,7 @@ public class StageManager : MonoBehaviour
 
                 // Wait a second before house lights come on...
                 HouseLightsAfterPause?.Invoke(true, 7f);
-                
+
                 // If the crowd are entertained, finish the act
                 CrowdController.CrowdEntertained = () => FinishAct(actData);
 
@@ -287,7 +288,7 @@ public class StageManager : MonoBehaviour
     }
 
     private void EnableMechanismsForAct(ActData actData)
-    {        
+    {
         if (actData.MusicEnabled)
         {
             _music.EnableAfterAnimation();
@@ -331,6 +332,15 @@ public class StageManager : MonoBehaviour
         else
         {
             _melodyButtonShort[1].DisableAfterAnimation();
+        }
+
+        if (actData.CrowdKeyboardEnabled)
+        {
+            _crowdKeyboard.enabled = true;
+        }
+        else
+        {
+            _crowdKeyboard.enabled = false;
         }
     }
 }

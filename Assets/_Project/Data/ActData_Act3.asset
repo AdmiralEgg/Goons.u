@@ -22,17 +22,10 @@ MonoBehaviour:
   MelodyLong1Enabled: 1
   MelodyShort1Enabled: 1
   MelodyShort2Enabled: 1
+  CrowdKeyboardEnabled: 1
   HagEnabled: 1
   HagStagePosition: 3
   ToffEnabled: 1
   ToffStagePosition: 5
   YorkyEnabled: 0
   YorkyStagePosition: 0
-  GoonLightsLeftEnabled: 0
-  GoonLightsLeftMidEnabled: 1
-  GoonLightsMiddleEnabled: 0
-  GoonLightsRightMidEnabled: 1
-  GoonLightsRightEnabled: 0
-  HouseLightLeftEnabled: 0
-  HouseLightRightEnabled: 0
-  CrowdLightEnabled: 1

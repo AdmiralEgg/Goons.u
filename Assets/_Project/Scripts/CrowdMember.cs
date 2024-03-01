@@ -192,6 +192,15 @@ public class CrowdMember : MonoBehaviour
     {
         _scaleShaker.Play();
         _rotationShaker.Play();
-        gameObject.SendMessageUpwards("CrowdPoked", this);
+
+        // If they're part of the keyboard
+        if (GetComponent<CrowdKeyData>().IsCrowdKey) 
+        {
+            gameObject.SendMessageUpwards("CrowdKeyPressed", this);
+        }
+        else
+        {
+            gameObject.SendMessageUpwards("CrowdPoked", this);
+        }
     }
 }

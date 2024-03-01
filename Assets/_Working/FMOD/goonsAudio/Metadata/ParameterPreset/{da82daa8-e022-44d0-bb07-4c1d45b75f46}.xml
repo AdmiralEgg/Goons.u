@@ -33,5 +33,19 @@
 		<property name="initialValue">
 			<value>0</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{ebb23f56-db35-4b8b-942d-3866c945b0fe}</destination>
+		</relationship>
+	</object>
+	<object class="LFOModulator" id="{ebb23f56-db35-4b8b-942d-3866c945b0fe}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>cursorPosition</value>
+		</property>
+		<property name="shape">
+			<value>5</value>
+		</property>
+		<property name="rate">
+			<value>0</value>
+		</property>
 	</object>
 </objects>

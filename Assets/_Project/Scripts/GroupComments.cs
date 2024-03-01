@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml;
 using FMOD;
@@ -52,9 +53,20 @@ public class GroupComments : MonoBehaviour
 
     private void SetupFMOD()
     {
+        //Goon hag = (Goon)_allGoons.Where(x => x.GetGoonData().GoonType == Goon.GoonType.Hag);
+        
         _scrapGroupInstance = FMODUnity.RuntimeManager.CreateInstance(_scrapGroupEvent);
         _crowdGroupInstance = FMODUnity.RuntimeManager.CreateInstance(_crowdGroupEvent);
         _speakerGroupInstance = FMODUnity.RuntimeManager.CreateInstance(_speakerGroupEvent);
+
+        /*
+        if (hag != null)
+        {
+            FMODUnity.RuntimeManager.AttachInstanceToGameObject(_scrapGroupInstance, hag.transform);
+            FMODUnity.RuntimeManager.AttachInstanceToGameObject(_crowdGroupInstance, hag.transform);
+            FMODUnity.RuntimeManager.AttachInstanceToGameObject(_speakerGroupInstance, hag.transform);
+        }
+        */
     }
 
     private void RecordTouch(string touchTag)

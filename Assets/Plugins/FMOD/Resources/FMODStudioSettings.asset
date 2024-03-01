@@ -407,6 +407,8 @@ MonoBehaviour:
   Banks:
   - Crowd
   - Crowd.assets
+  - CrowdKeyboard
+  - CrowdKeyboard.assets
   - Environment
   - Environment.assets
   - GoonGroupComments

@@ -18,6 +18,7 @@ public class ActData : ScriptableObject
     public bool MelodyLong1Enabled = true;
     public bool MelodyShort1Enabled;
     public bool MelodyShort2Enabled;
+    public bool CrowdKeyboardEnabled = false;
 
     [Header("Goons")]
     public bool HagEnabled = true;

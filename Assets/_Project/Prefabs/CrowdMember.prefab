@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2985056075301309840}
   - component: {fileID: 5805247753554536342}
+  - component: {fileID: 1378490817529614789}
   - component: {fileID: 7601250337257618392}
   - component: {fileID: 3643199833775017680}
   - component: {fileID: 2635523208726235334}
@@ -38,7 +39,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5805247753554536342
 MonoBehaviour:
@@ -59,6 +60,19 @@ MonoBehaviour:
   BounceTrigger:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1378490817529614789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8154128902857118547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a9ad247d1d206f4582932e4425a84c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isCrowdKey: 0
 --- !u!33 &7601250337257618392
 MeshFilter:
   m_ObjectHideFlags: 0

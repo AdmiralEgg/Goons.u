@@ -136,7 +136,6 @@ public class InputManager : MonoBehaviour
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Crowd"))
         {
             hit.collider.SendMessageUpwards("OnClickedTrigger", hit.collider.gameObject);
-            EnvironmentTouch?.Invoke("Crowd");
         }
 
         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"))

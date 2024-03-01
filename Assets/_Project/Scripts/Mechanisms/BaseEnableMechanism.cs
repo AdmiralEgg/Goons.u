@@ -14,7 +14,6 @@ public abstract class BaseEnableMechanism : MonoBehaviour
     [Tooltip("How does the mechanism move between enabled states")]
     public enum EnableMovement { Position, Hinge }
 
-
     [Header("Current States")]
     [SerializeField, ReadOnly]
     private EnabledState _currentEnabledState;
@@ -101,11 +100,13 @@ public abstract class BaseEnableMechanism : MonoBehaviour
             return;
         }
 
+        /*
         if ((_onStartTransitionTo) == EnabledState.Enabled && (CurrentEnabledState != EnabledState.Enabled))
         {
             EnableAfterAnimation();
             return;
         }
+        */
     }
 
     public virtual void EnableAfterAnimation()
@@ -171,8 +172,6 @@ public abstract class BaseEnableMechanism : MonoBehaviour
 
     private IEnumerator StartEnabledTransition(EnabledState targetState)
     {
-        Debug.Log($"Switching mechanism {this.name} to state {targetState}");
-        
         if (CurrentEnabledState == targetState)
         {
             yield break;
@@ -203,7 +202,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
         Vector3 smoothdampVelocity = Vector3.zero;
         float smoothTime = 1.5f;
 
-        while (Vector3.Distance(transform.position, targetPosition) > 0.03f)
+        while (Vector3.Distance(transform.position, targetPosition) > 0.04f)
         {
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref smoothdampVelocity, smoothTime);
 
@@ -211,7 +210,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
 
             t += Time.deltaTime;
             yield return null;
-        }   
+        }
 
         // Finish transition
         CurrentEnabledState = targetState;

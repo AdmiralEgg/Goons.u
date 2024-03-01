@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3efccea03bacb449012e3129ac8399, type: 3}
   m_Name: Act4_Points
   m_EditorClassIdentifier: 
-  PointsTarget: 30
+  PointsTarget: 34
   GoonSpeakPoints: 0.5
   GoonSpeakPointOnTimeBonus: 0.5
   GoonSpeakPointOnTimeThreshold: 0.8

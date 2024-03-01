@@ -24,8 +24,8 @@ public class ProjectorEnableMechanism : BaseEnableMechanism
 
     public override void EnableAfterAnimation()
     {
-        _projectorCamera.SetActive(true);
         base.EnableAfterAnimation();
+        _projectorCamera.SetActive(true);
     }
 
     public override void DisableAfterAnimation()

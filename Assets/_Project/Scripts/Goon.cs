@@ -253,9 +253,6 @@ public class Goon : MonoBehaviour
     private WordData GetWordDataByFMODWordData(string searchWord)
     {
         WordData data = _wordData.Find(x => x.FMODWordDataName == searchWord);
-
-        Debug.Log($"Returning word: {data.Word} and FMOD file name: {data.FMODWordDataName}");
-
         return data;
     }
 }
