@@ -31,16 +31,4 @@ public class ActData : ScriptableObject
     public bool YorkyEnabled;
     [ShowIf("YorkyEnabled", true), Required]
     public StagePositionController.StagePosition YorkyStagePosition;
-
-    [Header("Goon Lights")]
-    public bool GoonLightsLeftEnabled = true;
-    public bool GoonLightsLeftMidEnabled;
-    public bool GoonLightsMiddleEnabled;
-    public bool GoonLightsRightMidEnabled;
-    public bool GoonLightsRightEnabled;
-
-    [Header("House Lights")]
-    public bool HouseLightLeftEnabled;
-    public bool HouseLightRightEnabled;
-    public bool CrowdLightEnabled = true;
 }

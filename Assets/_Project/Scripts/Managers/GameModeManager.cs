@@ -1,15 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System;
 
 public class GameModeManager : MonoBehaviour
 {
-    public enum GameMode { None, Music, Scrap }
+    public enum GameMode { None, TransitionToMusic, Music, TransitionToScrap, Scrap }
 
     [SerializeField, ReadOnly]
     private GameMode _currentGameMode;
+
+    public GameMode CurrentGameMode
+    {
+        get { return _currentGameMode; }
+        private set { }
+    }
 
     [Header("Mechanism")]
     [SerializeField]
@@ -19,25 +23,48 @@ public class GameModeManager : MonoBehaviour
 
     public static Action<GameMode> ChangedGameMode;
 
-    private void OnEnable()
+    private void Awake()
     {
         SetGameMode(GameMode.None);
+    }
 
+    private void OnEnable()
+    {
         MusicButtonRunMechanism.MusicMechanismRunStateUpdate += MechanismRunStateCheck;
         ScrapButtonRunMechanism.ScrapMechanismRunStateUpdate += MechanismRunStateCheck;
     }
 
     private void OnDisable()
     {
-        SetGameMode(GameMode.None);
-
         MusicButtonRunMechanism.MusicMechanismRunStateUpdate -= MechanismRunStateCheck;
         ScrapButtonRunMechanism.ScrapMechanismRunStateUpdate -= MechanismRunStateCheck;
     }
 
-    public GameMode GetCurrentGameMode()
+    private void Update()
     {
-        return _currentGameMode;
+        // Wait for mechanisms to transition to the correct mode before switching game modes.
+        switch (_currentGameMode)
+        {
+            case GameMode.TransitionToMusic:
+                if ((_music.CurrentEnabledState == BaseEnableMechanism.EnabledState.Enabled) && _scrap.CurrentEnabledState == BaseEnableMechanism.EnabledState.Disabled)
+                {
+                    SetGameMode(GameMode.Music);
+                }
+                break;
+            case GameMode.TransitionToScrap:
+                if ((_music.CurrentEnabledState == BaseEnableMechanism.EnabledState.Disabled) && _scrap.CurrentEnabledState == BaseEnableMechanism.EnabledState.Enabled)
+                {
+                    SetGameMode(GameMode.Scrap);
+                }
+                break;
+            default: 
+                break;
+        }
+        
+        if ((_currentGameMode == GameMode.TransitionToMusic) || (_currentGameMode == GameMode.TransitionToScrap)) 
+        {
+            //Debug.Log($"Transition between game modes, checking music and scrap states. Music: {_music.CurrentEnabledState}. Scrap: {_scrap.CurrentEnabledState}.");
+        }
     }
 
     private void MechanismRunStateCheck(Type mechanismType, bool isStarting)
@@ -46,7 +73,8 @@ public class GameModeManager : MonoBehaviour
         {
             if (isStarting)
             {
-                SetGameMode(GameMode.Music);
+                SetGameMode(GameMode.TransitionToMusic);
+                //SetGameMode(GameMode.Music);
             }
             else
             {
@@ -58,7 +86,8 @@ public class GameModeManager : MonoBehaviour
         {
             if (isStarting)
             {
-                SetGameMode(GameMode.Scrap);
+                SetGameMode(GameMode.TransitionToScrap);
+                //SetGameMode(GameMode.Scrap);
             }
             else
             {
@@ -71,20 +100,27 @@ public class GameModeManager : MonoBehaviour
     {
         if (newGameMode == _currentGameMode) return;
 
+        Debug.Log($"Setting game mode: {newGameMode}");
+
         switch (newGameMode)
         {
+            case GameMode.TransitionToScrap:
+                _scrap.EnableAfterAnimation();
+                _music.DisableAfterAnimation();
+                break;
+            case GameMode.TransitionToMusic:
+                _scrap.DisableAfterAnimation();
+                _music.EnableAfterAnimation();
+                break;
             case GameMode.Scrap:
                 _music.DisableAfterAnimation();
-
                 break;
             case GameMode.Music:
                 _scrap.DisableAfterAnimation();
-
                 break;
             case GameMode.None:
                 _music.EnableAfterAnimation();
                 _scrap.EnableAfterAnimation();
-
                 break;
         }
 

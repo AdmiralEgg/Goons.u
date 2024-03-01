@@ -60,6 +60,9 @@ MonoBehaviour:
   _disabledWorldPosition: {x: -7.36, y: 7.67, z: 0}
   _disabledWorldRotation: {x: -0.07921271, y: -0.23523241, z: 0.1163508, w: 0.9616931}
   _transitionDuration: 2
+  _buttonLights:
+  - {fileID: 6141654189083412129}
+  - {fileID: 5256965294499779103}
 --- !u!114 &4370675548417548892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +81,6 @@ MonoBehaviour:
   _rotateTimeSeconds: 4
   _startButtonLight: {fileID: 5256965294499779103}
   _stopButtonLight: {fileID: 6141654189083412129}
-  _houseLights: {fileID: 0}
 --- !u!1 &3767846460954248105
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,8 +11,7 @@ public class InputManager : MonoBehaviour
     [Header("Game States")]
     [SerializeField, ReadOnly]
     private InputState _currentInputState;
-    [SerializeField, ReadOnly]
-    private GameModeManager.GameMode _currentGameMode;
+
     [SerializeField, ReadOnly]
     private Scrap _currentSelectedScrap;
     [SerializeField]
@@ -54,26 +53,20 @@ public class InputManager : MonoBehaviour
             UpdateInputState(InputState.ScrapSelected, scrap);
         };
 
-        GameModeManager.ChangedGameMode += CheckGameMode;
-        _currentGameMode = GameModeManager.GameMode.None;
+        GameModeManager.ChangedGameMode += (gameMode) =>
+        {
+            if (gameMode == GameModeManager.GameMode.Music || gameMode == GameModeManager.GameMode.None)
+            {
+                UpdateInputState(InputState.Free);
+            }
+        };
     }
 
     private void Update()
     {
-        // Show statics in the inspector. 
+        // Show statics in the inspector.
         // TODO: Sort this into a best practice pattern
         _currentInputState = s_currentInputState;
-    }
-
-    private void CheckGameMode(GameModeManager.GameMode gameMode)
-    {
-        Debug.Log("Input manager checking game mode");
-        _currentGameMode = gameMode;
-        
-        if (gameMode == GameModeManager.GameMode.Music || gameMode == GameModeManager.GameMode.None)
-        {
-            UpdateInputState(InputState.Free);
-        }
     }
 
     private void OnPlayerSelect(InputAction.CallbackContext context)
@@ -105,20 +98,25 @@ public class InputManager : MonoBehaviour
 
         if (hit.collider.gameObject.tag == "Scrap")
         {
-            if (_currentGameMode == GameModeManager.GameMode.Music || _currentGameMode == GameModeManager.GameMode.None)
-            {
-                // Send message to all goons that scrap has been clicked.
-                // Play animation on the scrap.
-                Scrap scrap = hit.collider.gameObject.GetComponent<Scrap>();
-                WordData wordData = scrap.GetWordData();
+            GameModeManager.GameMode currentMode = _gameModeManager.CurrentGameMode;
 
-                Debug.Log("Play the scrap through the goon");
+            if (currentMode == GameModeManager.GameMode.Music || currentMode == GameModeManager.GameMode.None)
+            {
+                Scrap scrap = hit.collider.gameObject.GetComponentInParent<Scrap>();
+
+                if (scrap == null) 
+                {
+                    Debug.Log($"Could not find Scrap component in parents of {hit.collider.name}");
+                    return;
+                }
+
+                WordData wordData = scrap.GetWordData();
                 InventoryScrapClicked?.Invoke(wordData);
                 scrap.PlayProdAnimation();
                 return;
             }
 
-            if (_currentGameMode == GameModeManager.GameMode.Scrap)
+            if (currentMode == GameModeManager.GameMode.Scrap)
             {
                 hit.collider.SendMessageUpwards("OnClickedTrigger", hit.collider.gameObject);
                 return;
@@ -187,6 +185,7 @@ public class InputManager : MonoBehaviour
         {
             _currentSelectedScrap.SetScrapAttachedState(Scrap.ScrapAttachedState.None);
             _currentSelectedScrap.transform.position = hit.point;
+            _currentSelectedScrap.gameObject.transform.parent = null;
             UpdateInputState(InputState.Free);
             return;
         }

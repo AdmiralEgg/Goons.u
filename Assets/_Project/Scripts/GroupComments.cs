@@ -62,7 +62,7 @@ public class GroupComments : MonoBehaviour
         if (_recordedTouches.ContainsKey(touchTag))
         {
             _recordedTouches[touchTag] = (int)_recordedTouches[touchTag] + 1;
-            UnityEngine.Debug.Log($"Added new touch: {touchTag}. Recorded value is now: {_recordedTouches[touchTag]}");
+            //UnityEngine.Debug.Log($"Added new touch: {touchTag}. Recorded value is now: {_recordedTouches[touchTag]}");
         }
         else
         {

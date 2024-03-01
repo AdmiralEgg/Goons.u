@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FMOD.Studio;
-using FMODUnity;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
 using UnityEngine;
 using static StageManager;
 
@@ -237,7 +233,7 @@ public class StageManager : MonoBehaviour
 
     async Task WaitForEnableMechanismState(BaseEnableMechanism mechanism, BaseEnableMechanism.EnabledState requiredState)
     {
-        while (mechanism.GetState() != requiredState)
+        while (mechanism.CurrentEnabledState != requiredState)
         {
             await Task.Delay(1000);
         }

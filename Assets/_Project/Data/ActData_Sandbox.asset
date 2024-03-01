@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Act: 6
   ActTitle: Sandbox
-  ActSubtitle: .
+  ActSubtitle: ' '
   NextAct: 6
   ProjectorEnabled: 0
   MusicEnabled: 1

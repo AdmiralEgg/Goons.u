@@ -88,7 +88,7 @@ public class ScrapButtonRunMechanism : BaseRunMechanism
     {
         base.OnClickedTrigger();
 
-        if (_enableMechanism?.GetState() != BaseEnableMechanism.EnabledState.Enabled) return;
+        if (_enableMechanism?.CurrentEnabledState != BaseEnableMechanism.EnabledState.Enabled) return;
 
         if (_currentRunningState == RunningState.Shutdown)
         {

@@ -35,15 +35,21 @@ public class HouseLightController : MonoBehaviour
 
     private void SwitchLights(bool switchOn)
     {
-        _houseLights.ForEach(light => light.enabled = switchOn);
-
-        if (switchOn)
-        {
-            _bigLightOnInstance.start();
-        }
-        else
-        {
-            _bigLightOffInstance.start();
+        foreach (Light light in _houseLights) 
+        { 
+            // if we aren't already in the enabled state
+            if (light.enabled != switchOn)
+            {
+                light.enabled = switchOn;
+                if (switchOn)
+                {
+                    _bigLightOnInstance.start();
+                }
+                else
+                {
+                    _bigLightOffInstance.start();
+                } 
+            }
         }
     }
 

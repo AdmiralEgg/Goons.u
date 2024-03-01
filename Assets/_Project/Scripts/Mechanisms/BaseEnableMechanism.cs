@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -13,9 +14,20 @@ public abstract class BaseEnableMechanism : MonoBehaviour
     [Tooltip("How does the mechanism move between enabled states")]
     public enum EnableMovement { Position, Hinge }
 
+
     [Header("Current States")]
     [SerializeField, ReadOnly]
-    public EnabledState CurrentEnabledState = EnabledState.Enabled;
+    private EnabledState _currentEnabledState;
+
+    public EnabledState CurrentEnabledState
+    {
+        get { return _currentEnabledState; }
+        private set { _currentEnabledState = value; }
+    }
+
+    [SerializeField]
+    private Coroutine _stateTransitionCoroutine;
+
     [SerializeField, ReadOnly, Tooltip("Whether GameObject has a RunMechanism component")]
     private BaseRunMechanism _runMechanism;
 
@@ -100,7 +112,13 @@ public abstract class BaseEnableMechanism : MonoBehaviour
     {
         if (_enableMovement == EnableMovement.Position)
         {
-            StartCoroutine(StartEnabledTransition(EnabledState.Enabled));
+            if (_stateTransitionCoroutine != null)
+            {
+                Debug.Log("Stopping transition coroutine");
+                StopCoroutine(_stateTransitionCoroutine);
+            }
+
+            _stateTransitionCoroutine = StartCoroutine(StartEnabledTransition(EnabledState.Enabled));
         }
 
         if (_enableMovement == EnableMovement.Hinge)
@@ -122,7 +140,13 @@ public abstract class BaseEnableMechanism : MonoBehaviour
     {
         if (_enableMovement == EnableMovement.Position)
         {
-            StartCoroutine(StartEnabledTransition(EnabledState.Disabled));
+            if (_stateTransitionCoroutine != null)
+            {
+                Debug.Log("Stopping the disable transition coroutine");
+                StopCoroutine(_stateTransitionCoroutine);
+            }
+
+            _stateTransitionCoroutine = StartCoroutine(StartEnabledTransition(EnabledState.Disabled));
         }
 
         if (_enableMovement == EnableMovement.Hinge)
@@ -147,11 +171,8 @@ public abstract class BaseEnableMechanism : MonoBehaviour
 
     private IEnumerator StartEnabledTransition(EnabledState targetState)
     {
-        if (CurrentEnabledState == EnabledState.InTransition)
-        {
-            yield break;
-        }
-
+        Debug.Log($"Switching mechanism {this.name} to state {targetState}");
+        
         if (CurrentEnabledState == targetState)
         {
             yield break;
@@ -161,7 +182,7 @@ public abstract class BaseEnableMechanism : MonoBehaviour
         Quaternion targetRotation;
 
         // Set our destination positions and rotations. Enabled or Disabled.
-        if (CurrentEnabledState == EnabledState.Disabled)
+        if (targetState == EnabledState.Enabled)
         {
             targetPosition = _enabledPosition;
             targetRotation = _enabledRotation;
@@ -179,9 +200,13 @@ public abstract class BaseEnableMechanism : MonoBehaviour
         Vector3 startPosition = this.transform.position;
         Quaternion startRotation = this.transform.rotation;
 
-        while (t < _transitionDuration)
+        Vector3 smoothdampVelocity = Vector3.zero;
+        float smoothTime = 1.5f;
+
+        while (Vector3.Distance(transform.position, targetPosition) > 0.03f)
         {
-            transform.position = Vector3.Lerp(startPosition, targetPosition, t / _transitionDuration);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref smoothdampVelocity, smoothTime);
+
             transform.rotation = Quaternion.RotateTowards(startRotation, targetRotation, t / _transitionDuration);
 
             t += Time.deltaTime;
@@ -203,10 +228,5 @@ public abstract class BaseEnableMechanism : MonoBehaviour
         }
 
         yield return null;
-    }
-
-    public EnabledState GetState()
-    {
-        return CurrentEnabledState;
     }
 }

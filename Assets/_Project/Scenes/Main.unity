@@ -688,7 +688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentGameState: 0
-  _startingGameState: 0
+  _startingGameState: 1
   _actData:
   - GameState: 0
     ActData: {fileID: 11400000, guid: ff312832034c48a4abf89bfe77fa3bdf, type: 2}
@@ -1113,7 +1113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentInputState: 0
-  _currentGameMode: 0
   _currentSelectedScrap: {fileID: 0}
   _gameModeManager: {fileID: 1610963259}
   _puffOfDust: {fileID: 391403958395726083, guid: f83e463346e198c4b97b108921c4e6a7, type: 3}
@@ -3948,7 +3947,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1483549251}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
@@ -6000,7 +5999,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811576608}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
@@ -7726,7 +7725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 780aac9fdd944dd4bbc429b8530e8ea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentEnabledState: 0
+  _currentEnabledState: 0
   _runMechanism: {fileID: 0}
   _enableMovement: 0
   _hinge: {fileID: 0}
@@ -8874,7 +8873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 780aac9fdd944dd4bbc429b8530e8ea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentEnabledState: 0
+  _currentEnabledState: 0
   _runMechanism: {fileID: 0}
   _enableMovement: 0
   _hinge: {fileID: 0}

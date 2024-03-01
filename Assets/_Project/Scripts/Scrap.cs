@@ -1,4 +1,4 @@
-using System;
+using System; 
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -16,6 +16,9 @@ public class Scrap : MonoBehaviour
 
     [SerializeField, ReadOnly]
     private WordData _wordData;
+
+    [SerializeField]
+    private BoxCollider _freeCollider, _inventoryCollider;
 
     [SerializeField]
     private TextMeshProUGUI _scrapText;
@@ -114,9 +117,13 @@ public class Scrap : MonoBehaviour
         {
             case ScrapAttachedState.None:
                 _rigidBody.isKinematic = false;
+                _inventoryCollider.gameObject.SetActive(false);
+                _freeCollider.gameObject.SetActive(true);
                 break;
             case ScrapAttachedState.Inventory:
                 _rigidBody.isKinematic = true;
+                _inventoryCollider.gameObject.SetActive(true);
+                _freeCollider.gameObject.SetActive(false);
                 break;
         }
     }

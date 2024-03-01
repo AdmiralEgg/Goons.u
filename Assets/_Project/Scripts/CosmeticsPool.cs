@@ -42,7 +42,10 @@ public class CosmeticsPool : MonoBehaviour
 
     private void Update()
     {
-        _inactiveItems = Pool.CountInactive;
+        if (Pool != null)
+        {
+            _inactiveItems = Pool.CountInactive;
+        }
     }
 
     private void OnReturnedToPool(Cosmetic system)
