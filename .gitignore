@@ -73,17 +73,6 @@ crashlytics-build.properties
 
 # Installed packages
 Assets/FullScreen/*
-Assets/Feel/*
-Assets/Plugins/Sirenix/*
-
-# Lighting data ignore
-Assets/Scenes/SampleScene/LightingData.asset
-
-# Ignore MagicaVoxel Software Assets
-Assets/_Working/MagicaVoxel/*
-!Assets/_Working/MagicaVoxel/palette
-!Assets/_Working/MagicaVoxel/export
-!Assets/_Working/MagicaVoxel/vox
 
 # Raw video
 Assets/_Working/_VideoRaw/*
