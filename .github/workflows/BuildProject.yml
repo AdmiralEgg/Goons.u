@@ -40,6 +40,7 @@ jobs:
         targetPlatform: 
           - StandaloneWindows64
           - WebGL
+          - Android
 
     steps:    
     - uses: actions/checkout@v4
