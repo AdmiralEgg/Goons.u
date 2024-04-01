@@ -37,10 +37,12 @@ jobs:
       matrix:
         projectPath: 
           - Goons.u
+        # targetPlatform: 
+        #   - StandaloneWindows64
+        #   - WebGL
+        #   - Android
         targetPlatform: 
           - StandaloneWindows64
-          - WebGL
-          - Android
     
     steps:
     - name: Free Disk Space (Ubuntu)
