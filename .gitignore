@@ -74,8 +74,8 @@ crashlytics-build.properties
 # Installed packages
 Assets/FullScreen/*
 
-# Raw video
-Assets/_Working/_VideoRaw/*
+# All working
+Assets/_Working/*
 
 # FMOD Cache Ignore
 /[Aa]ssets/**/FMODStudioCache.asset
