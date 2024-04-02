@@ -57,9 +57,6 @@ jobs:
       with:
         fetch-depth: 1
         lfs: true
-        sparse-checkout: |
-          /*
-          !/Assets/_Working/
 
     - name: Check Repo Structure
       run: ls -R
