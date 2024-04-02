@@ -222,7 +222,7 @@
     ],
     "m_VertexContext": {
         "m_Position": {
-            "x": 0.0000040531158447265628,
+            "x": 0.0000040531158447265629,
             "y": -42.00000762939453
         },
         "m_Blocks": [
@@ -267,6 +267,7 @@
     "m_OutputNode": {
         "m_Id": ""
     },
+    "m_SubDatas": [],
     "m_ActiveTargets": [
         {
             "m_Id": "796913f6bd324b9a80e6535471a86ee6"
@@ -643,7 +644,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "4bac58a0f5c04b5cb854088570d62274",
     "m_Id": 0,
-    "m_DisplayName": "AlphaClip",
+    "m_DisplayName": "SmokeAlphaClip",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1540,10 +1541,10 @@
     "m_Guid": {
         "m_GuidSerialized": "bfd3ac1a-5f9c-4d69-aaec-223f6ac4a6e7"
     },
-    "m_Name": "AlphaClip",
+    "m_Name": "SmokeAlphaClip",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "AlphaClip",
-    "m_DefaultReferenceName": "_AlphaClip",
+    "m_RefNameGeneratedByDisplayName": "SmokeAlphaClip",
+    "m_DefaultReferenceName": "_SmokeAlphaClip",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
