@@ -17,9 +17,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-        with: 
-          sparse-checkout: |
-            !Assets/_Working/
 
       - name: print latest_commit
         run: echo ${{ github.sha }}
@@ -60,6 +57,8 @@ jobs:
       with:
         fetch-depth: 1
         lfs: true
+        sparse-checkout: |
+          !Assets/_Working/
 
     - name: Check Repo Structure
       run: ls -R
