@@ -60,8 +60,6 @@ jobs:
         lfs: true
         sparse-checkout-cone-mode: false
         sparse-checkout: |
-          /*
-          !/*/
           /Assets/*
           !/Assets/_Working/*
 
