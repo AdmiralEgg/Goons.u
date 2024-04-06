@@ -41,8 +41,8 @@ jobs:
         projectPath: 
           - Goons.u
         targetPlatform: 
-          # - StandaloneWindows64
-          - WebGL
+          - StandaloneWindows64
+          # - WebGL
           - Android
     
     steps:
