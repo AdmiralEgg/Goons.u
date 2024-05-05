@@ -41,7 +41,7 @@ public class CurtainEnableMechanism : BaseEnableMechanism
 
         if ((CurrentEnabledState != EnabledState.InTransition) && (_isMovingSoundPlaying == true))
         {
-            _curtainSqueakInstance.stop(STOP_MODE.ALLOWFADEOUT);
+            _curtainSqueakInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             _isMovingSoundPlaying = false;
         }
     }

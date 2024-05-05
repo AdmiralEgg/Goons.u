@@ -66,6 +66,12 @@ public class StageManager : MonoBehaviour
     void Awake()
     {
         _actTitleTextController.gameObject.SetActive(false);
+        CrowdDebug.SwitchSandbox += SwitchToSandbox;
+    }
+
+    private void SwitchToSandbox()
+    {
+        SetState(GameState.Sandbox);
     }
 
     private void Start()

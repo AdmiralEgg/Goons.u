@@ -178,7 +178,7 @@ public class SpeakerRunMechanism : BaseRunMechanism
     public override void StopMechanism()
     {
         base.StopMechanism();
-        _musicInstance.stop(STOP_MODE.IMMEDIATE);
+        _musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         s_MusicStopped?.Invoke();
     }
 

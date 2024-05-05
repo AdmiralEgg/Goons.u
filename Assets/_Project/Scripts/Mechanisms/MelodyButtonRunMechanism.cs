@@ -88,7 +88,7 @@ public class MelodyButtonRunMechanism : BaseRunMechanism
         _animator.Play("PopOut");
 
         _mechanismRunStopInstance.start();
-        _melodyInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        _melodyInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     private IEnumerator WaitForFinish()

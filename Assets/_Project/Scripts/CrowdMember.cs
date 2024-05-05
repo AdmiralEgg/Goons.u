@@ -193,6 +193,12 @@ public class CrowdMember : MonoBehaviour
         _scaleShaker.Play();
         _rotationShaker.Play();
 
+        // If we're a debug crowd member
+        if (GetComponent<CrowdDebug>() != null) 
+        {
+            gameObject.SendMessageUpwards("CrowdDebugPressed");
+        }
+
         // If they're part of the keyboard
         if (GetComponent<CrowdKeyData>().IsCrowdKey) 
         {

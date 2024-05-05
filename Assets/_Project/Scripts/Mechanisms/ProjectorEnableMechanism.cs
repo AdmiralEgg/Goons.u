@@ -45,20 +45,20 @@ public class ProjectorEnableMechanism : BaseEnableMechanism
 
         if ((CurrentEnabledState != EnabledState.InTransition) && (_isMovingSoundPlaying == true))
         {
-            _movingInstance.stop(STOP_MODE.ALLOWFADEOUT);
+            _movingInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             _isMovingSoundPlaying = false;
         }
     }
 
     private void OnDestroy()
     {
-        _movingInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        _movingInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         _movingInstance.release();
     }
 
     private void OnDisable()
     {
-        _movingInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        _movingInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         _movingInstance.release();
     }
 }
