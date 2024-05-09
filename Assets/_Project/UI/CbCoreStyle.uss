@@ -1,0 +1,44 @@
+.hidden {
+    visibility: hidden;
+    display: none;
+}
+
+.CbButton {
+    border-left-color: rgb(90, 133, 178);
+    border-right-color: rgb(90, 133, 178);
+    border-top-color: rgb(90, 133, 178);
+    border-bottom-color: rgb(90, 133, 178);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: rgb(255, 255, 255);
+    -unity-text-outline-width: 1px;
+    font-size: 20px;
+    -unity-font-style: bold;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    -unity-font: url('project://database/Assets/_Project/Fonts/BIG%20JOHN.otf?fileID=12800000&guid=9b24fec2f26a74f4d9916337b4a8ef33&type=3#BIG JOHN');
+}
+
+.CbLabel {
+    align-self: center;
+    padding-bottom: 0;
+    -unity-font: url('project://database/Assets/_Project/Fonts/BIG%20JOHN.otf?fileID=12800000&guid=9b24fec2f26a74f4d9916337b4a8ef33&type=3#BIG JOHN');
+    -unity-font-style: bold;
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    padding-top: 5px;
+    padding-right: 0;
+    padding-left: 0;
+    margin-top: 5px;
+}
+
+.CBDropdown {
+}

@@ -181,7 +181,10 @@ public class StageManager : MonoBehaviour
         await Task.Delay(2000);
 
         // Title Off
-        _actTitleTextController.gameObject.SetActive(false);
+        if (_actTitleTextController != null)
+        {
+            _actTitleTextController.gameObject.SetActive(false);
+        }
 
         ActStarted?.Invoke();
 

@@ -25,12 +25,30 @@
                 },
                 {
                     "name": "Exit",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "c8bb9574-f2cb-4b57-98d6-f0f92603fc18",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "QualityDown",
+                    "type": "Value",
+                    "id": "f85ce0b7-a789-4a0e-a9a4-168a1a98206a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "QualityUp",
+                    "type": "Value",
+                    "id": "3a3ea060-893c-4da1-91d4-17d6eac035f5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -95,8 +113,30 @@
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Mouse&Keyboard",
+                    "groups": "Mouse&Keyboard;TouchScreen",
                     "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "078a2a7d-984c-4195-9303-5d36e2c28446",
+                    "path": "<Keyboard>/f1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "TouchScreen;Mouse&Keyboard",
+                    "action": "QualityDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d5b60dfa-048c-42c4-a201-2d66c34d6e59",
+                    "path": "<Keyboard>/f2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse&Keyboard;TouchScreen",
+                    "action": "QualityUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

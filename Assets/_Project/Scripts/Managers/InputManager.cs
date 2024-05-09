@@ -46,6 +46,8 @@ public class InputManager : MonoBehaviour
         // On click, figure out what has been hit. Nothing, or scrap.
         s_playerInput.actions["Select"].performed += OnPlayerSelect;
         s_playerInput.actions["Exit"].performed += OnExit;
+        s_playerInput.actions["QualityDown"].performed += QualityDown;
+        s_playerInput.actions["QualityUp"].performed += QualityUp;
 
         // If scrap has been selected, update the state.
         Scrap.ScrapSelected += (scrap) =>
@@ -60,6 +62,16 @@ public class InputManager : MonoBehaviour
                 UpdateInputState(InputState.Free);
             }
         };
+    }
+
+    private void QualityDown(InputAction.CallbackContext context)
+    {
+        QualitySettings.DecreaseLevel();
+    }
+
+    private void QualityUp(InputAction.CallbackContext context)
+    {
+        QualitySettings.IncreaseLevel();
     }
 
     private void Update()
