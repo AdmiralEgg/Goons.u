@@ -89,3 +89,4 @@ jobs:
       with:
         name: Build_${{ matrix.targetPlatform }}_${{ steps.builder.outputs.buildVersion }}
         path: build/${{ matrix.targetPlatform }}
+        retention-days: 7  # Set retention time to 7 days
